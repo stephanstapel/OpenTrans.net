@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<INVOICELIST version="2.1" xsi:schemaLocation="http://www.opentrans.org/XMLSchema/2.1 opentrans_2_1.xsd" xmlns="http://www.opentrans.org/XMLSchema/2.1" xmlns:bmecat="http://www.bmecat.org/bmecat/2005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<INVOICELIST_HEADER>
+		<INVOICELIST_INFO>
+			<INVOICELIST_ID>CCS-392</INVOICELIST_ID>
+			<INVOICELIST_DATE>2008-09-01</INVOICELIST_DATE>
+			<INVOICELIST_TYPE>credit_card_statement</INVOICELIST_TYPE>
+			<ACCOUNTING_PERIOD>
+				<ACCOUNTING_PERIOD_START_DATE>2008-07-29</ACCOUNTING_PERIOD_START_DATE>
+				<ACCOUNTING_PERIOD_END_DATE>2008-08-29</ACCOUNTING_PERIOD_END_DATE>
+			</ACCOUNTING_PERIOD>
+			<PARTIES>
+				<PARTY>
+					<bmecat:PARTY_ID type="bic">BANKDESS123</bmecat:PARTY_ID>
+					<ADDRESS>
+						<bmecat:NAME>Financial Institution</bmecat:NAME>
+						<CONTACT_DETAILS>
+							<bmecat:CONTACT_NAME>Support-person</bmecat:CONTACT_NAME>
+							<bmecat:PHONE>+49 711 XXXX XXXX</bmecat:PHONE>
+							<bmecat:FAX>+49 711 XXXX YYYY</bmecat:FAX>
+						</CONTACT_DETAILS>
+						<bmecat:STREET>Bankstr. 1</bmecat:STREET>
+						<bmecat:ZIP>70199</bmecat:ZIP>
+						<bmecat:CITY>Stuttgart</bmecat:CITY>
+						<bmecat:STATE>Baden-Württemberg</bmecat:STATE>
+						<bmecat:COUNTRY>Germany</bmecat:COUNTRY>
+						<bmecat:COUNTRY_CODED>DE</bmecat:COUNTRY_CODED>
+						<bmecat:PHONE>+49 711 AAA BBB CCC</bmecat:PHONE>
+						<bmecat:FAX>+49 711 AAA BBB DDD</bmecat:FAX>
+					</ADDRESS>
+				</PARTY>
+				<PARTY>
+					<bmecat:PARTY_ID type="supplier_specific">0000XXX-1</bmecat:PARTY_ID>
+					<ADDRESS>
+						<bmecat:NAME>John Doe</bmecat:NAME>
+						<CONTACT_DETAILS>
+							<bmecat:CONTACT_NAME>Doe</bmecat:CONTACT_NAME>
+							<bmecat:FIRST_NAME>John</bmecat:FIRST_NAME>
+							<bmecat:PHONE>+49 345 ABCDEFG-001</bmecat:PHONE>
+							<bmecat:EMAILS>
+								<bmecat:EMAIL>john.doe@johndoe.com</bmecat:EMAIL>
+							</bmecat:EMAILS>
+						</CONTACT_DETAILS>
+						<bmecat:STREET>Examplestreet 25</bmecat:STREET>
+						<bmecat:ZIP>06180</bmecat:ZIP>
+						<bmecat:CITY>Halle</bmecat:CITY>
+						<bmecat:STATE>Saxony-Anhalt</bmecat:STATE>
+						<bmecat:COUNTRY>Germany</bmecat:COUNTRY>
+						<bmecat:COUNTRY_CODED>DE</bmecat:COUNTRY_CODED>
+					</ADDRESS>
+					<ACCOUNT>
+						<HOLDER>John Doe</HOLDER>
+						<BANK_ACCOUNT>AAA BBB CCC 000</BANK_ACCOUNT>
+						<BANK_CODE>BNNKDEHA123</BANK_CODE>
+						<BANK_NAME>Bank Institute</BANK_NAME>
+						<BANK_COUNTRY>DE</BANK_COUNTRY>
+					</ACCOUNT>
+				</PARTY>
+			</PARTIES>
+			<INVOICE_ISSUER_IDREF>BANKDESS123</INVOICE_ISSUER_IDREF>
+			<INVOICE_RECIPIENT_IDREF>0000XXX-1</INVOICE_RECIPIENT_IDREF>
+			<bmecat:CURRENCY>EUR</bmecat:CURRENCY>
+			<PAYMENT>
+				<ACCOUNT>
+					<HOLDER>John Doe</HOLDER>
+					<BANK_ACCOUNT>AAA BBB CCC 000</BANK_ACCOUNT>
+					<BANK_CODE>BNNKDEHA123</BANK_CODE>
+					<BANK_NAME>Bank Institute</BANK_NAME>
+					<BANK_COUNTRY>DE</BANK_COUNTRY>
+				</ACCOUNT>
+			</PAYMENT>
+		</INVOICELIST_INFO>
+	</INVOICELIST_HEADER>
+	<INVOICELIST_ITEM_LIST>
+		<INVOICELIST_ITEM>
+			<LINE_ITEM_ID>1</LINE_ITEM_ID>
+			<CREDIT_LIMIT>+1000.00</CREDIT_LIMIT>
+			<OPENING_BALANCE>+0.0</OPENING_BALANCE>
+			<IL_INVOICE_LIST>
+				<IL_INVOICE_LIST_ITEM>
+					<INVOICE_REFERENCE>
+						<INVOICE_ID>4593820</INVOICE_ID>
+						<INVOICE_DATE>2008-08-01</INVOICE_DATE>
+						<POST_DATE>2008-08-03</POST_DATE>
+						<REASON_FOR_TRANSFER>Mc Dowells Catering</REASON_FOR_TRANSFER>
+					</INVOICE_REFERENCE>
+					<FOREIGN_CURRENCY>USD</FOREIGN_CURRENCY>
+					<FOREIGN_AMOUNT>-280.00</FOREIGN_AMOUNT>
+					<EXCHANGE_RATE>1.4336</EXCHANGE_RATE>
+					<NET_VALUE_GOODS>-195.31</NET_VALUE_GOODS>
+					<ALLOW_OR_CHARGES_FIX>
+						<ALLOW_OR_CHARGE type="surcharge">
+						<ALLOW_OR_CHARGE_TYPE>handling</ALLOW_OR_CHARGE_TYPE>
+						<ALLOW_OR_CHARGE_VALUE>
+							<AOC_PERCENTAGE_FACTOR>0.0079</AOC_PERCENTAGE_FACTOR>
+						</ALLOW_OR_CHARGE_VALUE>
+						</ALLOW_OR_CHARGE>
+						<ALLOW_OR_CHARGES_TOTAL_AMOUNT>-1.542949</ALLOW_OR_CHARGES_TOTAL_AMOUNT>
+					</ALLOW_OR_CHARGES_FIX>
+					<TOTAL_TAX>
+						<TAX_DETAILS_FIX>
+							<bmecat:TAX_TYPE>vat</bmecat:TAX_TYPE>
+							<bmecat:TAX>0.19</bmecat:TAX>
+							<TAX_AMOUNT>-37.40</TAX_AMOUNT>
+						</TAX_DETAILS_FIX>
+					</TOTAL_TAX>
+					<TOTAL_AMOUNT>-232.71</TOTAL_AMOUNT>
+				</IL_INVOICE_LIST_ITEM>
+				<IL_INVOICE_LIST_ITEM>
+					<INVOICE_REFERENCE>
+						<INVOICE_ID>3923021</INVOICE_ID>
+						<LINE_ITEM_ID>1</LINE_ITEM_ID>
+						<INVOICE_DATE>2008-08-05</INVOICE_DATE>
+						<POST_DATE>2008-08-06</POST_DATE>
+						<REASON_FOR_TRANSFER>cash withdrawal</REASON_FOR_TRANSFER>
+					</INVOICE_REFERENCE>
+					<NET_VALUE_GOODS>-100.00</NET_VALUE_GOODS>
+					<TOTAL_TAX>
+						<TAX_DETAILS_FIX>
+							<TAX_AMOUNT>+0.0</TAX_AMOUNT>
+						</TAX_DETAILS_FIX>
+					</TOTAL_TAX>
+					<TOTAL_AMOUNT>-100.00</TOTAL_AMOUNT>
+					<REWARDS>
+						<REWARDS_POINTS>+100</REWARDS_POINTS>
+						<REWARDS_SYSTEM>Cash-Withdrawal-Rewards</REWARDS_SYSTEM>
+					</REWARDS>
+				</IL_INVOICE_LIST_ITEM>
+			</IL_INVOICE_LIST>
+			<TOTAL_ITEM_NUM>2</TOTAL_ITEM_NUM>
+			<NET_VALUE_GOODS>-295.31</NET_VALUE_GOODS>
+			<TOTAL_AMOUNT>-332.71</TOTAL_AMOUNT>
+			<TOTAL_TAX>
+				<TAX_DETAILS_FIX>
+					<bmecat:TAX_TYPE>vat</bmecat:TAX_TYPE>
+					<bmecat:TAX>0.19</bmecat:TAX>
+					<TAX_AMOUNT>-37.40</TAX_AMOUNT>
+				</TAX_DETAILS_FIX>
+			</TOTAL_TAX>
+			<DIRECT_DEBIT>+332.71</DIRECT_DEBIT>
+			<CLOSING_BALANCE>+0.0</CLOSING_BALANCE>
+			<CREDIT_AVAILABLE>+1000.00</CREDIT_AVAILABLE>
+			<REWARDS>
+				<REWARDS_POINTS>+100</REWARDS_POINTS>
+				<REWARDS_SUMMARY>+1295</REWARDS_SUMMARY>
+				<REWARDS_SYSTEM>Cash-Withdrawal-Rewards</REWARDS_SYSTEM>
+				<REWARDS_DESCR>every EURO of cash withdrawals leads to one point</REWARDS_DESCR>
+			</REWARDS>
+		</INVOICELIST_ITEM>
+	</INVOICELIST_ITEM_LIST>
+	<INVOICELIST_SUMMARY>
+			<TOTAL_ITEM_NUM>2</TOTAL_ITEM_NUM>
+			<NET_VALUE_GOODS>-295.31</NET_VALUE_GOODS>
+			<TOTAL_AMOUNT>-332.71</TOTAL_AMOUNT>
+			<TOTAL_TAX>
+				<TAX_DETAILS_FIX>
+					<bmecat:TAX_TYPE>vat</bmecat:TAX_TYPE>
+					<bmecat:TAX>0.19</bmecat:TAX>
+					<TAX_AMOUNT>-37.40</TAX_AMOUNT>
+				</TAX_DETAILS_FIX>
+			</TOTAL_TAX>
+	</INVOICELIST_SUMMARY>
+</INVOICELIST>

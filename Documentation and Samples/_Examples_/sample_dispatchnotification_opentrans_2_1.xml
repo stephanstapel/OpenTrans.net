@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<DISPATCHNOTIFICATION version="2.1" xmlns="http://www.opentrans.org/XMLSchema/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opentrans.org/XMLSchema/2.1 opentrans_2_1.xsd" xmlns:bmecat="http://www.bmecat.org/bmecat/2005" xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+	<DISPATCHNOTIFICATION_HEADER>
+		<CONTROL_INFO>
+			<GENERATION_DATE>2009-05-13T06:20:00+01:00</GENERATION_DATE>
+		</CONTROL_INFO>
+		<DISPATCHNOTIFICATION_INFO>
+			<DISPATCHNOTIFICATION_ID>LA86</DISPATCHNOTIFICATION_ID>
+			<DISPATCHNOTIFICATION_DATE>2009-05-13T09:00:00+01:00</DISPATCHNOTIFICATION_DATE>
+			<DELIVERY_DATE>
+				<DELIVERY_START_DATE>2009-05-11T10:00:00+01:00</DELIVERY_START_DATE>
+				<DELIVERY_END_DATE>2009-05-25T10:00:00+01:00</DELIVERY_END_DATE>
+			</DELIVERY_DATE>
+			<PARTIES>
+				<PARTY>
+					<bmecat:PARTY_ID type="supplier_specific">108304</bmecat:PARTY_ID>
+					<PARTY_ROLE>supplier</PARTY_ROLE>
+					<ADDRESS>
+						<bmecat:NAME>Power Supply Corp.</bmecat:NAME>
+						<CONTACT_DETAILS>
+							<bmecat:CONTACT_ID>MA02</bmecat:CONTACT_ID>
+							<bmecat:CONTACT_NAME>Mustermann</bmecat:CONTACT_NAME>
+							<bmecat:FIRST_NAME>Max</bmecat:FIRST_NAME>
+							<bmecat:ACADEMIC_TITLE>Phd.</bmecat:ACADEMIC_TITLE>
+						</CONTACT_DETAILS>
+						<bmecat:STATE>Sachsen Anhalt</bmecat:STATE>
+						<bmecat:COUNTRY>Germany</bmecat:COUNTRY>
+						<bmecat:COUNTRY_CODED>DE</bmecat:COUNTRY_CODED>
+						<bmecat:PHONE>+49 345 WE SELL</bmecat:PHONE>
+						<bmecat:FAX>+49 555 77 88 99</bmecat:FAX>
+						<bmecat:EMAIL>power@supply.com</bmecat:EMAIL>
+						<bmecat:URL>www.powersupplycorp.com</bmecat:URL>
+					</ADDRESS>
+					<ACCOUNT>
+						<HOLDER>Power Supply Corp.</HOLDER>
+						<BANK_ACCOUNT type="iban">6594834873</BANK_ACCOUNT>
+						<BANK_CODE type="bic">1002003040</BANK_CODE>
+						<BANK_NAME>Good Bank</BANK_NAME>
+						<BANK_COUNTRY>DE</BANK_COUNTRY>
+					</ACCOUNT>
+				</PARTY>
+				<PARTY>
+					<bmecat:PARTY_ID type="supplier_specific">968314</bmecat:PARTY_ID>
+					<PARTY_ROLE>customer</PARTY_ROLE>
+					<ADDRESS>
+						<bmecat:NAME>Customer Corp..</bmecat:NAME>
+						<CONTACT_DETAILS>
+							<bmecat:CONTACT_ID>GüntherD</bmecat:CONTACT_ID>
+							<bmecat:CONTACT_NAME>Doe</bmecat:CONTACT_NAME>
+							<bmecat:FIRST_NAME>Günther</bmecat:FIRST_NAME>
+						</CONTACT_DETAILS>
+						<bmecat:STATE>Hamburg</bmecat:STATE>
+						<bmecat:COUNTRY>Germany</bmecat:COUNTRY>
+						<bmecat:COUNTRY_CODED>DE</bmecat:COUNTRY_CODED>
+					</ADDRESS>
+				</PARTY>
+				<PARTY>
+					<bmecat:PARTY_ID type="supplier_specific">980301</bmecat:PARTY_ID>
+					<PARTY_ROLE>deliverer</PARTY_ROLE>
+					<ADDRESS>
+						<CONTACT_DETAILS>
+							<bmecat:CONTACT_ID>1</bmecat:CONTACT_ID>
+							<bmecat:CONTACT_NAME>Transportation Services Inc.</bmecat:CONTACT_NAME>
+							<bmecat:PHONE>+49 711 000 000</bmecat:PHONE>
+						</CONTACT_DETAILS>
+						<bmecat:STREET>incstreet 102</bmecat:STREET>
+						<bmecat:ZIP>70199</bmecat:ZIP>
+						<bmecat:CITY>Stuttgart</bmecat:CITY>
+						<bmecat:STATE>Baden Württemberg</bmecat:STATE>
+					</ADDRESS>
+				</PARTY>
+			</PARTIES>
+			<bmecat:SUPPLIER_IDREF>108304</bmecat:SUPPLIER_IDREF>
+			<bmecat:BUYER_IDREF>968314</bmecat:BUYER_IDREF>
+			<SHIPMENT_PARTIES_REFERENCE>
+				<DELIVERY_IDREF>968314</DELIVERY_IDREF>
+				<DELIVERER_IDREF>980301</DELIVERER_IDREF>
+			</SHIPMENT_PARTIES_REFERENCE>
+			<SHIPMENT_ID>PACK-04943</SHIPMENT_ID>
+			<TRACKING_TRACING_URL>http://trace.your.package.com</TRACKING_TRACING_URL>
+		</DISPATCHNOTIFICATION_INFO>
+	</DISPATCHNOTIFICATION_HEADER>
+	
+	<DISPATCHNOTIFICATION_ITEM_LIST>
+		<DISPATCHNOTIFICATION_ITEM>
+			<LINE_ITEM_ID>P001</LINE_ITEM_ID>
+			<PRODUCT_ID>
+				<bmecat:SUPPLIER_PID>SG8</bmecat:SUPPLIER_PID>
+				<bmecat:DESCRIPTION_SHORT>screws</bmecat:DESCRIPTION_SHORT>
+			</PRODUCT_ID>
+			<QUANTITY>4000</QUANTITY>
+			<bmecat:ORDER_UNIT>C62</bmecat:ORDER_UNIT>
+			<PARTIAL_DELIVERY_LIST>
+				<PARTIAL_DELIVERY>
+					<QUANTITY>1000</QUANTITY>
+					<DELIVERY_DATE>
+						<DELIVERY_START_DATE>2009-05-11T10:00:00+01:00</DELIVERY_START_DATE>
+						<DELIVERY_END_DATE>2009-05-11T10:00:00+01:00</DELIVERY_END_DATE>
+					</DELIVERY_DATE>
+				</PARTIAL_DELIVERY>
+				<PARTIAL_DELIVERY>
+					<QUANTITY>2000</QUANTITY>
+					<DELIVERY_DATE>
+						<DELIVERY_START_DATE>2009-05-14T10:00:00+01:00</DELIVERY_START_DATE>
+						<DELIVERY_END_DATE>2009-05-14T10:00:00+01:00</DELIVERY_END_DATE>
+					</DELIVERY_DATE>
+				</PARTIAL_DELIVERY>
+				<PARTIAL_DELIVERY>
+					<QUANTITY>1000</QUANTITY>
+					<DELIVERY_DATE>
+						<DELIVERY_START_DATE>2009-05-25T10:00:00+01:00</DELIVERY_START_DATE>
+						<DELIVERY_END_DATE>2009-05-25T10:00:00+01:00</DELIVERY_END_DATE>
+					</DELIVERY_DATE>
+				</PARTIAL_DELIVERY>
+			</PARTIAL_DELIVERY_LIST>
+			<ORDER_REFERENCE>
+				<ORDER_ID>ORD112</ORDER_ID>
+				<LINE_ITEM_ID>P697</LINE_ITEM_ID>
+			</ORDER_REFERENCE>
+			<SHIPMENT_PARTIES_REFERENCE>
+				<DELIVERY_IDREF>968314</DELIVERY_IDREF>
+			</SHIPMENT_PARTIES_REFERENCE>
+		</DISPATCHNOTIFICATION_ITEM>
+	</DISPATCHNOTIFICATION_ITEM_LIST>
+	
+	<DISPATCHNOTIFICATION_SUMMARY>
+		<TOTAL_ITEM_NUM>1</TOTAL_ITEM_NUM>
+	</DISPATCHNOTIFICATION_SUMMARY>
+</DISPATCHNOTIFICATION>

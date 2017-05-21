@@ -1,0 +1,3000 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ 
+  Name:             opentrans_2_1.xsd
+  Fileversion:      2.1
+  Unchanged since:  2.1
+  Date:             02.10.2009
+  Authors:
+       Volker Schmitz  (stz),  Universitaet Essen BLI
+       Oliver Kelkar   (olk),  ehem. Fraunhofer IAO Stuttgart (bis Version 2.0 Beta v0.8)
+       Nico Weiner (now), Fraunhofer IAO (seit Version 2.0)
+
+Fraunhofer IAO und Universität Duisburg-Essen BLI gewähren Ihnen hiermit das dauerhafte, nicht exklusive, gebührenfreie, weltweit geltende Recht und die Lizenz, die openTRANS®-Spezifikation zu verwenden und dieselbe unter Beachtung des in der Spezifikation angegebenen Copyrights einzusetzen, zu kopieren, zu veröffentlichen und zu verteilen. Fraunhofer IAO und Universität Duisburg-Essen BLI erklären sich weiterhin bereit, Ihnen gemäß urheberrechtlichen Schutzrechten eine gebührenfreie Lizenz zum Implementieren und Verwenden der in der Spezifikation enthaltenen openTRANS®-Tags und Schemarichtlinien zum Erstellen von Computerprogrammen nach diesen Richtlinien zu gewähren. Diese Lizenz wird unter der Bedingung Ihrer Bereitschaft erteilt keine geistigen Urheberrechte gegenüber Fraunhofer IAO und Universität Duisburg-Essen BLI und sonstigen Unternehmen für deren Implementierung geltend zu machen. Fraunhofer IAO und Universität Duisburg-Essen BLI behalten sich sämtliche weiteren Rechte an der Materie und dem Gegenstand der Spezifikation ausdrücklich vor. Fraunhofer IAO und Universität Duisburg-Essen BLI lehnen ausdrücklich jede Art von Gewährleistung für die Spezifikation ab, einschließlich von Gewährleistungen dahingehend, dass diese Spezifikation oder deren Implementierung keine Rechte Dritter verletzt. Wenn sie diese Spezifikation veröffentlichen, kopieren oder verteilen, muss sie mit dem Copyright-Hinweis versehen werden. Wenn Sie die Spezifikation hingegen abändern, darf der Name der abgeänderten Spezifikation keinenfalls den Begriff "openTRANS®" enthalten und der folgende Hinweis muß in der Änderung enthalten sein: "Teile dieser Spezifikation beruhen auf dem openTRANS®-Standard V2.1 (Copyright © 2000-2009 Fraunhofer IAO und Universität Duisburg-Essen BLI)".
+"openTRANS" ist ein eingetragenes Warenzeichen der Fraunhofer Gesellschaft e.V.
+Änderungen der in diesem Dokument enthaltenen Informationen ohne Ankündigung vorbehalten.
+
+  Copyright 2009, All Rights Reserved
+  Fraunhofer IAO Stuttgart, Universitaet Duisburg-Essen BLI
+  
+  openTRANS:
+  more infos and full specification: http://www.opentrans.org
+  e-mail contact: authors@opentrans.org
+
+
+-->
+<xsd:schema xmlns="http://www.opentrans.org/XMLSchema/2.1" xmlns:bmecat="http://www.bmecat.org/bmecat/2005" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsig="http://www.w3.org/2000/09/xmldsig#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentrans.org/XMLSchema/2.1" elementFormDefault="qualified">
+	<xsd:import namespace="http://www.bmecat.org/bmecat/2005" schemaLocation="bmecat_2005.xsd"/>
+	<xsd:import namespace="http://www.w3.org/2005/05/xmlmime" schemaLocation="xmlmime.xsd"/>
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:element name="OPENTRANS">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="RFQ"/>
+				<xsd:element ref="QUOTATION"/>
+				<xsd:element ref="ORDER"/>
+				<xsd:element ref="ORDERCHANGE"/>
+				<xsd:element ref="ORDERRESPONSE"/>
+				<xsd:element ref="DISPATCHNOTIFICATION"/>
+				<xsd:element ref="RECEIPTACKNOWLEDGEMENT"/>
+				<xsd:element ref="INVOICE"/>
+				<xsd:element ref="INVOICELIST"/>
+				<xsd:element ref="REMITTANCEADVICE"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:simpleType name="dtADJUSTMENT_REASON_CODES">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d|[1-7]\d|(\p{N}|\p{L}){3}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="dtBOOLEAN">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[Ff][Aa][Ll][Ss][Ee]|[Tt][Rr][Uu][Ee]"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="dtLANG">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="aar"/>
+			<xsd:enumeration value="abk"/>
+			<xsd:enumeration value="ace"/>
+			<xsd:enumeration value="ach"/>
+			<xsd:enumeration value="ada"/>
+			<xsd:enumeration value="afa"/>
+			<xsd:enumeration value="afh"/>
+			<xsd:enumeration value="afr"/>
+			<xsd:enumeration value="aka"/>
+			<xsd:enumeration value="akk"/>
+			<xsd:enumeration value="alb"/>
+			<xsd:enumeration value="ale"/>
+			<xsd:enumeration value="alg"/>
+			<xsd:enumeration value="amh"/>
+			<xsd:enumeration value="ang"/>
+			<xsd:enumeration value="apa"/>
+			<xsd:enumeration value="ara"/>
+			<xsd:enumeration value="arc"/>
+			<xsd:enumeration value="arm"/>
+			<xsd:enumeration value="arn"/>
+			<xsd:enumeration value="arp"/>
+			<xsd:enumeration value="art"/>
+			<xsd:enumeration value="arw"/>
+			<xsd:enumeration value="asm"/>
+			<xsd:enumeration value="ath"/>
+			<xsd:enumeration value="aus"/>
+			<xsd:enumeration value="ava"/>
+			<xsd:enumeration value="ave"/>
+			<xsd:enumeration value="awa"/>
+			<xsd:enumeration value="aym"/>
+			<xsd:enumeration value="aze"/>
+			<xsd:enumeration value="bad"/>
+			<xsd:enumeration value="bai"/>
+			<xsd:enumeration value="bak"/>
+			<xsd:enumeration value="bal"/>
+			<xsd:enumeration value="bam"/>
+			<xsd:enumeration value="ban"/>
+			<xsd:enumeration value="baq"/>
+			<xsd:enumeration value="bas"/>
+			<xsd:enumeration value="bat"/>
+			<xsd:enumeration value="bej"/>
+			<xsd:enumeration value="bel"/>
+			<xsd:enumeration value="bem"/>
+			<xsd:enumeration value="ben"/>
+			<xsd:enumeration value="ber"/>
+			<xsd:enumeration value="bho"/>
+			<xsd:enumeration value="bih"/>
+			<xsd:enumeration value="bik"/>
+			<xsd:enumeration value="bin"/>
+			<xsd:enumeration value="bis"/>
+			<xsd:enumeration value="bla"/>
+			<xsd:enumeration value="bnt"/>
+			<xsd:enumeration value="bod"/>
+			<xsd:enumeration value="bos"/>
+			<xsd:enumeration value="bra"/>
+			<xsd:enumeration value="bre"/>
+			<xsd:enumeration value="btk"/>
+			<xsd:enumeration value="bua"/>
+			<xsd:enumeration value="bug"/>
+			<xsd:enumeration value="bul"/>
+			<xsd:enumeration value="bur"/>
+			<xsd:enumeration value="cad"/>
+			<xsd:enumeration value="cai"/>
+			<xsd:enumeration value="car"/>
+			<xsd:enumeration value="cat"/>
+			<xsd:enumeration value="cau"/>
+			<xsd:enumeration value="ceb"/>
+			<xsd:enumeration value="cel"/>
+			<xsd:enumeration value="ces"/>
+			<xsd:enumeration value="cha"/>
+			<xsd:enumeration value="chb"/>
+			<xsd:enumeration value="che"/>
+			<xsd:enumeration value="chg"/>
+			<xsd:enumeration value="chi"/>
+			<xsd:enumeration value="chk"/>
+			<xsd:enumeration value="chm"/>
+			<xsd:enumeration value="chn"/>
+			<xsd:enumeration value="cho"/>
+			<xsd:enumeration value="chp"/>
+			<xsd:enumeration value="chr"/>
+			<xsd:enumeration value="chu"/>
+			<xsd:enumeration value="chv"/>
+			<xsd:enumeration value="chy"/>
+			<xsd:enumeration value="cmc"/>
+			<xsd:enumeration value="cop"/>
+			<xsd:enumeration value="cor"/>
+			<xsd:enumeration value="cos"/>
+			<xsd:enumeration value="cpe"/>
+			<xsd:enumeration value="cpf"/>
+			<xsd:enumeration value="cpp"/>
+			<xsd:enumeration value="cre"/>
+			<xsd:enumeration value="crp"/>
+			<xsd:enumeration value="cus"/>
+			<xsd:enumeration value="cym"/>
+			<xsd:enumeration value="cze"/>
+			<xsd:enumeration value="dak"/>
+			<xsd:enumeration value="dan"/>
+			<xsd:enumeration value="day"/>
+			<xsd:enumeration value="del"/>
+			<xsd:enumeration value="den"/>
+			<xsd:enumeration value="deu"/>
+			<xsd:enumeration value="dgr"/>
+			<xsd:enumeration value="din"/>
+			<xsd:enumeration value="div"/>
+			<xsd:enumeration value="doi"/>
+			<xsd:enumeration value="dra"/>
+			<xsd:enumeration value="dua"/>
+			<xsd:enumeration value="dum"/>
+			<xsd:enumeration value="dut"/>
+			<xsd:enumeration value="dyu"/>
+			<xsd:enumeration value="dzo"/>
+			<xsd:enumeration value="efi"/>
+			<xsd:enumeration value="egy"/>
+			<xsd:enumeration value="eka"/>
+			<xsd:enumeration value="ell"/>
+			<xsd:enumeration value="elx"/>
+			<xsd:enumeration value="eng"/>
+			<xsd:enumeration value="enm"/>
+			<xsd:enumeration value="epo"/>
+			<xsd:enumeration value="est"/>
+			<xsd:enumeration value="eus"/>
+			<xsd:enumeration value="ewe"/>
+			<xsd:enumeration value="ewo"/>
+			<xsd:enumeration value="fan"/>
+			<xsd:enumeration value="fao"/>
+			<xsd:enumeration value="fas"/>
+			<xsd:enumeration value="fat"/>
+			<xsd:enumeration value="fij"/>
+			<xsd:enumeration value="fin"/>
+			<xsd:enumeration value="fiu"/>
+			<xsd:enumeration value="fon"/>
+			<xsd:enumeration value="fra"/>
+			<xsd:enumeration value="fre"/>
+			<xsd:enumeration value="frm"/>
+			<xsd:enumeration value="fro"/>
+			<xsd:enumeration value="fry"/>
+			<xsd:enumeration value="ful"/>
+			<xsd:enumeration value="fur"/>
+			<xsd:enumeration value="gaa"/>
+			<xsd:enumeration value="gay"/>
+			<xsd:enumeration value="gba"/>
+			<xsd:enumeration value="gem"/>
+			<xsd:enumeration value="geo"/>
+			<xsd:enumeration value="ger"/>
+			<xsd:enumeration value="gez"/>
+			<xsd:enumeration value="gil"/>
+			<xsd:enumeration value="gla"/>
+			<xsd:enumeration value="gle"/>
+			<xsd:enumeration value="glg"/>
+			<xsd:enumeration value="glv"/>
+			<xsd:enumeration value="gmh"/>
+			<xsd:enumeration value="goh"/>
+			<xsd:enumeration value="gon"/>
+			<xsd:enumeration value="gor"/>
+			<xsd:enumeration value="got"/>
+			<xsd:enumeration value="grb"/>
+			<xsd:enumeration value="grc"/>
+			<xsd:enumeration value="gre"/>
+			<xsd:enumeration value="grn"/>
+			<xsd:enumeration value="guj"/>
+			<xsd:enumeration value="gwi"/>
+			<xsd:enumeration value="hai"/>
+			<xsd:enumeration value="hau"/>
+			<xsd:enumeration value="haw"/>
+			<xsd:enumeration value="heb"/>
+			<xsd:enumeration value="her"/>
+			<xsd:enumeration value="hil"/>
+			<xsd:enumeration value="him"/>
+			<xsd:enumeration value="hin"/>
+			<xsd:enumeration value="hit"/>
+			<xsd:enumeration value="hmn"/>
+			<xsd:enumeration value="hmo"/>
+			<xsd:enumeration value="hrv"/>
+			<xsd:enumeration value="hun"/>
+			<xsd:enumeration value="hup"/>
+			<xsd:enumeration value="hye"/>
+			<xsd:enumeration value="iba"/>
+			<xsd:enumeration value="ibo"/>
+			<xsd:enumeration value="ice"/>
+			<xsd:enumeration value="ijo"/>
+			<xsd:enumeration value="iku"/>
+			<xsd:enumeration value="ile"/>
+			<xsd:enumeration value="ilo"/>
+			<xsd:enumeration value="ina"/>
+			<xsd:enumeration value="inc"/>
+			<xsd:enumeration value="ind"/>
+			<xsd:enumeration value="ine"/>
+			<xsd:enumeration value="ipk"/>
+			<xsd:enumeration value="ira"/>
+			<xsd:enumeration value="iro"/>
+			<xsd:enumeration value="isl"/>
+			<xsd:enumeration value="ita"/>
+			<xsd:enumeration value="jav"/>
+			<xsd:enumeration value="jpn"/>
+			<xsd:enumeration value="jpr"/>
+			<xsd:enumeration value="jrb"/>
+			<xsd:enumeration value="kaa"/>
+			<xsd:enumeration value="kab"/>
+			<xsd:enumeration value="kac"/>
+			<xsd:enumeration value="kal"/>
+			<xsd:enumeration value="kam"/>
+			<xsd:enumeration value="kan"/>
+			<xsd:enumeration value="kar"/>
+			<xsd:enumeration value="kas"/>
+			<xsd:enumeration value="kat"/>
+			<xsd:enumeration value="kau"/>
+			<xsd:enumeration value="kaw"/>
+			<xsd:enumeration value="kaz"/>
+			<xsd:enumeration value="kha"/>
+			<xsd:enumeration value="khi"/>
+			<xsd:enumeration value="khm"/>
+			<xsd:enumeration value="kho"/>
+			<xsd:enumeration value="kik"/>
+			<xsd:enumeration value="kin"/>
+			<xsd:enumeration value="kir"/>
+			<xsd:enumeration value="kmb"/>
+			<xsd:enumeration value="kok"/>
+			<xsd:enumeration value="kom"/>
+			<xsd:enumeration value="kon"/>
+			<xsd:enumeration value="kor"/>
+			<xsd:enumeration value="kos"/>
+			<xsd:enumeration value="kpe"/>
+			<xsd:enumeration value="kro"/>
+			<xsd:enumeration value="kru"/>
+			<xsd:enumeration value="kua"/>
+			<xsd:enumeration value="kum"/>
+			<xsd:enumeration value="kur"/>
+			<xsd:enumeration value="kut"/>
+			<xsd:enumeration value="lad"/>
+			<xsd:enumeration value="lah"/>
+			<xsd:enumeration value="lam"/>
+			<xsd:enumeration value="lao"/>
+			<xsd:enumeration value="lat"/>
+			<xsd:enumeration value="lav"/>
+			<xsd:enumeration value="lez"/>
+			<xsd:enumeration value="lin"/>
+			<xsd:enumeration value="lit"/>
+			<xsd:enumeration value="lol"/>
+			<xsd:enumeration value="loz"/>
+			<xsd:enumeration value="ltz"/>
+			<xsd:enumeration value="lua"/>
+			<xsd:enumeration value="lub"/>
+			<xsd:enumeration value="lug"/>
+			<xsd:enumeration value="lui"/>
+			<xsd:enumeration value="lun"/>
+			<xsd:enumeration value="luo"/>
+			<xsd:enumeration value="lus"/>
+			<xsd:enumeration value="mac"/>
+			<xsd:enumeration value="mad"/>
+			<xsd:enumeration value="mag"/>
+			<xsd:enumeration value="mah"/>
+			<xsd:enumeration value="mai"/>
+			<xsd:enumeration value="mak"/>
+			<xsd:enumeration value="mal"/>
+			<xsd:enumeration value="man"/>
+			<xsd:enumeration value="mao"/>
+			<xsd:enumeration value="map"/>
+			<xsd:enumeration value="mar"/>
+			<xsd:enumeration value="mas"/>
+			<xsd:enumeration value="may"/>
+			<xsd:enumeration value="mdr"/>
+			<xsd:enumeration value="men"/>
+			<xsd:enumeration value="mga"/>
+			<xsd:enumeration value="mic"/>
+			<xsd:enumeration value="min"/>
+			<xsd:enumeration value="mis"/>
+			<xsd:enumeration value="mkd"/>
+			<xsd:enumeration value="mkh"/>
+			<xsd:enumeration value="mlg"/>
+			<xsd:enumeration value="mlt"/>
+			<xsd:enumeration value="mnc"/>
+			<xsd:enumeration value="mni"/>
+			<xsd:enumeration value="mno"/>
+			<xsd:enumeration value="moh"/>
+			<xsd:enumeration value="mol"/>
+			<xsd:enumeration value="mon"/>
+			<xsd:enumeration value="mos"/>
+			<xsd:enumeration value="mri"/>
+			<xsd:enumeration value="msa"/>
+			<xsd:enumeration value="mul"/>
+			<xsd:enumeration value="mun"/>
+			<xsd:enumeration value="mus"/>
+			<xsd:enumeration value="mwr"/>
+			<xsd:enumeration value="mya"/>
+			<xsd:enumeration value="myn"/>
+			<xsd:enumeration value="nah"/>
+			<xsd:enumeration value="nai"/>
+			<xsd:enumeration value="nau"/>
+			<xsd:enumeration value="nav"/>
+			<xsd:enumeration value="nbl"/>
+			<xsd:enumeration value="nde"/>
+			<xsd:enumeration value="ndo"/>
+			<xsd:enumeration value="nds"/>
+			<xsd:enumeration value="nep"/>
+			<xsd:enumeration value="new"/>
+			<xsd:enumeration value="nia"/>
+			<xsd:enumeration value="nic"/>
+			<xsd:enumeration value="niu"/>
+			<xsd:enumeration value="nld"/>
+			<xsd:enumeration value="nno"/>
+			<xsd:enumeration value="nob"/>
+			<xsd:enumeration value="non"/>
+			<xsd:enumeration value="nor"/>
+			<xsd:enumeration value="nso"/>
+			<xsd:enumeration value="nub"/>
+			<xsd:enumeration value="nya"/>
+			<xsd:enumeration value="nym"/>
+			<xsd:enumeration value="nyn"/>
+			<xsd:enumeration value="nyo"/>
+			<xsd:enumeration value="nzi"/>
+			<xsd:enumeration value="oci"/>
+			<xsd:enumeration value="oji"/>
+			<xsd:enumeration value="ori"/>
+			<xsd:enumeration value="orm"/>
+			<xsd:enumeration value="osa"/>
+			<xsd:enumeration value="oss"/>
+			<xsd:enumeration value="ota"/>
+			<xsd:enumeration value="oto"/>
+			<xsd:enumeration value="paa"/>
+			<xsd:enumeration value="pag"/>
+			<xsd:enumeration value="pal"/>
+			<xsd:enumeration value="pam"/>
+			<xsd:enumeration value="pan"/>
+			<xsd:enumeration value="pap"/>
+			<xsd:enumeration value="pau"/>
+			<xsd:enumeration value="peo"/>
+			<xsd:enumeration value="per"/>
+			<xsd:enumeration value="phi"/>
+			<xsd:enumeration value="phn"/>
+			<xsd:enumeration value="pli"/>
+			<xsd:enumeration value="pol"/>
+			<xsd:enumeration value="pon"/>
+			<xsd:enumeration value="por"/>
+			<xsd:enumeration value="pra"/>
+			<xsd:enumeration value="pro"/>
+			<xsd:enumeration value="pus"/>
+			<xsd:enumeration value="qaa"/>
+			<xsd:enumeration value="que"/>
+			<xsd:enumeration value="raj"/>
+			<xsd:enumeration value="rap"/>
+			<xsd:enumeration value="rar"/>
+			<xsd:enumeration value="roa"/>
+			<xsd:enumeration value="roh"/>
+			<xsd:enumeration value="rom"/>
+			<xsd:enumeration value="ron"/>
+			<xsd:enumeration value="rum"/>
+			<xsd:enumeration value="run"/>
+			<xsd:enumeration value="rus"/>
+			<xsd:enumeration value="sad"/>
+			<xsd:enumeration value="sag"/>
+			<xsd:enumeration value="sah"/>
+			<xsd:enumeration value="sai"/>
+			<xsd:enumeration value="sal"/>
+			<xsd:enumeration value="sam"/>
+			<xsd:enumeration value="san"/>
+			<xsd:enumeration value="sas"/>
+			<xsd:enumeration value="sat"/>
+			<xsd:enumeration value="scc"/>
+			<xsd:enumeration value="sco"/>
+			<xsd:enumeration value="scr"/>
+			<xsd:enumeration value="sel"/>
+			<xsd:enumeration value="sem"/>
+			<xsd:enumeration value="sga"/>
+			<xsd:enumeration value="sgn"/>
+			<xsd:enumeration value="shn"/>
+			<xsd:enumeration value="sid"/>
+			<xsd:enumeration value="sin"/>
+			<xsd:enumeration value="sio"/>
+			<xsd:enumeration value="sit"/>
+			<xsd:enumeration value="sla"/>
+			<xsd:enumeration value="slk"/>
+			<xsd:enumeration value="slo"/>
+			<xsd:enumeration value="slv"/>
+			<xsd:enumeration value="sme"/>
+			<xsd:enumeration value="smi"/>
+			<xsd:enumeration value="smo"/>
+			<xsd:enumeration value="sna"/>
+			<xsd:enumeration value="snd"/>
+			<xsd:enumeration value="snk"/>
+			<xsd:enumeration value="sog"/>
+			<xsd:enumeration value="som"/>
+			<xsd:enumeration value="son"/>
+			<xsd:enumeration value="sot"/>
+			<xsd:enumeration value="spa"/>
+			<xsd:enumeration value="sqi"/>
+			<xsd:enumeration value="srd"/>
+			<xsd:enumeration value="srp"/>
+			<xsd:enumeration value="srr"/>
+			<xsd:enumeration value="ssa"/>
+			<xsd:enumeration value="ssw"/>
+			<xsd:enumeration value="suk"/>
+			<xsd:enumeration value="sun"/>
+			<xsd:enumeration value="sus"/>
+			<xsd:enumeration value="sux"/>
+			<xsd:enumeration value="swa"/>
+			<xsd:enumeration value="swe"/>
+			<xsd:enumeration value="syr"/>
+			<xsd:enumeration value="tah"/>
+			<xsd:enumeration value="tai"/>
+			<xsd:enumeration value="tam"/>
+			<xsd:enumeration value="tat"/>
+			<xsd:enumeration value="tel"/>
+			<xsd:enumeration value="tem"/>
+			<xsd:enumeration value="ter"/>
+			<xsd:enumeration value="tet"/>
+			<xsd:enumeration value="tgk"/>
+			<xsd:enumeration value="tgl"/>
+			<xsd:enumeration value="tha"/>
+			<xsd:enumeration value="tib"/>
+			<xsd:enumeration value="tig"/>
+			<xsd:enumeration value="tir"/>
+			<xsd:enumeration value="tiv"/>
+			<xsd:enumeration value="tkl"/>
+			<xsd:enumeration value="tli"/>
+			<xsd:enumeration value="tmh"/>
+			<xsd:enumeration value="tog"/>
+			<xsd:enumeration value="ton"/>
+			<xsd:enumeration value="tpi"/>
+			<xsd:enumeration value="tsi"/>
+			<xsd:enumeration value="tsn"/>
+			<xsd:enumeration value="tso"/>
+			<xsd:enumeration value="tuk"/>
+			<xsd:enumeration value="tum"/>
+			<xsd:enumeration value="tur"/>
+			<xsd:enumeration value="tut"/>
+			<xsd:enumeration value="tvl"/>
+			<xsd:enumeration value="twi"/>
+			<xsd:enumeration value="tyv"/>
+			<xsd:enumeration value="uga"/>
+			<xsd:enumeration value="uig"/>
+			<xsd:enumeration value="ukr"/>
+			<xsd:enumeration value="umb"/>
+			<xsd:enumeration value="und"/>
+			<xsd:enumeration value="urd"/>
+			<xsd:enumeration value="uzb"/>
+			<xsd:enumeration value="vai"/>
+			<xsd:enumeration value="ven"/>
+			<xsd:enumeration value="vie"/>
+			<xsd:enumeration value="vol"/>
+			<xsd:enumeration value="vot"/>
+			<xsd:enumeration value="wak"/>
+			<xsd:enumeration value="wal"/>
+			<xsd:enumeration value="war"/>
+			<xsd:enumeration value="was"/>
+			<xsd:enumeration value="wel"/>
+			<xsd:enumeration value="wen"/>
+			<xsd:enumeration value="wol"/>
+			<xsd:enumeration value="xho"/>
+			<xsd:enumeration value="yao"/>
+			<xsd:enumeration value="yap"/>
+			<xsd:enumeration value="yid"/>
+			<xsd:enumeration value="yor"/>
+			<xsd:enumeration value="ypk"/>
+			<xsd:enumeration value="zap"/>
+			<xsd:enumeration value="zen"/>
+			<xsd:enumeration value="zha"/>
+			<xsd:enumeration value="zho"/>
+			<xsd:enumeration value="znd"/>
+			<xsd:enumeration value="zul"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="typeMLSTRING00050">
+		<xsd:simpleContent>
+			<xsd:restriction base="bmecat:dtMLSTRING">
+				<xsd:maxLength value="50"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="typeMLSTRING64000">
+		<xsd:simpleContent>
+			<xsd:restriction base="bmecat:dtMLSTRING">
+				<xsd:maxLength value="64000"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="typeOPENTRANS_version">
+		<xsd:restriction base="bmecat:dtSTRING">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="7"/>
+			<xsd:enumeration value="2.1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="typePAYMENT_TERM">
+		<xsd:restriction base="bmecat:dtSTRING">
+			<xsd:maxLength value="250"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="typePHONE">
+		<xsd:restriction base="bmecat:dtSTRING">
+			<xsd:maxLength value="50"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="typeSTRING00050">
+		<xsd:restriction base="bmecat:dtSTRING">
+			<xsd:maxLength value="50"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="typeSTRING00100">
+		<xsd:restriction base="bmecat:dtSTRING">
+			<xsd:maxLength value="100"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="udxHEADER">
+		<xsd:complexContent>
+			<xsd:extension base="xsd:anyType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="udxITEM">
+		<xsd:complexContent>
+			<xsd:extension base="xsd:anyType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="udxREPORT">
+		<xsd:complexContent>
+			<xsd:extension base="xsd:anyType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="ACCOUNT">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="HOLDER"/>
+				<xsd:element ref="BANK_ACCOUNT"/>
+				<xsd:element ref="BANK_CODE" minOccurs="0"/>
+				<xsd:element ref="BANK_NAME" minOccurs="0"/>
+				<xsd:element ref="BANK_COUNTRY" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ACCOUNTING_PERIOD">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ACCOUNTING_PERIOD_START_DATE"/>
+				<xsd:element ref="ACCOUNTING_PERIOD_END_DATE"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ACCOUNTING_PERIOD_END_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="ACCOUNTING_PERIOD_START_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="ADDRESS">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:NAME" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:NAME2" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:NAME3" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:DEPARTMENT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="CONTACT_DETAILS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:STREET" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:ZIP" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:BOXNO" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:ZIPBOX" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:CITY" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:STATE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:COUNTRY" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:COUNTRY_CODED" minOccurs="0"/>
+				<xsd:element ref="bmecat:VAT_ID" minOccurs="0"/>
+				<xsd:element ref="TAX_NUMBER" minOccurs="0"/>
+				<xsd:element ref="bmecat:PHONE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:FAX" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+					<xsd:element ref="bmecat:EMAIL"/>
+					<xsd:element ref="bmecat:PUBLIC_KEY" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+				<xsd:element ref="bmecat:URL" minOccurs="0"/>
+				<xsd:element ref="bmecat:ADDRESS_REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ADJUSTED_INVOICE_SUMMARY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="NET_VALUE_GOODS"/>
+				<xsd:element ref="TOTAL_TAX"/>
+				<xsd:element ref="TOTAL_AMOUNT"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ADJUSTED_SUMMARY_AMOUNT" type="bmecat:dtNUMBER"/>
+	<xsd:element name="ADJUSTMENT_REASON_CODE" type="dtADJUSTMENT_REASON_CODES"/>
+	<xsd:element name="ADJUSTMENT_REASON_DESCR" type="bmecat:dtMLSTRING"/>
+	<xsd:element name="AGREEMENT">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:AGREEMENT_ID"/>
+				<xsd:element ref="bmecat:AGREEMENT_LINE_ID" minOccurs="0"/>
+				<xsd:element ref="bmecat:AGREEMENT_START_DATE" minOccurs="0"/>
+				<xsd:element ref="bmecat:AGREEMENT_END_DATE"/>
+				<xsd:element ref="bmecat:SUPPLIER_IDREF" minOccurs="0"/>
+				<xsd:element ref="AGREEMENT_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+			</xsd:sequence>
+			<xsd:attribute name="type" use="optional">
+				<xsd:simpleType>
+					<xsd:restriction base="bmecat:dtSTRING">
+						<xsd:minLength value="1"/>
+						<xsd:maxLength value="50"/>
+						<xsd:pattern value="buyer|supplier|\w{1,50}"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute name="default" type="dtBOOLEAN" use="optional"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="AGREEMENT_DESCR">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:restriction base="bmecat:dtMLSTRING">
+					<xsd:maxLength value="250"/>
+					<xsd:minLength value="1"/>
+				</xsd:restriction>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ALLOW_OR_CHARGE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ALLOW_OR_CHARGE_SEQUENCE" minOccurs="0"/>
+				<xsd:element ref="ALLOW_OR_CHARGE_NAME" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ALLOW_OR_CHARGE_TYPE" minOccurs="0"/>
+				<xsd:element ref="ALLOW_OR_CHARGE_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ALLOW_OR_CHARGE_VALUE" minOccurs="0"/>
+				<xsd:element ref="ALLOW_OR_CHARGE_BASE" minOccurs="0"/>
+			</xsd:sequence>
+			<xsd:attribute name="type" use="required">
+				<xsd:simpleType>
+					<xsd:restriction base="bmecat:dtSTRING">
+						<xsd:enumeration value="allowance"/>
+						<xsd:enumeration value="surcharge"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ALLOW_OR_CHARGE_AMOUNT" type="bmecat:dtFLOAT"/>
+	<xsd:element name="ALLOW_OR_CHARGE_BASE" type="bmecat:dtFLOAT"/>
+	<xsd:element name="ALLOW_OR_CHARGE_DESCR">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:restriction base="bmecat:dtMLSTRING">
+					<xsd:minLength value="1"/>
+					<xsd:maxLength value="250"/>
+				</xsd:restriction>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ALLOW_OR_CHARGE_NAME">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:restriction base="bmecat:dtMLSTRING">
+					<xsd:minLength value="1"/>
+					<xsd:maxLength value="80"/>
+				</xsd:restriction>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ALLOW_OR_CHARGE_SEQUENCE" type="bmecat:dtCOUNT"/>
+	<xsd:element name="ALLOW_OR_CHARGE_TYPE">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="30"/>
+				<xsd:minLength value="1"/>
+				<xsd:pattern value="abroad|administration|bulk_goods|cash_discount|charge|cod|customs|customization|deposit|express|freight|handling|insurance|island|material|packing|partial_quantity|period_bonus|postage|project_bonus|overpackaging|rebate|recycling|small_order|special_work_times|toll|[\w\-\.]{1,30}"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ALLOW_OR_CHARGE_VALUE">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="AOC_PERCENTAGE_FACTOR"/>
+				<xsd:element ref="AOC_MONETARY_AMOUNT"/>
+				<xsd:element ref="AOC_ORDER_UNITS_COUNT"/>
+				<xsd:element ref="AOC_ADDITIONAL_ITEMS"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ALLOW_OR_CHARGES">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ALLOW_OR_CHARGE" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ALLOW_OR_CHARGES_FIX">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ALLOW_OR_CHARGE" maxOccurs="unbounded"/>
+				<xsd:element ref="ALLOW_OR_CHARGES_TOTAL_AMOUNT" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ALLOW_OR_CHARGES_TOTAL_AMOUNT" type="bmecat:dtFLOAT"/>
+	<xsd:element name="ALT_CUSTOMER_ORDER_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="250"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="AMOUNT_OVER_CREDIT_LIMIT" type="bmecat:dtNUMBER"/>
+	<xsd:element name="AOC_ADDITIONAL_ITEMS">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="250"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="AOC_MONETARY_AMOUNT" type="bmecat:dtFLOAT"/>
+	<xsd:element name="AOC_ORDER_UNITS_COUNT">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="bmecat:dtFLOAT">
+					<xsd:attribute name="type" use="required">
+						<xsd:simpleType>
+							<xsd:restriction base="bmecat:dtSTRING">
+								<xsd:minLength value="1"/>
+								<xsd:maxLength value="20"/>
+								<xsd:enumeration value="inclusive"/>
+								<xsd:enumeration value="exclusive"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="AOC_PERCENTAGE_FACTOR" type="bmecat:dtFLOAT"/>
+	<xsd:element name="BANK_ACCOUNT">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="typeSTRING00100">
+					<xsd:attribute name="type" use="optional">
+						<xsd:simpleType>
+							<xsd:restriction base="bmecat:dtSTRING">
+								<xsd:minLength value="1"/>
+								<xsd:maxLength value="20"/>
+								<xsd:pattern value="standard|iban|\w{1,20}"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="BANK_CODE">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="typeSTRING00050">
+					<xsd:attribute name="type" use="optional">
+						<xsd:simpleType>
+							<xsd:restriction base="bmecat:dtSTRING">
+								<xsd:minLength value="1"/>
+								<xsd:maxLength value="20"/>
+								<xsd:pattern value="bic|\w{1,20}"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="BANK_COUNTRY" type="bmecat:dtCOUNTRIES"/>
+	<xsd:element name="BANK_NAME">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="50"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="BUYER_PARTY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:PARTY"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="CARD">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="CARD_NUM"/>
+				<xsd:element ref="CARD_AUTH_CODE" minOccurs="0"/>
+				<xsd:element ref="CARD_REF_NUM" minOccurs="0"/>
+				<xsd:element ref="CARD_EXPIRATION_DATE"/>
+				<xsd:element ref="CARD_HOLDER_NAME"/>
+			</xsd:sequence>
+			<xsd:attribute name="type" use="required">
+				<xsd:simpleType>
+					<xsd:restriction base="bmecat:dtSTRING">
+						<xsd:minLength value="1"/>
+						<xsd:maxLength value="50"/>
+						<xsd:pattern value="MasterCard|VISA|AmericanExpress|DinersClub|JCB|Maestro|DiscoverCard|Transcard|DinaCard|ChinaUnionPay|\w{1,50}"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="CARD_AUTH_CODE">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="10"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="CARD_EXPIRATION_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="CARD_HOLDER_NAME">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="50"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="CARD_NUM">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="16"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="CARD_REF_NUM">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="50"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="CARD_TYPE">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="typeSTRING00100">
+					<xsd:attribute name="lang" type="dtLANG" use="optional"/>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="CASH" type="bmecat:dtBOOLEAN"/>
+	<xsd:element name="CATALOG_REFERENCE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:CATALOG_ID"/>
+				<xsd:element ref="bmecat:CATALOG_VERSION"/>
+				<xsd:element ref="bmecat:CATALOG_NAME" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="CENTRAL_REGULATION" type="bmecat:dtBOOLEAN" default="false"/>
+	<xsd:element name="CHECK" type="bmecat:dtBOOLEAN"/>
+	<xsd:element name="CLOSING_BALANCE" type="bmecat:dtNUMBER"/>
+	<xsd:element name="CONFIG_CODE_FIX">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="6000"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="CONTACT_DETAILS">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:CONTACT_ID" minOccurs="0"/>
+				<xsd:element ref="bmecat:CONTACT_NAME" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:FIRST_NAME" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:TITLE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:ACADEMIC_TITLE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="CONTACT_ROLE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:CONTACT_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:PHONE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:FAX" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:URL" minOccurs="0"/>
+				<xsd:element ref="bmecat:EMAILS" minOccurs="0"/>
+				<xsd:element ref="bmecat:AUTHENTIFICATION" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="CONTACT_ROLE">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="typeMLSTRING00050">
+					<xsd:attribute name="type" use="optional">
+						<xsd:simpleType>
+							<xsd:restriction base="bmecat:dtSTRING">
+								<xsd:minLength value="1"/>
+								<xsd:maxLength value="20"/>
+								<xsd:enumeration value="administrativ"/>
+								<xsd:enumeration value="commercial"/>
+								<xsd:enumeration value="document_issuer"/>
+								<xsd:enumeration value="special_treatment"/>
+								<xsd:enumeration value="technical"/>
+								<xsd:enumeration value="others"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="CONTROL_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="STOP_AUTOMATIC_PROCESSING" minOccurs="0"/>
+				<xsd:element ref="GENERATOR_INFO" minOccurs="0"/>
+				<xsd:element ref="GENERATION_DATE" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="CREDIT_LIMIT" type="bmecat:dtNUMBER"/>
+	<xsd:element name="CREDIT_AVAILABLE" type="bmecat:dtNUMBER"/>
+	<xsd:element name="CUSTOMER_IDREF" type="bmecat:typePARTY_ID"/>
+	<xsd:element name="CUSTOMER_ORDER_REFERENCE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ORDER_ID" minOccurs="0"/>
+				<xsd:element ref="LINE_ITEM_ID" minOccurs="0"/>
+				<xsd:element ref="ORDER_DATE" minOccurs="0"/>
+				<xsd:element ref="ORDER_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="CUSTOMER_IDREF" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DAYS" type="bmecat:dtCOUNT"/>
+	<xsd:element name="DEBIT" type="bmecat:dtBOOLEAN"/>
+	<xsd:element name="DELIVERER_IDREF" type="bmecat:typePARTY_ID"/>
+	<xsd:element name="DELIVERY_COMPLETED" type="bmecat:dtBOOLEAN"/>
+	<xsd:element name="DELIVERY_DATE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DELIVERY_START_DATE"/>
+				<xsd:element ref="DELIVERY_END_DATE"/>
+			</xsd:sequence>
+			<xsd:attribute name="type" use="optional" default="fixed">
+				<xsd:simpleType>
+					<xsd:restriction base="bmecat:dtSTRING">
+						<xsd:minLength value="1"/>
+						<xsd:maxLength value="20"/>
+						<xsd:enumeration value="optional"/>
+						<xsd:enumeration value="fixed"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DELIVERY_END_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="DELIVERY_IDREF" type="bmecat:typePARTY_ID"/>
+	<xsd:element name="DELIVERY_PARTY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:PARTY"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DELIVERY_REFERENCE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DELIVERYNOTE_ID" minOccurs="0"/>
+				<xsd:element ref="LINE_ITEM_ID" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_IDREF" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DELIVERY_START_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="DELIVERYNOTE_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="DELIVERYNOTE_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="250"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DIRECT_DEBIT" type="bmecat:dtNUMBER"/>
+	<xsd:element name="DISCOUNT_FACTOR" type="bmecat:dtFLOAT"/>
+	<xsd:element name="DISPATCHNOTIFICATION">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DISPATCHNOTIFICATION_HEADER"/>
+				<xsd:element ref="DISPATCHNOTIFICATION_ITEM_LIST"/>
+				<xsd:element ref="DISPATCHNOTIFICATION_SUMMARY"/>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="typeOPENTRANS_version" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DISPATCHNOTIFICATION_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="DISPATCHNOTIFICATION_HEADER">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="CONTROL_INFO" minOccurs="0"/>
+				<xsd:element ref="DISPATCHNOTIFICATION_INFO"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DISPATCHNOTIFICATION_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="250"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="DISPATCHNOTIFICATION_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DISPATCHNOTIFICATION_ID"/>
+				<xsd:element ref="DISPATCHNOTIFICATION_DATE" minOccurs="0"/>
+				<xsd:element ref="bmecat:LANGUAGE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:MIME_ROOT" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+				<xsd:element ref="PARTIES"/>
+				<xsd:element ref="bmecat:SUPPLIER_IDREF"/>
+				<xsd:element ref="bmecat:BUYER_IDREF" minOccurs="0"/>
+				<xsd:element ref="SHIPMENT_PARTIES_REFERENCE"/>
+				<xsd:element ref="SHIPMENT_ID" minOccurs="0"/>
+				<xsd:element ref="TRACKING_TRACING_URL" minOccurs="0"/>
+				<xsd:element ref="DOCEXCHANGE_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="LOGISTIC_DETAILS_INFO" minOccurs="0"/>
+				<xsd:element ref="bmecat:INTERNATIONAL_RESTRICTIONS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="HEADER_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DISPATCHNOTIFICATION_ITEM">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="LINE_ITEM_ID"/>
+				<xsd:element ref="PRODUCT_ID"/>
+				<xsd:element ref="PRODUCT_FEATURES" minOccurs="0"/>
+				<xsd:element ref="PRODUCT_COMPONENTS" minOccurs="0"/>
+				<xsd:element ref="QUANTITY"/>
+				<xsd:element ref="bmecat:ORDER_UNIT"/>
+				<xsd:element ref="PARTIAL_DELIVERY_LIST" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_COMPLETED" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:SUPPLIER_IDREF" minOccurs="0"/>
+				<xsd:element ref="ORDER_REFERENCE"/>
+				<xsd:element ref="SUPPLIER_ORDER_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="CUSTOMER_ORDER_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="SHIPMENT_PARTIES_REFERENCE"/>
+				<xsd:element ref="LOGISTIC_DETAILS" minOccurs="0"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ITEM_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DISPATCHNOTIFICATION_ITEM_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DISPATCHNOTIFICATION_ITEM" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DISPATCHNOTIFICATION_SUMMARY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TOTAL_ITEM_NUM"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DOCEXCHANGE_PARTIES_REFERENCE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DOCUMENT_ISSUER_IDREF" minOccurs="0"/>
+				<xsd:element ref="DOCUMENT_RECIPIENT_IDREF" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DOCUMENT_ISSUER_IDREF" type="bmecat:typePARTY_ID"/>
+	<xsd:element name="DOCUMENT_RECIPIENT_IDREF" type="bmecat:typePARTY_ID"/>
+	<xsd:element name="E_BILLING">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="INVOICE_ORIGINAL" minOccurs="0"/>
+				<xsd:element ref="SIGNATURE_AND_VERIFICATION" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="EXCHANGE_RATE" type="bmecat:dtNUMBER"/>
+	<xsd:element name="FEATURE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice>
+					<xsd:element ref="bmecat:FNAME" maxOccurs="unbounded"/>
+					<xsd:element ref="bmecat:FT_IDREF"/>
+					<xsd:element ref="bmecat:FTEMPLATE"/>
+				</xsd:choice>
+				<xsd:choice>
+					<xsd:element ref="bmecat:FVALUE" maxOccurs="unbounded"/>
+					<xsd:element ref="bmecat:VALUE_IDREF" maxOccurs="unbounded"/>
+				</xsd:choice>
+				<xsd:element ref="bmecat:FUNIT" minOccurs="0"/>
+				<xsd:element ref="bmecat:FORDER" minOccurs="0"/>
+				<xsd:element ref="bmecat:FDESCR" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:FVALUE_DETAILS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:FVALUE_TYPE" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="FILE_HASH_VALUE">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="typeSTRING00100">
+					<xsd:attribute name="type" use="required">
+						<xsd:simpleType>
+							<xsd:restriction base="bmecat:dtSTRING">
+								<xsd:minLength value="1"/>
+								<xsd:maxLength value="50"/>
+								<xsd:pattern value="SHA512|SHA384|SHA256|SHA1|MD5|RIPEMD128|RIPEMD160|RIPEMD256|RIPEMD320|Tiger192|Tiger160|Tiger128|HAVAL|PANAMA|WHIRLPOOL|LMHash|NTLM|\w{1,50}"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="lang" type="dtLANG" use="optional"/>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="FILE_NAME">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="250"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="FILE_SIZE">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtCOUNT">
+				<xsd:minInclusive value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="FINAL_DELIVERY_IDREF" type="bmecat:typePARTY_ID"/>
+	<xsd:element name="FINAL_DELIVERY_PARTY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:PARTY"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="FINANCE_CHARGE" type="bmecat:dtNUMBER"/>
+	<xsd:element name="FINANCE_CHARGE_DESCR">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:restriction base="bmecat:dtMLSTRING">
+					<xsd:minLength value="1"/>
+					<xsd:maxLength value="300"/>
+				</xsd:restriction>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="FOREIGN_AMOUNT" type="bmecat:dtNUMBER"/>
+	<xsd:element name="FOREIGN_CURRENCY" type="bmecat:dtCURRENCIES"/>
+	<xsd:element name="GENERATION_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="GENERATOR_INFO">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="250"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="HEADER_UDX" type="udxHEADER"/>
+	<xsd:element name="HOLDER">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="50"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="IL_INVOICE_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="IL_INVOICE_LIST_ITEM" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="IL_INVOICE_LIST_ITEM">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="INVOICE_REFERENCE"/>
+				<xsd:sequence>
+					<xsd:element ref="FOREIGN_CURRENCY" minOccurs="0"/>
+					<xsd:element ref="FOREIGN_AMOUNT" minOccurs="0"/>
+					<xsd:element ref="EXCHANGE_RATE" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:element ref="NET_VALUE_GOODS"/>
+				<xsd:element ref="NET_VALUE_EXTRA" minOccurs="0"/>
+				<xsd:element ref="ALLOW_OR_CHARGES_FIX" minOccurs="0"/>
+				<xsd:element ref="TOTAL_TAX"/>
+				<xsd:element ref="TOTAL_AMOUNT"/>
+				<xsd:element ref="REWARDS" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="INVOICE_HEADER"/>
+				<xsd:element ref="INVOICE_ITEM_LIST"/>
+				<xsd:element ref="INVOICE_SUMMARY"/>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="typeOPENTRANS_version" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE_ADJUSTMENT">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ADJUSTED_INVOICE_SUMMARY"/>
+				<xsd:element ref="ADJUSTMENT_REASON_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ADJUSTMENT_REASON_CODE" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE_CORRECTION">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="INVOICE_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="ADJUSTMENT_REASON_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ADJUSTMENT_REASON_CODE" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE_COVERAGE" default="single">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="20"/>
+				<xsd:enumeration value="single"/>
+				<xsd:enumeration value="collective"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="INVOICE_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="INVOICE_DESCR">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:restriction base="bmecat:dtMLSTRING">
+					<xsd:minLength value="1"/>
+					<xsd:maxLength value="300"/>
+				</xsd:restriction>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE_HEADER">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="CONTROL_INFO" minOccurs="0"/>
+				<xsd:element ref="INVOICE_INFO"/>
+				<xsd:element ref="ORDER_HISTORY" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="250"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="INVOICE_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="INVOICE_ID"/>
+				<xsd:element ref="INVOICE_DATE"/>
+				<xsd:element ref="REASON_FOR_TRANSFER" minOccurs="0"/>
+				<xsd:element ref="INVOICE_TYPE" minOccurs="0"/>
+				<xsd:element ref="INVOICE_COVERAGE" minOccurs="0"/>
+				<xsd:element ref="DELIVERYNOTE_ID" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_IDREF" minOccurs="0"/>
+				<xsd:element ref="bmecat:LANGUAGE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:MIME_ROOT" minOccurs="0"/>
+				<xsd:element ref="PARTIES"/>
+				<xsd:element ref="INVOICE_ISSUER_IDREF"/>
+				<xsd:element ref="INVOICE_RECIPIENT_IDREF"/>
+				<xsd:element ref="bmecat:BUYER_IDREF" minOccurs="0"/>
+				<xsd:element ref="bmecat:SUPPLIER_IDREF" minOccurs="0"/>
+				<xsd:element ref="PAYER_IDREF" minOccurs="0"/>
+				<xsd:element ref="REMITTEE_IDREF" minOccurs="0"/>
+				<xsd:element ref="DOCEXCHANGE_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:CURRENCY"/>
+				<xsd:element ref="PAYMENT" minOccurs="0"/>
+				<xsd:element ref="TERMS_AND_CONDITIONS" minOccurs="0"/>
+				<xsd:element ref="bmecat:ACCOUNTING_INFO" minOccurs="0"/>
+				<xsd:element ref="E_BILLING" minOccurs="0"/>
+				<xsd:element ref="LOGISTIC_DETAILS_INFO" minOccurs="0"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="HEADER_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE_ISSUER_IDREF" type="bmecat:typePARTY_ID"/>
+	<xsd:element name="INVOICE_ITEM">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="LINE_ITEM_ID"/>
+				<xsd:element ref="PRODUCT_ID"/>
+				<xsd:element ref="PRODUCT_FEATURES" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="PRODUCT_COMPONENTS" minOccurs="0"/>
+				<xsd:element ref="QUANTITY"/>
+				<xsd:element ref="bmecat:ORDER_UNIT"/>
+				<xsd:element ref="PRODUCT_PRICE_FIX"/>
+				<xsd:element ref="PRICE_LINE_AMOUNT"/>
+				<xsd:sequence>
+					<xsd:element ref="FOREIGN_CURRENCY" minOccurs="0"/>
+					<xsd:element ref="EXCHANGE_RATE" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:element ref="INVOICE_CORRECTION" minOccurs="0"/>
+				<xsd:element ref="ORDER_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="SUPPLIER_ORDER_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="CUSTOMER_ORDER_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="LOGISTIC_DETAILS" minOccurs="0"/>
+				<xsd:element ref="bmecat:ACCOUNTING_INFO" minOccurs="0"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ITEM_UDX" minOccurs="0"/>
+			</xsd:sequence>
+			<xsd:attribute name="type" use="optional">
+				<xsd:simpleType>
+					<xsd:restriction base="bmecat:dtSTRING">
+						<xsd:minLength value="1"/>
+						<xsd:maxLength value="20"/>
+						<xsd:enumeration value="order_item"/>
+						<xsd:enumeration value="extra_item"/>
+						<xsd:enumeration value="pledge_item"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE_ITEM_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="INVOICE_ITEM" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE_ORIGINAL">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="MIME"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE_PARTY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:PARTY"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE_RECIPIENT_IDREF" type="bmecat:typePARTY_ID"/>
+	<xsd:element name="INVOICE_REFERENCE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="INVOICE_ID"/>
+				<xsd:element ref="LINE_ITEM_ID" minOccurs="0"/>
+				<xsd:element ref="INVOICE_DATE" minOccurs="0"/>
+				<xsd:element ref="POST_DATE" minOccurs="0"/>
+				<xsd:element ref="REASON_FOR_TRANSFER" minOccurs="0"/>
+				<xsd:element ref="INVOICE_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="type" use="optional" default="invoice">
+				<xsd:simpleType>
+					<xsd:restriction base="bmecat:dtSTRING">
+						<xsd:minLength value="1"/>
+						<xsd:maxLength value="20"/>
+						<xsd:enumeration value="invoice"/>
+						<xsd:enumeration value="invoicelist"/>
+						<xsd:enumeration value="credit_memo"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE_SUMMARY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TOTAL_ITEM_NUM"/>
+				<xsd:element ref="NET_VALUE_GOODS"/>
+				<xsd:element ref="NET_VALUE_EXTRA" minOccurs="0"/>
+				<xsd:element ref="TOTAL_AMOUNT"/>
+				<xsd:element ref="ALLOW_OR_CHARGES_FIX" minOccurs="0"/>
+				<xsd:element ref="TOTAL_TAX"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICE_TYPE" default="invoice">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="20"/>
+				<xsd:enumeration value="advice_of_amendment"/>
+				<xsd:enumeration value="credit_memo"/>
+				<xsd:enumeration value="invoice"/>
+				<xsd:enumeration value="invoice_copy"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="INVOICELIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="INVOICELIST_HEADER"/>
+				<xsd:element ref="INVOICELIST_ITEM_LIST"/>
+				<xsd:element ref="INVOICELIST_SUMMARY"/>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="typeOPENTRANS_version" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICELIST_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="INVOICELIST_HEADER">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="CONTROL_INFO" minOccurs="0"/>
+				<xsd:element ref="INVOICELIST_INFO"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICELIST_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="250"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="INVOICELIST_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="INVOICELIST_ID"/>
+				<xsd:element ref="INVOICELIST_DATE"/>
+				<xsd:element ref="REASON_FOR_TRANSFER" minOccurs="0"/>
+				<xsd:element ref="INVOICELIST_TYPE" minOccurs="0"/>
+				<xsd:element ref="ACCOUNTING_PERIOD"/>
+				<xsd:element ref="bmecat:LANGUAGE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:MIME_ROOT" minOccurs="0"/>
+				<xsd:element ref="PARTIES"/>
+				<xsd:element ref="INVOICE_ISSUER_IDREF" minOccurs="0"/>
+				<xsd:element ref="INVOICE_RECIPIENT_IDREF" minOccurs="0"/>
+				<xsd:element ref="bmecat:BUYER_IDREF" minOccurs="0"/>
+				<xsd:element ref="bmecat:SUPPLIER_IDREF" minOccurs="0"/>
+				<xsd:element ref="PAYER_IDREF" minOccurs="0"/>
+				<xsd:element ref="REMITTEE_IDREF" minOccurs="0"/>
+				<xsd:element ref="DOCEXCHANGE_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:CURRENCY"/>
+				<xsd:element ref="PAYMENT" minOccurs="0"/>
+				<xsd:element ref="TERMS_AND_CONDITIONS" minOccurs="0"/>
+				<xsd:element ref="bmecat:ACCOUNTING_INFO" minOccurs="0"/>
+				<xsd:element ref="E_BILLING" minOccurs="0"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="HEADER_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICELIST_ITEM">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="LINE_ITEM_ID"/>
+				<xsd:element ref="INVOICE_RECIPIENT_IDREF" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_IDREF" minOccurs="0"/>
+				<xsd:element ref="INVOICE_ISSUER_IDREF" minOccurs="0"/>
+				<xsd:element ref="ACCOUNTING_PERIOD" minOccurs="0"/>
+				<xsd:element ref="CREDIT_LIMIT" minOccurs="0"/>
+				<xsd:element ref="OPENING_BALANCE" minOccurs="0"/>
+				<xsd:element ref="IL_INVOICE_LIST"/>
+				<xsd:element ref="TOTAL_ITEM_NUM" minOccurs="0"/>
+				<xsd:element ref="NET_VALUE_GOODS"/>
+				<xsd:element ref="NET_VALUE_EXTRA" minOccurs="0"/>
+				<xsd:element ref="ALLOW_OR_CHARGES_FIX" minOccurs="0"/>
+				<xsd:element ref="TOTAL_AMOUNT"/>
+				<xsd:element ref="TOTAL_TAX"/>
+				<xsd:element ref="DIRECT_DEBIT" minOccurs="0"/>
+				<xsd:element ref="CLOSING_BALANCE" minOccurs="0"/>
+				<xsd:element ref="AMOUNT_OVER_CREDIT_LIMIT" minOccurs="0"/>
+				<xsd:element ref="CREDIT_AVAILABLE" minOccurs="0"/>
+				<xsd:element ref="REWARDS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ITEM_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICELIST_ITEM_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="INVOICELIST_ITEM" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICELIST_SUMMARY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TOTAL_ITEM_NUM"/>
+				<xsd:element ref="NET_VALUE_GOODS"/>
+				<xsd:element ref="TOTAL_AMOUNT"/>
+				<xsd:element ref="TOTAL_TAX"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="INVOICELIST_TYPE" default="collective_invoice">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="25"/>
+				<xsd:enumeration value="collect_credit_memo"/>
+				<xsd:enumeration value="collective_invoice"/>
+				<xsd:enumeration value="credit_card_statement"/>
+				<xsd:enumeration value="invoice_list"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ITEM_UDX" type="udxITEM"/>
+	<xsd:element name="LINE_ITEM_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="50"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="LOGISTIC_DETAILS">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:CUSTOMS_TARIFF_NUMBER" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:STATISTICS_FACTOR" minOccurs="0"/>
+				<xsd:element ref="bmecat:COUNTRY_OF_ORIGIN" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:PRODUCT_DIMENSIONS" minOccurs="0"/>
+				<xsd:element ref="bmecat:SPECIAL_TREATMENT_CLASS" minOccurs="0"/>
+				<xsd:element ref="bmecat:TRANSPORT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="PACKAGE_INFO" minOccurs="0"/>
+				<xsd:element ref="bmecat:MEANS_OF_TRANSPORT" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="LOGISTIC_DETAILS_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:COUNTRY_OF_ORIGIN" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:TRANSPORT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="PACKAGE_INFO" minOccurs="0"/>
+				<xsd:element ref="bmecat:MEANS_OF_TRANSPORT" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="LOT_NUMBER">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="80"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="MANUFACTURER_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:MANUFACTURER_IDREF"/>
+				<xsd:element ref="bmecat:MANUFACTURER_PID"/>
+				<xsd:element ref="bmecat:MANUFACTURER_TYPE_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="MEANS_OF_TRANSPORT_IDREF">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="50"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="MIME">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:MIME_TYPE" minOccurs="0"/>
+				<xsd:choice>
+					<xsd:sequence>
+						<xsd:element ref="bmecat:MIME_SOURCE" maxOccurs="unbounded"/>
+						<xsd:element ref="FILE_HASH_VALUE" minOccurs="0" maxOccurs="unbounded"/>
+					</xsd:sequence>
+					<xsd:element ref="MIME_EMBEDDED" maxOccurs="unbounded"/>
+				</xsd:choice>
+				<xsd:element ref="bmecat:MIME_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:MIME_ALT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MIME_PURPOSE" minOccurs="0"/>
+				<xsd:element ref="bmecat:MIME_ORDER" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="MIME_DATA" type="xmime:base64Binary"/>
+	<xsd:element name="MIME_EMBEDDED">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="MIME_DATA"/>
+				<xsd:element ref="FILE_NAME" minOccurs="0"/>
+				<xsd:element ref="FILE_SIZE" minOccurs="0"/>
+			</xsd:sequence>
+			<xsd:attribute name="lang" type="dtLANG" use="optional"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="MIME_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="MIME" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="MIME_PURPOSE">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="20"/>
+				<xsd:enumeration value="conformity"/>
+				<xsd:enumeration value="data_sheet"/>
+				<xsd:enumeration value="detail"/>
+				<xsd:enumeration value="directions"/>
+				<xsd:enumeration value="fax_image"/>
+				<xsd:enumeration value="freehand_sketch"/>
+				<xsd:enumeration value="icon"/>
+				<xsd:enumeration value="logo"/>
+				<xsd:enumeration value="manual"/>
+				<xsd:enumeration value="mounting_guidelines"/>
+				<xsd:enumeration value="normal"/>
+				<xsd:enumeration value="original_document"/>
+				<xsd:enumeration value="repair_manual"/>
+				<xsd:enumeration value="safety_data_sheet"/>
+				<xsd:enumeration value="signatur_file"/>
+				<xsd:enumeration value="service_descr"/>
+				<xsd:enumeration value="service_record"/>
+				<xsd:enumeration value="thumbnail"/>
+				<xsd:enumeration value="verification_report"/>
+				<xsd:enumeration value="warranty"/>
+				<xsd:enumeration value="others"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="NET_VALUE_EXTRA" type="bmecat:dtNUMBER"/>
+	<xsd:element name="NET_VALUE_GOODS" type="bmecat:dtNUMBER"/>
+	<xsd:element name="OPENING_BALANCE" type="bmecat:dtNUMBER"/>
+	<xsd:element name="ORDER">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ORDER_HEADER"/>
+				<xsd:element ref="ORDER_ITEM_LIST"/>
+				<xsd:element ref="ORDER_SUMMARY"/>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="typeOPENTRANS_version" use="required"/>
+			<xsd:attribute name="type" use="required">
+				<xsd:simpleType>
+					<xsd:restriction base="bmecat:dtSTRING">
+						<xsd:minLength value="1"/>
+						<xsd:maxLength value="20"/>
+						<xsd:enumeration value="standard"/>
+						<xsd:enumeration value="express"/>
+						<xsd:enumeration value="release"/>
+						<xsd:enumeration value="consignment"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDER_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="ORDER_DESCR">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:restriction base="bmecat:dtMLSTRING">
+					<xsd:minLength value="1"/>
+					<xsd:maxLength value="300"/>
+				</xsd:restriction>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDER_HEADER">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="CONTROL_INFO" minOccurs="0"/>
+				<xsd:element ref="SOURCING_INFO" minOccurs="0"/>
+				<xsd:element ref="ORDER_INFO"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDER_HISTORY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ORDER_ID"/>
+				<xsd:element ref="ALT_CUSTOMER_ORDER_ID" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="SUPPLIER_ORDER_ID" minOccurs="0"/>
+				<xsd:element ref="ORDER_DATE" minOccurs="0"/>
+				<xsd:element ref="ORDER_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="DELIVERYNOTE_ID" minOccurs="0"/>
+				<xsd:element ref="DELIVERYNOTE_DATE" minOccurs="0"/>
+				<xsd:element ref="AGREEMENT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="CATALOG_REFERENCE" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDER_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="250"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="ORDER_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ORDER_ID"/>
+				<xsd:element ref="ORDER_DATE"/>
+				<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+				<xsd:element ref="bmecat:LANGUAGE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:MIME_ROOT" minOccurs="0"/>
+				<xsd:element ref="PARTIES"/>
+				<xsd:element ref="CUSTOMER_ORDER_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="ORDER_PARTIES_REFERENCE"/>
+				<xsd:element ref="DOCEXCHANGE_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:CURRENCY" minOccurs="0"/>
+				<xsd:element ref="PAYMENT" minOccurs="0"/>
+				<xsd:element ref="TERMS_AND_CONDITIONS" minOccurs="0"/>
+				<xsd:element ref="PARTIAL_SHIPMENT_ALLOWED" minOccurs="0"/>
+				<xsd:element ref="bmecat:TRANSPORT" minOccurs="0"/>
+				<xsd:element ref="bmecat:INTERNATIONAL_RESTRICTIONS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="HEADER_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDER_ITEM">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="LINE_ITEM_ID"/>
+				<xsd:element ref="PRODUCT_ID"/>
+				<xsd:element ref="PRODUCT_FEATURES" minOccurs="0"/>
+				<xsd:element ref="PRODUCT_COMPONENTS" minOccurs="0"/>
+				<xsd:element ref="QUANTITY"/>
+				<xsd:element ref="bmecat:ORDER_UNIT"/>
+				<xsd:element ref="PRODUCT_PRICE_FIX" minOccurs="0"/>
+				<xsd:element ref="PRICE_LINE_AMOUNT" minOccurs="0"/>
+				<xsd:choice minOccurs="0">
+					<xsd:sequence>
+						<xsd:element ref="PARTIAL_SHIPMENT_ALLOWED" minOccurs="0"/>
+						<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:element ref="PARTIAL_DELIVERY_LIST" minOccurs="0"/>
+				</xsd:choice>
+				<xsd:element ref="SOURCING_INFO" minOccurs="0"/>
+				<xsd:element ref="CUSTOMER_ORDER_REFERENCE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:ACCOUNTING_INFO" minOccurs="0"/>
+				<xsd:element ref="SHIPMENT_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:TRANSPORT" minOccurs="0"/>
+				<xsd:element ref="bmecat:INTERNATIONAL_RESTRICTIONS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:SPECIAL_TREATMENT_CLASS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ITEM_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDER_ITEM_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ORDER_ITEM" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDER_PARTIES">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="BUYER_PARTY"/>
+				<xsd:element ref="SUPPLIER_PARTY"/>
+				<xsd:element ref="INVOICE_PARTY" minOccurs="0"/>
+				<xsd:element ref="SHIPMENT_PARTIES" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDER_PARTIES_REFERENCE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:BUYER_IDREF"/>
+				<xsd:element ref="bmecat:SUPPLIER_IDREF"/>
+				<xsd:element ref="INVOICE_RECIPIENT_IDREF" minOccurs="0"/>
+				<xsd:element ref="SHIPMENT_PARTIES_REFERENCE" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDER_REFERENCE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ORDER_ID"/>
+				<xsd:element ref="LINE_ITEM_ID"/>
+				<xsd:element ref="ORDER_DATE" minOccurs="0"/>
+				<xsd:element ref="ORDER_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="AGREEMENT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="CATALOG_REFERENCE" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDER_SUMMARY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TOTAL_ITEM_NUM"/>
+				<xsd:element ref="TOTAL_AMOUNT" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDERCHANGE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ORDERCHANGE_HEADER"/>
+				<xsd:element ref="ORDERCHANGE_ITEM_LIST"/>
+				<xsd:element ref="ORDERCHANGE_SUMMARY"/>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="typeOPENTRANS_version" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDERCHANGE_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="ORDERCHANGE_HEADER">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="CONTROL_INFO" minOccurs="0"/>
+				<xsd:element ref="ORDERCHANGE_INFO"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDERCHANGE_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ORDER_ID"/>
+				<xsd:element ref="ORDERCHANGE_DATE"/>
+				<xsd:element ref="ORDER_DATE" minOccurs="0"/>
+				<xsd:element ref="ALT_CUSTOMER_ORDER_ID" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="SUPPLIER_ORDER_ID" minOccurs="0"/>
+				<xsd:element ref="ORDERCHANGE_SEQUENCE_ID"/>
+				<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+				<xsd:element ref="bmecat:LANGUAGE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:MIME_ROOT" minOccurs="0"/>
+				<xsd:element ref="PARTIES"/>
+				<xsd:element ref="ORDER_PARTIES_REFERENCE"/>
+				<xsd:element ref="DOCEXCHANGE_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:CURRENCY" minOccurs="0"/>
+				<xsd:element ref="PAYMENT" minOccurs="0"/>
+				<xsd:element ref="TERMS_AND_CONDITIONS" minOccurs="0"/>
+				<xsd:element ref="PARTIAL_SHIPMENT_ALLOWED" minOccurs="0"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="HEADER_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDERCHANGE_ITEM_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ORDER_ITEM" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDERCHANGE_SEQUENCE_ID" type="bmecat:dtCOUNT"/>
+	<xsd:element name="ORDERCHANGE_SUMMARY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TOTAL_ITEM_NUM"/>
+				<xsd:element ref="TOTAL_AMOUNT" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDERRESPONSE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ORDERRESPONSE_HEADER"/>
+				<xsd:element ref="ORDERRESPONSE_ITEM_LIST"/>
+				<xsd:element ref="ORDERRESPONSE_SUMMARY"/>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="typeOPENTRANS_version" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDERRESPONSE_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="ORDERRESPONSE_HEADER">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="CONTROL_INFO" minOccurs="0"/>
+				<xsd:element ref="ORDERRESPONSE_INFO"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDERRESPONSE_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ORDER_ID"/>
+				<xsd:element ref="ORDERRESPONSE_DATE"/>
+				<xsd:element ref="ORDER_DATE" minOccurs="0"/>
+				<xsd:element ref="ALT_CUSTOMER_ORDER_ID" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="SUPPLIER_ORDER_ID" minOccurs="0"/>
+				<xsd:element ref="ORDERCHANGE_SEQUENCE_ID" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+				<xsd:element ref="bmecat:LANGUAGE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:MIME_ROOT" minOccurs="0"/>
+				<xsd:element ref="PARTIES"/>
+				<xsd:element ref="ORDER_PARTIES_REFERENCE"/>
+				<xsd:element ref="DOCEXCHANGE_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:CURRENCY" minOccurs="0"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="HEADER_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDERRESPONSE_ITEM">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="LINE_ITEM_ID"/>
+				<xsd:element ref="PRODUCT_ID"/>
+				<xsd:element ref="PRODUCT_FEATURES" minOccurs="0"/>
+				<xsd:element ref="PRODUCT_COMPONENTS" minOccurs="0"/>
+				<xsd:element ref="QUANTITY"/>
+				<xsd:element ref="bmecat:ORDER_UNIT"/>
+				<xsd:element ref="PRODUCT_PRICE_FIX" minOccurs="0"/>
+				<xsd:element ref="PRICE_LINE_AMOUNT" minOccurs="0"/>
+				<xsd:choice minOccurs="0">
+					<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+					<xsd:element ref="PARTIAL_DELIVERY_LIST" minOccurs="0"/>
+				</xsd:choice>
+				<xsd:element ref="SHIPMENT_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:SPECIAL_TREATMENT_CLASS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ITEM_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDERRESPONSE_ITEM_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ORDERRESPONSE_ITEM" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORDERRESPONSE_SUMMARY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TOTAL_ITEM_NUM"/>
+				<xsd:element ref="TOTAL_AMOUNT" minOccurs="0"/>
+				<xsd:element ref="ALLOW_OR_CHARGES_FIX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORIGINAL_INVOICE_SUMMARY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="NET_VALUE_GOODS"/>
+				<xsd:element ref="TOTAL_TAX"/>
+				<xsd:element ref="TOTAL_AMOUNT"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ORIGINAL_SUMMARY_AMOUNT" type="bmecat:dtNUMBER"/>
+	<xsd:element name="PACKAGE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PACKAGE_ID" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="PACKAGE_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:PACKING_UNIT_CODE" minOccurs="0"/>
+				<xsd:element ref="bmecat:PACKING_UNIT_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="PACKAGE_ORDER_UNIT_QUANTITY" minOccurs="0"/>
+				<xsd:element ref="PACKAGE_QUANTITY" minOccurs="0"/>
+				<xsd:element ref="PACKAGE_DIMENSIONS" minOccurs="0"/>
+				<xsd:element ref="MEANS_OF_TRANSPORT_IDREF" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="SUB_PACKAGES" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PACKAGE_DESCR">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:restriction base="bmecat:dtMLSTRING">
+					<xsd:minLength value="1"/>
+					<xsd:maxLength value="300"/>
+				</xsd:restriction>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PACKAGE_DIMENSIONS">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:VOLUME" minOccurs="0"/>
+				<xsd:element ref="bmecat:WEIGHT" minOccurs="0"/>
+				<xsd:element ref="bmecat:LENGTH" minOccurs="0"/>
+				<xsd:element ref="bmecat:WIDTH" minOccurs="0"/>
+				<xsd:element ref="bmecat:DEPTH" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PACKAGE_ID">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="typeSTRING00050">
+					<xsd:attribute name="type" use="optional">
+						<xsd:simpleType>
+							<xsd:restriction base="bmecat:dtSTRING">
+								<xsd:minLength value="1"/>
+								<xsd:maxLength value="50"/>
+								<xsd:pattern value="buyer_specific|deliverer_specific|grai|mtv|nve|sscc|supplier_specific|\w{1,50}"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PACKAGE_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PACKAGE" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PACKAGE_ORDER_UNIT_QUANTITY">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtNUMBER">
+				<xsd:minInclusive value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="PACKAGE_QUANTITY">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtNUMBER">
+				<xsd:minInclusive value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="PACKAGE_TYPE">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="50"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="PARTIAL_DELIVERY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="QUANTITY"/>
+				<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PARTIAL_DELIVERY_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PARTIAL_DELIVERY" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PARTIAL_SHIPMENT" type="bmecat:dtBOOLEAN"/>
+	<xsd:element name="PARTIAL_SHIPMENT_ALLOWED" type="bmecat:dtBOOLEAN"/>
+	<xsd:element name="PARTIES">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PARTY" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PARTY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:PARTY_ID" maxOccurs="unbounded"/>
+				<xsd:element ref="PARTY_ROLE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ADDRESS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ACCOUNT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PARTY_ROLE">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="20"/>
+				<xsd:enumeration value="buyer"/>
+				<xsd:enumeration value="central_regulator"/>
+				<xsd:enumeration value="customer"/>
+				<xsd:enumeration value="deliverer"/>
+				<xsd:enumeration value="delivery"/>
+				<xsd:enumeration value="document_creator"/>
+				<xsd:enumeration value="final_delivery"/>
+				<xsd:enumeration value="intermediary"/>
+				<xsd:enumeration value="invoice_issuer"/>
+				<xsd:enumeration value="invoice_recipient"/>
+				<xsd:enumeration value="ipp_operator"/>
+				<xsd:enumeration value="manufacturer"/>
+				<xsd:enumeration value="marketplace"/>
+				<xsd:enumeration value="payer"/>
+				<xsd:enumeration value="remittee"/>
+				<xsd:enumeration value="standardization_body"/>
+				<xsd:enumeration value="supplier"/>
+				<xsd:enumeration value="trustedthirdparty"/>
+				<xsd:enumeration value="other"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="PAYER_IDREF" type="bmecat:typePARTY_ID"/>
+	<xsd:element name="PAYMENT">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice>
+					<xsd:element ref="CARD"/>
+					<xsd:element ref="ACCOUNT" maxOccurs="unbounded"/>
+					<xsd:element ref="DEBIT"/>
+					<xsd:element ref="CHECK"/>
+					<xsd:element ref="CASH"/>
+				</xsd:choice>
+				<xsd:element ref="CENTRAL_REGULATION" minOccurs="0"/>
+				<xsd:element ref="PAYMENT_TERMS" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PAYMENT_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="PAYMENT_TERM">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="typePAYMENT_TERM">
+					<xsd:attribute name="type" use="required">
+						<xsd:simpleType>
+							<xsd:restriction base="bmecat:dtSTRING">
+								<xsd:minLength value="1"/>
+								<xsd:maxLength value="20"/>
+								<xsd:enumeration value="unece"/>
+								<xsd:enumeration value="other"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PAYMENT_TERMS">
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0">
+				<xsd:element ref="PAYMENT_TERM" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="TIME_FOR_PAYMENT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="VALUE_DATE" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="POST_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="PRICE_BASE_FIX">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PRICE_UNIT_VALUE"/>
+				<xsd:element ref="bmecat:PRICE_UNIT"/>
+				<xsd:element ref="bmecat:PRICE_UNIT_FACTOR" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PRICE_LINE_AMOUNT" type="bmecat:dtNUMBER"/>
+	<xsd:element name="PRICE_UNIT_VALUE" type="bmecat:dtFLOAT"/>
+	<xsd:element name="PRODUCT_COMPONENT">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PRODUCT_ID"/>
+				<xsd:element ref="PRODUCT_FEATURES" minOccurs="0"/>
+				<xsd:element ref="PRODUCT_COMPONENTS" minOccurs="0"/>
+				<xsd:element ref="QUANTITY"/>
+				<xsd:element ref="bmecat:ORDER_UNIT"/>
+				<xsd:element ref="PRODUCT_PRICE_FIX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PRODUCT_COMPONENTS">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PRODUCT_COMPONENT" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PRODUCT_FEATURES">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:REFERENCE_FEATURE_SYSTEM_NAME" minOccurs="0"/>
+				<xsd:element ref="bmecat:REFERENCE_FEATURE_GROUP_ID" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:REFERENCE_FEATURE_GROUP_NAME" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:REFERENCE_FEATURE_GROUP_ID2" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:GROUP_PRODUCT_ORDER" minOccurs="0"/>
+				<xsd:element ref="FEATURE" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PRODUCT_ID">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:SUPPLIER_PID" minOccurs="0"/>
+				<xsd:element ref="bmecat:SUPPLIER_IDREF" minOccurs="0"/>
+				<xsd:element ref="CONFIG_CODE_FIX" minOccurs="0"/>
+				<xsd:element ref="LOT_NUMBER" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="SERIAL_NUMBER" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:INTERNATIONAL_PID" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:BUYER_PID" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:DESCRIPTION_SHORT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:DESCRIPTION_LONG" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MANUFACTURER_INFO" minOccurs="0"/>
+				<xsd:element ref="bmecat:PRODUCT_TYPE" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PRODUCT_PRICE_DETAILS">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:VALID_START_DATE" minOccurs="0"/>
+				<xsd:element ref="bmecat:VALID_END_DATE" minOccurs="0"/>
+				<xsd:element ref="bmecat:DAILY_PRICE" minOccurs="0"/>
+				<xsd:element ref="bmecat:PRODUCT_PRICE" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PRODUCT_PRICE_FIX">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:PRICE_AMOUNT"/>
+				<xsd:element ref="ALLOW_OR_CHARGES_FIX" minOccurs="0"/>
+				<xsd:element ref="bmecat:PRICE_FLAG" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="TAX_DETAILS_FIX" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:PRICE_QUANTITY" minOccurs="0"/>
+				<xsd:element ref="PRICE_BASE_FIX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="QUANTITY" type="bmecat:dtNUMBER"/>
+	<xsd:element name="QUOTATION">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="QUOTATION_HEADER"/>
+				<xsd:element ref="QUOTATION_ITEM_LIST"/>
+				<xsd:element ref="QUOTATION_SUMMARY"/>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="typeOPENTRANS_version" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="QUOTATION_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="QUOTATION_HEADER">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="CONTROL_INFO" minOccurs="0"/>
+				<xsd:element ref="QUOTATION_INFO"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="QUOTATION_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="250"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="QUOTATION_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="QUOTATION_ID"/>
+				<xsd:element ref="QUOTATION_DATE"/>
+				<xsd:element ref="bmecat:VALID_START_DATE" minOccurs="0"/>
+				<xsd:element ref="bmecat:VALID_END_DATE" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+				<xsd:element ref="bmecat:LANGUAGE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:MIME_ROOT" minOccurs="0"/>
+				<xsd:element ref="PARTIES"/>
+				<xsd:element ref="ORDER_PARTIES_REFERENCE"/>
+				<xsd:element ref="DOCEXCHANGE_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="AGREEMENT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="CATALOG_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:CURRENCY"/>
+				<xsd:element ref="PAYMENT" minOccurs="0"/>
+				<xsd:element ref="TERMS_AND_CONDITIONS" minOccurs="0"/>
+				<xsd:element ref="bmecat:TRANSPORT" minOccurs="0"/>
+				<xsd:element ref="bmecat:INTERNATIONAL_RESTRICTIONS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:TERRITORY" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="HEADER_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="QUOTATION_ITEM">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="LINE_ITEM_ID"/>
+				<xsd:element ref="PRODUCT_ID"/>
+				<xsd:element ref="PRODUCT_FEATURES" minOccurs="0"/>
+				<xsd:element ref="PRODUCT_COMPONENTS" minOccurs="0"/>
+				<xsd:element ref="QUANTITY"/>
+				<xsd:element ref="bmecat:ORDER_UNIT"/>
+				<xsd:element ref="PRODUCT_PRICE_FIX" minOccurs="0"/>
+				<xsd:element ref="PRICE_LINE_AMOUNT" minOccurs="0"/>
+				<xsd:element ref="AGREEMENT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="CATALOG_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="PARTIAL_SHIPMENT" minOccurs="0"/>
+				<xsd:choice minOccurs="0">
+					<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+					<xsd:element ref="PARTIAL_DELIVERY_LIST" minOccurs="0"/>
+				</xsd:choice>
+				<xsd:element ref="SHIPMENT_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:TRANSPORT" minOccurs="0"/>
+				<xsd:element ref="bmecat:INTERNATIONAL_RESTRICTIONS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:SPECIAL_TREATMENT_CLASS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ITEM_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="QUOTATION_ITEM_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="QUOTATION_ITEM" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="QUOTATION_SUMMARY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TOTAL_ITEM_NUM"/>
+				<xsd:element ref="TOTAL_AMOUNT" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RA_INVOICE_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="RA_INVOICE_LIST_ITEM" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RA_INVOICE_LIST_ITEM">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="INVOICE_REFERENCE"/>
+				<xsd:element ref="ORIGINAL_INVOICE_SUMMARY"/>
+				<xsd:element ref="INVOICE_ADJUSTMENT" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="REASON_FOR_TRANSFER">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="140"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="RECEIPT_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="RECEIPTACKNOWLEDGEMENT">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="RECEIPTACKNOWLEDGEMENT_HEADER"/>
+				<xsd:element ref="RECEIPTACKNOWLEDGEMENT_ITEM_LIST"/>
+				<xsd:element ref="RECEIPTACKNOWLEDGEMENT_SUMMARY"/>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="typeOPENTRANS_version" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RECEIPTACKNOWLEDGEMENT_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="RECEIPTACKNOWLEDGEMENT_HEADER">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="CONTROL_INFO" minOccurs="0"/>
+				<xsd:element ref="RECEIPTACKNOWLEDGEMENT_INFO"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RECEIPTACKNOWLEDGEMENT_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="250"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="RECEIPTACKNOWLEDGEMENT_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="RECEIPTACKNOWLEDGEMENT_ID"/>
+				<xsd:element ref="RECEIPTACKNOWLEDGEMENT_DATE" minOccurs="0"/>
+				<xsd:element ref="RECEIPT_DATE"/>
+				<xsd:element ref="bmecat:LANGUAGE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:MIME_ROOT" minOccurs="0"/>
+				<xsd:element ref="PARTIES"/>
+				<xsd:element ref="bmecat:SUPPLIER_IDREF"/>
+				<xsd:element ref="bmecat:BUYER_IDREF" minOccurs="0"/>
+				<xsd:element ref="SHIPMENT_PARTIES_REFERENCE"/>
+				<xsd:element ref="DOCEXCHANGE_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="HEADER_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RECEIPTACKNOWLEDGEMENT_ITEM">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="LINE_ITEM_ID"/>
+				<xsd:element ref="PRODUCT_ID"/>
+				<xsd:element ref="QUANTITY"/>
+				<xsd:element ref="bmecat:ORDER_UNIT"/>
+				<xsd:element ref="DELIVERY_COMPLETED" minOccurs="0"/>
+				<xsd:element ref="RECEIPT_DATE" minOccurs="0"/>
+				<xsd:element ref="ORDER_REFERENCE"/>
+				<xsd:element ref="SUPPLIER_ORDER_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="CUSTOMER_ORDER_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_REFERENCE"/>
+				<xsd:element ref="bmecat:SUPPLIER_IDREF" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_IDREF" minOccurs="0"/>
+				<xsd:element ref="FINAL_DELIVERY_IDREF" minOccurs="0"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ITEM_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RECEIPTACKNOWLEDGEMENT_ITEM_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="RECEIPTACKNOWLEDGEMENT_ITEM" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RECEIPTACKNOWLEDGEMENT_SUMMARY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TOTAL_ITEM_NUM"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="REMARKS">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="typeMLSTRING64000">
+					<xsd:attribute name="type" use="optional">
+						<xsd:simpleType>
+							<xsd:restriction base="bmecat:dtSTRING">
+								<xsd:minLength value="1"/>
+								<xsd:maxLength value="250"/>
+								<xsd:pattern value="deliverynote|dispatchnotification|general|invoice|order|orderchange|orderresponse|quotation|receiptacknowledgement|remittanceadvice|invoicelist|rfq|transport|\w{1,250}"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="REMITTANCEADVICE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="REMITTANCEADVICE_HEADER"/>
+				<xsd:element ref="REMITTANCEADVICE_ITEM_LIST"/>
+				<xsd:element ref="REMITTANCEADVICE_SUMMARY"/>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="typeOPENTRANS_version" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="REMITTANCEADVICE_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="REMITTANCEADVICE_HEADER">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="CONTROL_INFO" minOccurs="0"/>
+				<xsd:element ref="REMITTANCEADVICE_INFO"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="REMITTANCEADVICE_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="250"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="REMITTANCEADVICE_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="REMITTANCEADVICE_ID"/>
+				<xsd:element ref="REMITTANCEADVICE_DATE"/>
+				<xsd:element ref="REASON_FOR_TRANSFER" minOccurs="0"/>
+				<xsd:element ref="REMITTANCEADVICE_TYPE" minOccurs="0"/>
+				<xsd:element ref="bmecat:LANGUAGE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:MIME_ROOT" minOccurs="0"/>
+				<xsd:element ref="PARTIES"/>
+				<xsd:element ref="PAYER_IDREF"/>
+				<xsd:element ref="REMITTEE_IDREF"/>
+				<xsd:element ref="INVOICE_ISSUER_IDREF" minOccurs="0"/>
+				<xsd:element ref="INVOICE_RECIPIENT_IDREF" minOccurs="0"/>
+				<xsd:element ref="DOCEXCHANGE_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:BUYER_IDREF" minOccurs="0"/>
+				<xsd:element ref="bmecat:SUPPLIER_IDREF" minOccurs="0"/>
+				<xsd:element ref="bmecat:CURRENCY"/>
+				<xsd:element ref="PAYMENT" minOccurs="0"/>
+				<xsd:element ref="PAYMENT_DATE" minOccurs="0"/>
+				<xsd:element ref="TERMS_AND_CONDITIONS" minOccurs="0"/>
+				<xsd:element ref="bmecat:ACCOUNTING_INFO" minOccurs="0"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="HEADER_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="REMITTANCEADVICE_ITEM">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="LINE_ITEM_ID"/>
+				<xsd:element ref="INVOICE_ISSUER_IDREF" minOccurs="0"/>
+				<xsd:element ref="INVOICE_RECIPIENT_IDREF" minOccurs="0"/>
+				<xsd:element ref="RA_INVOICE_LIST"/>
+				<xsd:element ref="TOTAL_ITEM_NUM" minOccurs="0"/>
+				<xsd:element ref="TOTAL_AMOUNT"/>
+				<xsd:element ref="ORIGINAL_SUMMARY_AMOUNT" minOccurs="0"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ITEM_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="REMITTANCEADVICE_ITEM_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="REMITTANCEADVICE_ITEM" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="REMITTANCEADVICE_SUMMARY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TOTAL_ITEM_NUM"/>
+				<xsd:element ref="ORIGINAL_SUMMARY_AMOUNT"/>
+				<xsd:element ref="ADJUSTED_SUMMARY_AMOUNT"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="REMITTANCEADVICE_TYPE">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="20"/>
+				<xsd:enumeration value="payment"/>
+				<xsd:enumeration value="collection"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="REMITTEE_IDREF" type="bmecat:typePARTY_ID"/>
+	<xsd:element name="REPORT_UDX" type="udxREPORT"/>
+	<xsd:element name="RESULT_CODE">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="20"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="RESULT_DESCR" type="bmecat:dtMLSTRING"/>
+	<xsd:element name="REWARDS">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="REWARDS_POINTS"/>
+				<xsd:element ref="REWARDS_SUMMARY" minOccurs="0"/>
+				<xsd:element ref="REWARDS_SYSTEM"/>
+				<xsd:element ref="REWARDS_DESCR" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="REWARDS_DESCR">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:restriction base="bmecat:dtMLSTRING">
+					<xsd:minLength value="1"/>
+					<xsd:maxLength value="250"/>
+				</xsd:restriction>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="REWARDS_POINTS" type="bmecat:dtNUMBER"/>
+	<xsd:element name="REWARDS_SUMMARY" type="bmecat:dtNUMBER"/>
+	<xsd:element name="REWARDS_SYSTEM">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:restriction base="bmecat:dtMLSTRING">
+					<xsd:minLength value="1"/>
+					<xsd:maxLength value="80"/>
+				</xsd:restriction>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RFQ">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="RFQ_HEADER"/>
+				<xsd:element ref="RFQ_ITEM_LIST"/>
+				<xsd:element ref="RFQ_SUMMARY"/>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="typeOPENTRANS_version" use="required"/>
+			<xsd:attribute name="type" use="required">
+				<xsd:simpleType>
+					<xsd:restriction base="bmecat:dtSTRING">
+						<xsd:minLength value="1"/>
+						<xsd:maxLength value="20"/>
+						<xsd:enumeration value="standard"/>
+						<xsd:enumeration value="express"/>
+						<xsd:enumeration value="release"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RFQ_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="RFQ_HEADER">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="CONTROL_INFO" minOccurs="0"/>
+				<xsd:element ref="RFQ_INFO"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RFQ_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="250"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="RFQ_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="RFQ_ID"/>
+				<xsd:element ref="RFQ_DATE"/>
+				<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+				<xsd:element ref="bmecat:LANGUAGE" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:MIME_ROOT" minOccurs="0"/>
+				<xsd:element ref="PARTIES"/>
+				<xsd:element ref="ORDER_PARTIES_REFERENCE"/>
+				<xsd:element ref="DOCEXCHANGE_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="AGREEMENT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="CATALOG_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:CURRENCY"/>
+				<xsd:element ref="PAYMENT" minOccurs="0"/>
+				<xsd:element ref="TERMS_AND_CONDITIONS" minOccurs="0"/>
+				<xsd:element ref="PARTIAL_SHIPMENT_ALLOWED" minOccurs="0"/>
+				<xsd:element ref="bmecat:TRANSPORT" minOccurs="0"/>
+				<xsd:element ref="bmecat:INTERNATIONAL_RESTRICTIONS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="HEADER_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RFQ_ITEM">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="LINE_ITEM_ID"/>
+				<xsd:element ref="PRODUCT_ID"/>
+				<xsd:element ref="PRODUCT_FEATURES" minOccurs="0"/>
+				<xsd:element ref="PRODUCT_COMPONENTS" minOccurs="0"/>
+				<xsd:element ref="QUANTITY"/>
+				<xsd:element ref="bmecat:ORDER_UNIT"/>
+				<xsd:element ref="PRODUCT_PRICE_FIX" minOccurs="0"/>
+				<xsd:element ref="PRICE_LINE_AMOUNT" minOccurs="0"/>
+				<xsd:element ref="AGREEMENT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="CATALOG_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="PARTIAL_SHIPMENT_ALLOWED" minOccurs="0"/>
+				<xsd:element ref="DELIVERY_DATE" minOccurs="0"/>
+				<xsd:element ref="SHIPMENT_PARTIES_REFERENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:TRANSPORT" minOccurs="0"/>
+				<xsd:element ref="bmecat:INTERNATIONAL_RESTRICTIONS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:SPECIAL_TREATMENT_CLASS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="MIME_INFO" minOccurs="0"/>
+				<xsd:element ref="REMARKS" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="ITEM_UDX" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RFQ_ITEM_LIST">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="RFQ_ITEM" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RFQ_SUMMARY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TOTAL_ITEM_NUM"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SERIAL_NUMBER">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="80"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SHIPMENT_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="250"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SHIPMENT_PARTIES">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DELIVERY_PARTY"/>
+				<xsd:element ref="FINAL_DELIVERY_PARTY" minOccurs="0"/>
+				<xsd:element ref="TRANSPORT_PARTY" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SHIPMENT_PARTIES_REFERENCE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DELIVERY_IDREF"/>
+				<xsd:element ref="FINAL_DELIVERY_IDREF" minOccurs="0"/>
+				<xsd:element ref="DELIVERER_IDREF" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SIGNATURE">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="MIME"/>
+				<xsd:element ref="SIGNATURE_IN_ORIGINAL"/>
+				<xsd:element ref="XML_SIGNATURE"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SIGNATURE_AND_VERIFICATION">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="SIGNATURE"/>
+				<xsd:element ref="VERIFICATION" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SIGNATURE_IN_ORIGINAL" type="bmecat:dtBOOLEAN"/>
+	<xsd:element name="SOURCING_INFO">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="QUOTATION_ID" minOccurs="0"/>
+				<xsd:element ref="AGREEMENT" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="CATALOG_REFERENCE" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="STOP_AUTOMATIC_PROCESSING">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="250"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SUB_PACKAGES">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PACKAGE" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SUPPLIER_ORDER_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="250"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SUPPLIER_ORDER_ITEM_ID">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="50"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SUPPLIER_ORDER_REFERENCE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="SUPPLIER_ORDER_ID"/>
+				<xsd:element ref="SUPPLIER_ORDER_ITEM_ID"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SUPPLIER_PARTY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:PARTY"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="TAX_AMOUNT" type="bmecat:dtNUMBER"/>
+	<xsd:element name="TAX_BASE" type="bmecat:dtNUMBER"/>
+	<xsd:element name="TAX_DETAILS_FIX">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:CALCULATION_SEQUENCE" minOccurs="0"/>
+				<xsd:element ref="bmecat:TAX_CATEGORY" minOccurs="0"/>
+				<xsd:element ref="bmecat:TAX_TYPE" minOccurs="0"/>
+				<xsd:element ref="bmecat:TAX" minOccurs="0"/>
+				<xsd:element ref="TAX_AMOUNT" minOccurs="0"/>
+				<xsd:element ref="TAX_BASE" minOccurs="0"/>
+				<xsd:element ref="bmecat:EXEMPTION_REASON" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="bmecat:JURISDICTION" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="TAX_NUMBER">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="50"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TERMS_AND_CONDITIONS">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:maxLength value="250"/>
+				<xsd:minLength value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TIME_FOR_PAYMENT">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice>
+					<xsd:element ref="PAYMENT_DATE"/>
+					<xsd:element ref="DAYS"/>
+				</xsd:choice>
+				<xsd:choice minOccurs="0">
+					<xsd:element ref="DISCOUNT_FACTOR" minOccurs="0"/>
+					<xsd:element ref="ALLOW_OR_CHARGES_FIX" minOccurs="0"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="TOTAL_AMOUNT" type="bmecat:dtNUMBER"/>
+	<xsd:element name="TOTAL_ITEM_NUM" type="bmecat:dtCOUNT"/>
+	<xsd:element name="TOTAL_TAX">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="TAX_DETAILS_FIX" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="TOTAL_TAX_AMOUNT" type="bmecat:dtNUMBER"/>
+	<xsd:element name="TRACKING_TRACING_URL">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="255"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="TRANSPORT_PARTY">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bmecat:PARTY"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="VALUE_DATE" type="bmecat:dtDATETIME"/>
+	<xsd:element name="VERIFICATION">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="VERIFICATION_PARTY_IDREF"/>
+				<xsd:element ref="VERIFICATION_SUCCESS"/>
+				<xsd:element ref="VERIFICATION_REPORT"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="VERIFICATION_ATTACHMENT">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="MIME"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="VERIFICATION_PARTY_IDREF" type="bmecat:typePARTY_ID"/>
+	<xsd:element name="VERIFICATION_PROTOCOL">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="RESULT_CODE"/>
+				<xsd:element ref="RESULT_DESCR" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="VERIFICATION_REPORT">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:element ref="VERIFICATION_ATTACHMENT"/>
+				<xsd:element ref="VERIFICATION_PROTOCOL"/>
+				<xsd:element ref="VERIFICATION_XMLREPORT"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="VERIFICATION_RESULT" type="bmecat:dtBOOLEAN"/>
+	<xsd:element name="VERIFICATION_SUCCESS" type="bmecat:dtBOOLEAN"/>
+	<xsd:element name="VERIFICATION_XMLREPORT">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="XML_FORMAT"/>
+				<xsd:element ref="REPORT_UDX"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="XML_FORMAT">
+		<xsd:simpleType>
+			<xsd:restriction base="bmecat:dtSTRING">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="50"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="XML_SIGNATURE">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="xsig:Signature"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

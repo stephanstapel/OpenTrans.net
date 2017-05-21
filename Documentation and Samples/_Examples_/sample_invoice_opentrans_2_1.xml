@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<INVOICE version="2.1" xmlns="http://www.opentrans.org/XMLSchema/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opentrans.org/XMLSchema/2.1 opentrans_2_1.xsd" xmlns:bmecat="http://www.bmecat.org/bmecat/2005" xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+	<INVOICE_HEADER>
+		<CONTROL_INFO>
+			<GENERATION_DATE>2009-05-13T06:20:00+01:00</GENERATION_DATE>
+		</CONTROL_INFO>
+		<INVOICE_INFO>
+			<INVOICE_ID>I21298</INVOICE_ID>
+			<INVOICE_DATE>2009-05-13T09:00:00+01:00</INVOICE_DATE>
+			<INVOICE_COVERAGE>single</INVOICE_COVERAGE>
+			<DELIVERY_DATE>
+				<DELIVERY_START_DATE>2009-05-11T10:00:00+01:00</DELIVERY_START_DATE>
+				<DELIVERY_END_DATE>2009-05-11T10:00:00+01:00</DELIVERY_END_DATE>
+			</DELIVERY_DATE>
+			<DELIVERY_IDREF>980301</DELIVERY_IDREF>
+			<PARTIES>
+				<PARTY>
+					<bmecat:PARTY_ID type="supplier_specific">108304</bmecat:PARTY_ID>
+					<PARTY_ROLE>document_creator</PARTY_ROLE>
+					<ADDRESS>
+						<bmecat:NAME>Power Supply Corp.</bmecat:NAME>
+						<CONTACT_DETAILS>
+							<bmecat:CONTACT_ID>MA02</bmecat:CONTACT_ID>
+							<bmecat:CONTACT_NAME>Mustermann</bmecat:CONTACT_NAME>
+							<bmecat:FIRST_NAME>Max</bmecat:FIRST_NAME>
+							<bmecat:ACADEMIC_TITLE>Phd.</bmecat:ACADEMIC_TITLE>
+						</CONTACT_DETAILS>
+						<bmecat:STATE>Sachsen Anhalt</bmecat:STATE>
+						<bmecat:COUNTRY>Germany</bmecat:COUNTRY>
+						<bmecat:COUNTRY_CODED>DE</bmecat:COUNTRY_CODED>
+						<bmecat:PHONE type="IndividuelleAngabe">+49 345 WE SELL</bmecat:PHONE>
+						<bmecat:FAX>+49 555 77 88 99</bmecat:FAX>
+						<bmecat:EMAIL>power@supply.com</bmecat:EMAIL>
+						<bmecat:URL>www.powersupplycorp.com</bmecat:URL>
+					</ADDRESS>
+					<ACCOUNT>
+						<HOLDER>Power Supply Corp.</HOLDER>
+						<BANK_ACCOUNT type="iban">6594834873</BANK_ACCOUNT>
+						<BANK_CODE type="bic">1002003040</BANK_CODE>
+						<BANK_NAME>Good Bank</BANK_NAME>
+						<BANK_COUNTRY>DE</BANK_COUNTRY>
+					</ACCOUNT>
+				</PARTY>
+				<PARTY>
+					<bmecat:PARTY_ID type="supplier_specific">968314</bmecat:PARTY_ID>
+					<PARTY_ROLE>buyer</PARTY_ROLE>
+					<ADDRESS>
+						<bmecat:NAME>Supershop Store International</bmecat:NAME>
+					</ADDRESS>
+				</PARTY>
+				<PARTY>
+					<bmecat:PARTY_ID type="supplier_specific">980301</bmecat:PARTY_ID>
+					<PARTY_ROLE>delivery</PARTY_ROLE>
+					<ADDRESS>
+						<CONTACT_DETAILS>
+							<bmecat:CONTACT_ID>1</bmecat:CONTACT_ID>
+							<bmecat:CONTACT_NAME>Supershop Store Stuttgart</bmecat:CONTACT_NAME>
+							<bmecat:PHONE>0711 970 000</bmecat:PHONE>
+						</CONTACT_DETAILS>
+						<bmecat:STREET>shopppingstr.102</bmecat:STREET>
+						<bmecat:ZIP>70199</bmecat:ZIP>
+						<bmecat:CITY>Stuttgart</bmecat:CITY>
+						<bmecat:STATE>Baden Württemberg</bmecat:STATE>
+					</ADDRESS>
+				</PARTY>
+				<PARTY>
+					<bmecat:PARTY_ID type="supplier_specific">supersigner</bmecat:PARTY_ID>
+					<PARTY_ROLE>other</PARTY_ROLE>
+					<ADDRESS>
+						<bmecat:NAME>supersigner</bmecat:NAME>
+						<bmecat:URL>www.supersigner.org</bmecat:URL>
+					</ADDRESS>
+				</PARTY>
+			</PARTIES>
+			<INVOICE_ISSUER_IDREF type="supplier_specific">108304</INVOICE_ISSUER_IDREF>
+			<INVOICE_RECIPIENT_IDREF type="supplier_specific">968314</INVOICE_RECIPIENT_IDREF>
+			<bmecat:CURRENCY>EUR</bmecat:CURRENCY>
+			<TERMS_AND_CONDITIONS>Können unter www.supershopstore.com/agb abgerufen werden</TERMS_AND_CONDITIONS>
+			<E_BILLING>
+				<SIGNATURE_AND_VERIFICATION>
+					<SIGNATURE>
+						<MIME>
+							<bmecat:MIME_SOURCE>key.asc</bmecat:MIME_SOURCE>
+							<FILE_HASH_VALUE type="MD5">54fec8f377b45af5d6c487110b88ba98</FILE_HASH_VALUE>
+							<MIME_PURPOSE>signatur_file</MIME_PURPOSE>
+						</MIME>
+					</SIGNATURE>
+					<VERIFICATION>
+						<VERIFICATION_PARTY_IDREF>supersigner</VERIFICATION_PARTY_IDREF>
+						<VERIFICATION_SUCCESS>TRUE</VERIFICATION_SUCCESS>
+						<VERIFICATION_REPORT>
+							<VERIFICATION_ATTACHMENT>
+								<MIME>
+									<bmecat:MIME_SOURCE>report.xml</bmecat:MIME_SOURCE>
+									<FILE_HASH_VALUE type="MD5">54fec8f377b45af5d6c78974g88ba98</FILE_HASH_VALUE>
+									<MIME_PURPOSE>verification_report</MIME_PURPOSE>
+								</MIME>
+							</VERIFICATION_ATTACHMENT>
+						</VERIFICATION_REPORT>
+					</VERIFICATION>
+				</SIGNATURE_AND_VERIFICATION>
+			</E_BILLING>
+		</INVOICE_INFO>
+		<ORDER_HISTORY>
+			<ORDER_ID>O3849</ORDER_ID>
+			<ORDER_DATE>2009-05-02T08:10:30+01:00</ORDER_DATE>
+		</ORDER_HISTORY>
+	</INVOICE_HEADER>
+
+	<INVOICE_ITEM_LIST>
+		<INVOICE_ITEM>
+			<LINE_ITEM_ID>1</LINE_ITEM_ID>
+			<PRODUCT_ID>
+				<bmecat:SUPPLIER_PID>NB-A4</bmecat:SUPPLIER_PID>
+				<bmecat:DESCRIPTION_SHORT>Notebook, Schwarz</bmecat:DESCRIPTION_SHORT>
+				<bmecat:DESCRIPTION_LONG>Notebook mit Einsteinium-Prozessor, 256 GB RAM und 1024 TB Festplatte</bmecat:DESCRIPTION_LONG>
+			</PRODUCT_ID>
+			<PRODUCT_FEATURES>
+				<FEATURE>
+					<bmecat:FNAME>Farbe</bmecat:FNAME>
+					<bmecat:FVALUE>Schwarz</bmecat:FVALUE>
+					<bmecat:FVALUE_DETAILS>Super-Dark</bmecat:FVALUE_DETAILS>
+				</FEATURE>
+				<FEATURE>
+					<bmecat:FNAME>Gewicht</bmecat:FNAME>
+					<bmecat:FVALUE>1</bmecat:FVALUE>
+					<bmecat:FUNIT>KG</bmecat:FUNIT>
+					<bmecat:FDESCR>Das Gewicht wird standardmäßig ohne Akku angegeben.</bmecat:FDESCR>
+				</FEATURE>
+			</PRODUCT_FEATURES>
+			<PRODUCT_COMPONENTS>
+				<PRODUCT_COMPONENT>
+					<PRODUCT_ID>
+						<bmecat:SUPPLIER_PID>T-38</bmecat:SUPPLIER_PID>
+						<bmecat:DESCRIPTION_SHORT>Notebooktasche</bmecat:DESCRIPTION_SHORT>
+					</PRODUCT_ID>
+					<QUANTITY>4</QUANTITY>
+					<bmecat:ORDER_UNIT>BG</bmecat:ORDER_UNIT>
+				</PRODUCT_COMPONENT>
+			</PRODUCT_COMPONENTS>
+			<QUANTITY>4</QUANTITY>
+			<bmecat:ORDER_UNIT>PK</bmecat:ORDER_UNIT>
+			<PRODUCT_PRICE_FIX>
+				<bmecat:PRICE_AMOUNT>1200</bmecat:PRICE_AMOUNT>
+				<ALLOW_OR_CHARGES_FIX>
+					<ALLOW_OR_CHARGE type="allowance">
+						<ALLOW_OR_CHARGE_TYPE>rebate</ALLOW_OR_CHARGE_TYPE>
+						<ALLOW_OR_CHARGE_VALUE>
+							<AOC_PERCENTAGE_FACTOR>10.00</AOC_PERCENTAGE_FACTOR>
+						</ALLOW_OR_CHARGE_VALUE>
+					</ALLOW_OR_CHARGE>
+					<ALLOW_OR_CHARGES_TOTAL_AMOUNT>120</ALLOW_OR_CHARGES_TOTAL_AMOUNT>
+				</ALLOW_OR_CHARGES_FIX>
+				<TAX_DETAILS_FIX>
+					<bmecat:TAX_CATEGORY>standard_rate</bmecat:TAX_CATEGORY>
+					<bmecat:TAX_TYPE>vat</bmecat:TAX_TYPE>
+					<bmecat:TAX>0.19</bmecat:TAX>
+					<TAX_AMOUNT>889.20</TAX_AMOUNT>
+				</TAX_DETAILS_FIX>
+			</PRODUCT_PRICE_FIX>
+			<PRICE_LINE_AMOUNT>4680.00</PRICE_LINE_AMOUNT>
+			<LOGISTIC_DETAILS>
+				<bmecat:PRODUCT_DIMENSIONS>
+					<bmecat:WEIGHT>1</bmecat:WEIGHT>
+					<bmecat:WIDTH>0.25</bmecat:WIDTH>
+					<bmecat:DEPTH>0.25</bmecat:DEPTH>
+				</bmecat:PRODUCT_DIMENSIONS>
+				<PACKAGE_INFO>
+					<PACKAGE>
+						<PACKAGE_DESCR>Standard-Paket
+						</PACKAGE_DESCR>
+						<bmecat:PACKING_UNIT_CODE>PK</bmecat:PACKING_UNIT_CODE>
+					</PACKAGE>
+				</PACKAGE_INFO>
+			</LOGISTIC_DETAILS>
+			<MIME_INFO>
+				<MIME>
+					<bmecat:MIME_TYPE>image/jpeg</bmecat:MIME_TYPE>
+					<bmecat:MIME_SOURCE>front.jpg</bmecat:MIME_SOURCE>
+					<bmecat:MIME_DESCR>Frontalansicht des Notebooks</bmecat:MIME_DESCR>
+					<bmecat:MIME_ALT>Bild Notebook Front</bmecat:MIME_ALT>
+					<MIME_PURPOSE>thumbnail</MIME_PURPOSE>
+				</MIME>
+				<MIME>
+					<MIME_EMBEDDED>
+						<MIME_DATA xmime:contentType="image/jpeg">bnVyIGVpbiBUZXN0bGF1Zg==</MIME_DATA>
+					</MIME_EMBEDDED>
+					<bmecat:MIME_DESCR>Notebook New Style</bmecat:MIME_DESCR>
+					<bmecat:MIME_ALT>Bild Notebook New Style</bmecat:MIME_ALT>
+					<MIME_PURPOSE>freehand_sketch</MIME_PURPOSE>
+				</MIME>
+			</MIME_INFO>
+		</INVOICE_ITEM>
+	</INVOICE_ITEM_LIST>
+
+	<INVOICE_SUMMARY>
+		<TOTAL_ITEM_NUM>1</TOTAL_ITEM_NUM>
+		<NET_VALUE_GOODS>4680.00</NET_VALUE_GOODS>
+		<TOTAL_AMOUNT>5569.20</TOTAL_AMOUNT>
+		<TOTAL_TAX>
+			<TAX_DETAILS_FIX>
+				<bmecat:TAX_CATEGORY>standard_rate</bmecat:TAX_CATEGORY>
+				<bmecat:TAX_TYPE>vat</bmecat:TAX_TYPE>
+				<bmecat:TAX>0.19</bmecat:TAX>
+				<TAX_AMOUNT>889.20</TAX_AMOUNT>
+			</TAX_DETAILS_FIX>
+		</TOTAL_TAX>
+	</INVOICE_SUMMARY>
+</INVOICE>

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--	File-Version: 1.0
+
+Author: Nico Weiner, Fraunhofer IAO
+Remarks:
+
+Not all possible elements are shown here. If multi-language support is required, please use the lang-attribute of the related elements (not shown here).
+
+Please note that only dummy-prices and units are used. No price-calculations were made at the time of creation.
+ -->
+<ORDER type="standard" version="2.1" xmlns="http://www.opentrans.org/XMLSchema/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opentrans.org/XMLSchema/2.1 opentrans_2_1.xsd" xmlns:bmecat="http://www.bmecat.org/bmecat/2005" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsig="http://www.w3.org/2000/09/xmldsig#">
+	<ORDER_HEADER>
+		<CONTROL_INFO>
+			<GENERATION_DATE>2009-05-13T06:20:00+01:00</GENERATION_DATE>
+		</CONTROL_INFO>
+		<SOURCING_INFO>
+			<QUOTATION_ID>ReferencetoQuotationNr</QUOTATION_ID>
+			<AGREEMENT default="TRUE" type="buyer">
+				<bmecat:AGREEMENT_ID>a</bmecat:AGREEMENT_ID>
+				<bmecat:AGREEMENT_LINE_ID>1</bmecat:AGREEMENT_LINE_ID>
+				<bmecat:AGREEMENT_START_DATE>2009-05-13T06:20:00+01:00</bmecat:AGREEMENT_START_DATE>
+				<bmecat:AGREEMENT_END_DATE>2009-05-16T06:20:00+01:00</bmecat:AGREEMENT_END_DATE>
+				<bmecat:SUPPLIER_IDREF type="party_specific">XYZ2</bmecat:SUPPLIER_IDREF>
+				<AGREEMENT_DESCR lang="deu">a</AGREEMENT_DESCR>
+				<AGREEMENT_DESCR lang="eng">a</AGREEMENT_DESCR>
+				<MIME_INFO>
+					<MIME>
+						<bmecat:MIME_TYPE>image/jpeg</bmecat:MIME_TYPE>
+						<bmecat:MIME_SOURCE>some src path</bmecat:MIME_SOURCE>
+						<FILE_HASH_VALUE type="MD5">h4shv4lue</FILE_HASH_VALUE>
+						<bmecat:MIME_DESCR>Logo</bmecat:MIME_DESCR>
+						<MIME_PURPOSE>logo</MIME_PURPOSE>
+						<bmecat:MIME_ORDER>1</bmecat:MIME_ORDER>
+					</MIME>
+					<MIME>
+						<bmecat:MIME_TYPE>application/pdf</bmecat:MIME_TYPE>
+						<bmecat:MIME_SOURCE>src/pdffile.pdf</bmecat:MIME_SOURCE>
+						<FILE_HASH_VALUE type="MD5">some pdf file hash</FILE_HASH_VALUE>
+						<bmecat:MIME_DESCR>any description</bmecat:MIME_DESCR>
+						<MIME_PURPOSE>freehand_sketch</MIME_PURPOSE>
+						<bmecat:MIME_ORDER>2</bmecat:MIME_ORDER>
+					</MIME>
+				</MIME_INFO>
+			</AGREEMENT>
+			<CATALOG_REFERENCE>
+				<bmecat:CATALOG_ID>BMECATXYZ345</bmecat:CATALOG_ID>
+				<bmecat:CATALOG_VERSION>0.1</bmecat:CATALOG_VERSION>
+				<bmecat:CATALOG_NAME>BMECAT-CATALOG Parts for Cars</bmecat:CATALOG_NAME>
+			</CATALOG_REFERENCE>
+		</SOURCING_INFO>
+		<ORDER_INFO>
+			<ORDER_ID>OID1</ORDER_ID>
+			<ORDER_DATE>2009-05-13T06:20:00+01:00</ORDER_DATE>
+			<DELIVERY_DATE>
+				<DELIVERY_START_DATE>2009-05-20T10:00:00+01:00</DELIVERY_START_DATE>
+				<DELIVERY_END_DATE>2009-05-20T10:00:00+01:00</DELIVERY_END_DATE>
+			</DELIVERY_DATE>
+			<PARTIES>
+				<PARTY>
+					<bmecat:PARTY_ID type="PredefinedOrCustomType">a</bmecat:PARTY_ID>
+					<PARTY_ROLE>buyer</PARTY_ROLE>
+					<ADDRESS>
+						<bmecat:NAME>a</bmecat:NAME>
+						<bmecat:NAME2>a</bmecat:NAME2>
+						<bmecat:NAME3>a</bmecat:NAME3>
+						<bmecat:DEPARTMENT>a</bmecat:DEPARTMENT>
+						<CONTACT_DETAILS>
+							<bmecat:CONTACT_ID>a</bmecat:CONTACT_ID>
+							<bmecat:CONTACT_NAME>a</bmecat:CONTACT_NAME>
+							<bmecat:CONTACT_NAME>a</bmecat:CONTACT_NAME>
+							<bmecat:FIRST_NAME>a</bmecat:FIRST_NAME>
+							<bmecat:FIRST_NAME>a</bmecat:FIRST_NAME>
+							<bmecat:TITLE>a</bmecat:TITLE>
+							<bmecat:TITLE>a</bmecat:TITLE>
+							<bmecat:ACADEMIC_TITLE>a</bmecat:ACADEMIC_TITLE>
+							<CONTACT_ROLE type="administrativ">a</CONTACT_ROLE>
+							<bmecat:CONTACT_DESCR>a</bmecat:CONTACT_DESCR>
+							<bmecat:PHONE type="$">a</bmecat:PHONE>
+							<bmecat:FAX type="$">a</bmecat:FAX>
+							<bmecat:URL>a</bmecat:URL>
+							<bmecat:EMAILS>
+								<bmecat:EMAIL>a</bmecat:EMAIL>
+								<bmecat:PUBLIC_KEY type="a">a</bmecat:PUBLIC_KEY>
+								<bmecat:EMAIL>a</bmecat:EMAIL>
+								<bmecat:PUBLIC_KEY type="a">a</bmecat:PUBLIC_KEY>
+							</bmecat:EMAILS>
+							<bmecat:AUTHENTIFICATION>
+								<bmecat:LOGIN>a</bmecat:LOGIN>
+								<bmecat:PASSWORD>use encryption</bmecat:PASSWORD>
+							</bmecat:AUTHENTIFICATION>
+						</CONTACT_DETAILS>
+						<!-- There can be more contact-details
+						<CONTACT_DETAILS>
+							...
+						</CONTACT_DETAILS>
+						-->
+						<bmecat:STREET>a</bmecat:STREET>
+						<bmecat:ZIP>a</bmecat:ZIP>
+						<bmecat:BOXNO>a</bmecat:BOXNO>
+						<bmecat:ZIPBOX>a</bmecat:ZIPBOX>
+						<bmecat:CITY>a</bmecat:CITY>
+						<bmecat:STATE>a</bmecat:STATE>
+						<bmecat:COUNTRY>a</bmecat:COUNTRY>
+						<bmecat:COUNTRY_CODED>DE</bmecat:COUNTRY_CODED>
+						<bmecat:VAT_ID>a</bmecat:VAT_ID>
+						<TAX_NUMBER>a</TAX_NUMBER>
+						<bmecat:PHONE type="office">a</bmecat:PHONE>
+						<bmecat:FAX type="office">a</bmecat:FAX>
+						<bmecat:EMAIL>general-mail</bmecat:EMAIL>
+						<bmecat:PUBLIC_KEY type="a">a</bmecat:PUBLIC_KEY>
+						<bmecat:URL>a</bmecat:URL>
+						<bmecat:ADDRESS_REMARKS>a</bmecat:ADDRESS_REMARKS>
+					</ADDRESS>
+					<!-- There can be more addresses
+					<ADDRESS>
+						...
+					</ADDRESS>
+					-->
+					<ACCOUNT>
+						<HOLDER>a</HOLDER>
+						<BANK_ACCOUNT type="iban">a</BANK_ACCOUNT>
+						<BANK_CODE type="bic">a</BANK_CODE>
+						<BANK_NAME>a</BANK_NAME>
+						<BANK_COUNTRY>DE</BANK_COUNTRY>
+					</ACCOUNT>
+					<!-- There can be more accounts
+					<ACCOUNT>
+						...
+					</ACCOUNT>
+					-->
+					<!-- maybe some additional mime types ...
+					<MIME_INFO>
+						...
+					</MIME_INFO>
+					-->
+				</PARTY>
+			</PARTIES>
+			<CUSTOMER_ORDER_REFERENCE>
+				<ORDER_ID>a</ORDER_ID>
+				<LINE_ITEM_ID>a</LINE_ITEM_ID>
+				<ORDER_DATE>2009-05-13T06:20:00+01:00</ORDER_DATE>
+				<ORDER_DESCR>a</ORDER_DESCR>
+				<CUSTOMER_IDREF type="party_specific">a</CUSTOMER_IDREF>
+			</CUSTOMER_ORDER_REFERENCE>
+			<ORDER_PARTIES_REFERENCE>
+				<bmecat:BUYER_IDREF type="buyer_specific">see above in parties (this ID should be defined in parties)</bmecat:BUYER_IDREF>
+				<bmecat:SUPPLIER_IDREF type="duns">anyone supplies (this ID should be defined in parties)</bmecat:SUPPLIER_IDREF>
+				<INVOICE_RECIPIENT_IDREF type="duns">WhoPays (this ID should be defined in parties)</INVOICE_RECIPIENT_IDREF>
+				<SHIPMENT_PARTIES_REFERENCE>
+					<DELIVERY_IDREF>aaa (this ID should be defined in parties)</DELIVERY_IDREF>
+					<FINAL_DELIVERY_IDREF type="duns">aaa (this ID should be defined in parties)</FINAL_DELIVERY_IDREF>
+					<DELIVERER_IDREF type="iln">aaa (this ID should be defined in parties)</DELIVERER_IDREF>
+				</SHIPMENT_PARTIES_REFERENCE>
+			</ORDER_PARTIES_REFERENCE>
+			<DOCEXCHANGE_PARTIES_REFERENCE>
+				<DOCUMENT_ISSUER_IDREF type="duns">aaa (this ID should be defined in parties)</DOCUMENT_ISSUER_IDREF>
+				<DOCUMENT_RECIPIENT_IDREF type="duns">aaa (this ID should be defined in parties)</DOCUMENT_RECIPIENT_IDREF>
+				<DOCUMENT_RECIPIENT_IDREF type="duns">aaa (this ID should be defined in parties)</DOCUMENT_RECIPIENT_IDREF>
+			</DOCEXCHANGE_PARTIES_REFERENCE>
+			<bmecat:CURRENCY>EUR</bmecat:CURRENCY>
+			<PAYMENT>
+				<CARD type="VISA">
+					<CARD_NUM>a</CARD_NUM>
+					<CARD_AUTH_CODE>a</CARD_AUTH_CODE>
+					<CARD_REF_NUM>a</CARD_REF_NUM>
+					<CARD_EXPIRATION_DATE>2009-05</CARD_EXPIRATION_DATE>
+					<CARD_HOLDER_NAME>a</CARD_HOLDER_NAME>
+				</CARD>
+				<CENTRAL_REGULATION>false</CENTRAL_REGULATION>
+				<PAYMENT_TERMS>
+					<TIME_FOR_PAYMENT>
+						<DAYS>30</DAYS>
+					</TIME_FOR_PAYMENT>
+					<!-- other examples
+					<TIME_FOR_PAYMENT>
+						<DAYS>10</DAYS>
+						<DISCOUNT_FACTOR>0.3</DISCOUNT_FACTOR>
+					</TIME_FOR_PAYMENT>
+					<TIME_FOR_PAYMENT>
+						<DAYS>20</DAYS>
+						<DISCOUNT_FACTOR>0.1</DISCOUNT_FACTOR>
+					</TIME_FOR_PAYMENT>
+					<VALUE_DATE>2009-05-15</VALUE_DATE>
+					-->
+				</PAYMENT_TERMS>
+			</PAYMENT>
+			<TERMS_AND_CONDITIONS>a</TERMS_AND_CONDITIONS>
+			<PARTIAL_SHIPMENT_ALLOWED>TRUE</PARTIAL_SHIPMENT_ALLOWED>
+			<bmecat:TRANSPORT>
+				<bmecat:INCOTERM>aaa</bmecat:INCOTERM>
+				<bmecat:LOCATION>a</bmecat:LOCATION>
+				<bmecat:TRANSPORT_REMARK>a</bmecat:TRANSPORT_REMARK>
+			</bmecat:TRANSPORT>
+			<bmecat:INTERNATIONAL_RESTRICTIONS type="national">some restriction</bmecat:INTERNATIONAL_RESTRICTIONS>
+			<REMARKS type="customType">a</REMARKS>
+			<HEADER_UDX>user defined extension on header-level (for example to describe sector-specific things). can be xml. Can be published on opentrans.org to support spreading of sector-specifics.</HEADER_UDX>
+		</ORDER_INFO>
+	</ORDER_HEADER>
+	<ORDER_ITEM_LIST>
+		<ORDER_ITEM>
+			<LINE_ITEM_ID>1</LINE_ITEM_ID>
+			<PRODUCT_ID>
+				<bmecat:SUPPLIER_PID type="$">a</bmecat:SUPPLIER_PID>
+				<bmecat:SUPPLIER_IDREF type="$">a</bmecat:SUPPLIER_IDREF>
+				<CONFIG_CODE_FIX>a</CONFIG_CODE_FIX>
+				<LOT_NUMBER>a</LOT_NUMBER>
+				<SERIAL_NUMBER>a</SERIAL_NUMBER>
+				<bmecat:INTERNATIONAL_PID type="$">a</bmecat:INTERNATIONAL_PID>
+				<bmecat:BUYER_PID type="$">a</bmecat:BUYER_PID>
+				<bmecat:DESCRIPTION_SHORT lang="deu">a</bmecat:DESCRIPTION_SHORT>
+				<bmecat:DESCRIPTION_LONG lang="eng">a</bmecat:DESCRIPTION_LONG>
+				<MANUFACTURER_INFO>
+					<bmecat:MANUFACTURER_IDREF type="$">a</bmecat:MANUFACTURER_IDREF>
+					<bmecat:MANUFACTURER_PID>a</bmecat:MANUFACTURER_PID>
+					<bmecat:MANUFACTURER_TYPE_DESCR lang="eng">a</bmecat:MANUFACTURER_TYPE_DESCR>
+				</MANUFACTURER_INFO>
+				<bmecat:PRODUCT_TYPE>bundle</bmecat:PRODUCT_TYPE>
+			</PRODUCT_ID>
+			<PRODUCT_FEATURES>
+				<bmecat:REFERENCE_FEATURE_SYSTEM_NAME>$</bmecat:REFERENCE_FEATURE_SYSTEM_NAME>
+				<bmecat:REFERENCE_FEATURE_GROUP_ID type="flat">a</bmecat:REFERENCE_FEATURE_GROUP_ID>
+				<bmecat:REFERENCE_FEATURE_GROUP_NAME>a</bmecat:REFERENCE_FEATURE_GROUP_NAME>
+				<bmecat:REFERENCE_FEATURE_GROUP_ID2 type="flat">a</bmecat:REFERENCE_FEATURE_GROUP_ID2>
+				<bmecat:GROUP_PRODUCT_ORDER>0</bmecat:GROUP_PRODUCT_ORDER>
+				<FEATURE>
+					<bmecat:FNAME>a</bmecat:FNAME>
+					<bmecat:FVALUE>a</bmecat:FVALUE>
+					<bmecat:FUNIT>a</bmecat:FUNIT>
+					<bmecat:FORDER>0</bmecat:FORDER>
+					<bmecat:FDESCR lang="aar">a</bmecat:FDESCR>
+					<bmecat:FVALUE_DETAILS lang="aar">a</bmecat:FVALUE_DETAILS>
+					<bmecat:FVALUE_TYPE>choice</bmecat:FVALUE_TYPE>
+				</FEATURE>
+				<!-- maybe some additional FEATUREs ...
+					<FEATURE>
+						...
+					</FEATURE>
+					-->
+			</PRODUCT_FEATURES>
+			<PRODUCT_COMPONENTS>
+				<PRODUCT_COMPONENT>
+					<PRODUCT_ID>
+						<!-- ... -->
+					</PRODUCT_ID>
+					<PRODUCT_FEATURES>
+						<!-- ... -->
+					</PRODUCT_FEATURES>
+					<QUANTITY>1.0</QUANTITY>
+					<bmecat:ORDER_UNIT>04</bmecat:ORDER_UNIT>
+					<!--
+					<PRODUCT_PRICE_FIX>
+						... pricing for component ...
+					</PRODUCT_PRICE_FIX>
+					-->
+				</PRODUCT_COMPONENT>
+				<!-- maybe some additional PRODUCT_COMPONENTs ...
+					<PRODUCT_COMPONENT>
+						...
+					</PRODUCT_COMPONENT>
+					-->
+			</PRODUCT_COMPONENTS>
+			<QUANTITY>1.0</QUANTITY>
+			<bmecat:ORDER_UNIT>04</bmecat:ORDER_UNIT>
+			<PRODUCT_PRICE_FIX>
+				<bmecat:PRICE_AMOUNT>0.0</bmecat:PRICE_AMOUNT>
+				<ALLOW_OR_CHARGES_FIX>
+					<ALLOW_OR_CHARGE type="allowance">
+						<ALLOW_OR_CHARGE_SEQUENCE>1</ALLOW_OR_CHARGE_SEQUENCE>
+						<ALLOW_OR_CHARGE_NAME>a</ALLOW_OR_CHARGE_NAME>
+						<ALLOW_OR_CHARGE_TYPE>small_order</ALLOW_OR_CHARGE_TYPE>
+						<ALLOW_OR_CHARGE_DESCR>a</ALLOW_OR_CHARGE_DESCR>
+						<ALLOW_OR_CHARGE_VALUE>
+							<AOC_PERCENTAGE_FACTOR>0.08</AOC_PERCENTAGE_FACTOR>
+						</ALLOW_OR_CHARGE_VALUE>
+					</ALLOW_OR_CHARGE>
+					<ALLOW_OR_CHARGE type="allowance">
+						<ALLOW_OR_CHARGE_SEQUENCE>2</ALLOW_OR_CHARGE_SEQUENCE>
+						<ALLOW_OR_CHARGE_NAME>b</ALLOW_OR_CHARGE_NAME>
+						<ALLOW_OR_CHARGE_TYPE>cash_discount</ALLOW_OR_CHARGE_TYPE>
+						<ALLOW_OR_CHARGE_DESCR>a</ALLOW_OR_CHARGE_DESCR>
+						<ALLOW_OR_CHARGE_VALUE>
+							<AOC_PERCENTAGE_FACTOR>0.05</AOC_PERCENTAGE_FACTOR>
+						</ALLOW_OR_CHARGE_VALUE>
+						<!-- if you want to use another base for allowances or charges <ALLOW_OR_CHARGE_BASE></ALLOW_OR_CHARGE_BASE> -->
+					</ALLOW_OR_CHARGE>
+					<ALLOW_OR_CHARGES_TOTAL_AMOUNT>1111</ALLOW_OR_CHARGES_TOTAL_AMOUNT>
+				</ALLOW_OR_CHARGES_FIX>
+				<bmecat:PRICE_FLAG type="incl_assurance">TRUE</bmecat:PRICE_FLAG>
+				<TAX_DETAILS_FIX>
+					<bmecat:CALCULATION_SEQUENCE>1</bmecat:CALCULATION_SEQUENCE>
+					<bmecat:TAX_CATEGORY>$</bmecat:TAX_CATEGORY>
+					<bmecat:TAX_TYPE>vat</bmecat:TAX_TYPE>
+					<bmecat:TAX>0.0</bmecat:TAX>
+					<TAX_AMOUNT>0.0</TAX_AMOUNT>
+					<TAX_BASE>0.0</TAX_BASE>
+					<bmecat:EXEMPTION_REASON>a</bmecat:EXEMPTION_REASON>
+					<bmecat:JURISDICTION>a</bmecat:JURISDICTION>
+				</TAX_DETAILS_FIX>
+				<bmecat:PRICE_QUANTITY>1</bmecat:PRICE_QUANTITY>
+				<PRICE_BASE_FIX>
+					<PRICE_UNIT_VALUE>1111</PRICE_UNIT_VALUE>
+					<bmecat:PRICE_UNIT>04</bmecat:PRICE_UNIT>
+					<bmecat:PRICE_UNIT_FACTOR>1</bmecat:PRICE_UNIT_FACTOR>
+				</PRICE_BASE_FIX>
+			</PRODUCT_PRICE_FIX>
+			<PRICE_LINE_AMOUNT>1111</PRICE_LINE_AMOUNT>
+			<PARTIAL_SHIPMENT_ALLOWED>FALSE</PARTIAL_SHIPMENT_ALLOWED>
+			<!--
+			<DELIVERY_DATE type="fixed">
+				... is defined in the header this time ...
+			</DELIVERY_DATE>
+			-->
+			<SOURCING_INFO>
+				<QUOTATION_ID>ID/Number of the related quotation</QUOTATION_ID>
+				<!--
+				any agreements, catalog reference and customer order reference here on item-level (we already defined some on header-level)
+				-->
+			</SOURCING_INFO>
+			<bmecat:ACCOUNTING_INFO>
+				<bmecat:COST_CATEGORY_ID type="cost_center">a</bmecat:COST_CATEGORY_ID>
+				<bmecat:COST_TYPE>a</bmecat:COST_TYPE>
+				<bmecat:COST_ACCOUNT>a</bmecat:COST_ACCOUNT>
+			</bmecat:ACCOUNTING_INFO>
+			<!-- define shipment on item-level (if shipment of items is different)
+			<SHIPMENT_PARTIES_REFERENCE>
+				already defined on header-level
+			</SHIPMENT_PARTIES_REFERENCE>
+			<bmecat:TRANSPORT>
+				<bmecat:INCOTERM>aaa</bmecat:INCOTERM>
+				<bmecat:LOCATION>a</bmecat:LOCATION>
+				<bmecat:TRANSPORT_REMARK lang="aar">a</bmecat:TRANSPORT_REMARK>
+				<bmecat:TRANSPORT_REMARK lang="aar">a</bmecat:TRANSPORT_REMARK>
+			</bmecat:TRANSPORT>
+			<bmecat:INTERNATIONAL_RESTRICTIONS type="$">a</bmecat:INTERNATIONAL_RESTRICTIONS>
+			<bmecat:INTERNATIONAL_RESTRICTIONS type="$">a</bmecat:INTERNATIONAL_RESTRICTIONS>
+			<bmecat:SPECIAL_TREATMENT_CLASS type="a">a</bmecat:SPECIAL_TREATMENT_CLASS>
+			<bmecat:SPECIAL_TREATMENT_CLASS type="a">a</bmecat:SPECIAL_TREATMENT_CLASS>
+			-->
+			<REMARKS type="customRemark" lang="deu">a</REMARKS>
+			<ITEM_UDX>user defined extension on item-level (for example to describe sector-specific things). Can be xml. Can be published on opentrans.org to support spreading of sector-specifics.</ITEM_UDX>
+		</ORDER_ITEM>
+		<!--
+		<ORDER_ITEM>
+			additional order-items
+		</ORDER_ITEM>
+		-->
+	</ORDER_ITEM_LIST>
+	<ORDER_SUMMARY>
+		<TOTAL_ITEM_NUM>1</TOTAL_ITEM_NUM>
+		<TOTAL_AMOUNT>1111</TOTAL_AMOUNT>
+	</ORDER_SUMMARY>
+</ORDER>
