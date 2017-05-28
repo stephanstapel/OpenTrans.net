@@ -102,6 +102,7 @@ namespace OpenTrans.net
             stream.Seek(streamPosition, SeekOrigin.Begin);
         } // !Save()
 
+
         private void _writeOrderItem(XmlTextWriter writer, OrderItem item)
         {
             Writer.WriteStartElement("ORDER_ITEM");
@@ -111,9 +112,15 @@ namespace OpenTrans.net
                 _writeProductId(Writer, item.ProductId);
             }
 
-            _writeAmount(Writer, "QUANTITY", item.Quantity);
+            if (item.Quantity.HasValue)
+            {
+                _writeAmount(Writer, "QUANTITY", item.Quantity.Value);
+            }
             _writeOptionalElementString(Writer, "bmecat:ORDER_UNIT", item.OrderUnit.EnumToString());
-            _writeAmount(Writer, "PRICE_LINE_AMOUNT", item.LineAmount);
+            if (item.LineAmount.HasValue)
+            {
+                _writeAmount(Writer, "PRICE_LINE_AMOUNT", item.LineAmount.Value);
+            }
 
             foreach (string remark in item.Remarks)
             {
@@ -131,7 +138,7 @@ namespace OpenTrans.net
         {
             Writer.WriteStartElement("PRODUCT_ID");
             _writeOptionalElementString(Writer, "bmecat:SUPPLIER_PID", productId.SupplierPId, new Dictionary<string, string>() { { "type", ""} });
-            _writeOptionalElementString(Writer, "bmecat:bmecat:SUPPLIER_IDREF", productId.SupplierIdRef, new Dictionary<string, string> { { "type", "" } });
+            _writeOptionalElementString(Writer, "bmecat:SUPPLIER_IDREF", productId.SupplierIdRef, new Dictionary<string, string> { { "type", "" } });
             _writeOptionalElementString(Writer, "bmecat:DESCRIPTION_SHORT", productId.DescriptionShort, new Dictionary<string, string> { { "lang", "deu" } });
             _writeOptionalElementString(Writer, "bmecat:DESCRIPTION_LONG", productId.DescriptionLong, new Dictionary<string, string> { { "lang", "deu" } });
             Writer.WriteEndElement(); // !PRODUCT_ID
@@ -146,12 +153,13 @@ namespace OpenTrans.net
             {
                 Writer.WriteElementString("PARTY_ROLE", _role);
             }
+
+            writer.WriteStartElement("ADDRESS");
             _writeOptionalElementString(writer, "bmecat:NAME", party.Name);
             _writeOptionalElementString(writer, "bmecat:NAME2", party.Name2);
             _writeOptionalElementString(writer, "bmecat:NAME3", party.Name3);
             _writeOptionalElementString(writer, "bmecat:DEPARTMENT", party.Department);
             _writeOptionalElementString(writer, "bmecat:STREET", party.Street);
-
             _writeOptionalElementString(writer, "bmecat:ZIP", party.Zip);
             _writeOptionalElementString(writer, "bmecat:BOXNO", party.BoxNo);
             _writeOptionalElementString(writer, "bmecat:ZIPBOX", party.ZipBox);
@@ -161,6 +169,27 @@ namespace OpenTrans.net
             _writeOptionalElementString(writer, "bmecat:COUNTRY_CODE", party.CountryCode.EnumToString());
             _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
             _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
+
+            if (party.ContactDetails != null)
+            {
+                writer.WriteStartElement("CONTACT_DETAILS");
+                _writeOptionalElementString(writer, "CONTACT_ID", party.ContactDetails.Id);
+                _writeOptionalElementString(writer, "CONTACT_NAME", party.ContactDetails.Name);
+                _writeOptionalElementString(writer, "FIRST_NAME", party.ContactDetails.FirstName);
+                _writeOptionalElementString(writer, "TITLE", party.ContactDetails.Title);
+                _writeOptionalElementString(writer, "ACADEMIC_TITLE", party.ContactDetails.AcademicTitle);
+                _writeOptionalElementString(writer, "CONTACT_DESCR", party.ContactDetails.Description);
+                _writeOptionalElementString(writer, "URL", party.ContactDetails.Url);
+                _writeOptionalElementString(writer, "AUTHENTIFICATION", party.ContactDetails.Authentification);
+
+                /**
+                 * @todo write elements phone, fax, roles, emailAddresses
+                 */
+
+                writer.WriteEndElement(); // !CONTACT_DETAILS
+            }
+
+            Writer.WriteEndElement(); // !ADDRESS
 
             Writer.WriteEndElement(); // !PARTY
         } // !_writeParty()

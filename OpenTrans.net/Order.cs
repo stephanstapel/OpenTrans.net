@@ -43,13 +43,15 @@ namespace OpenTrans.net
 
         public static Order Load(Stream stream)
         {
-            return OrderReader.Load(stream);
+            OrderReader reader = new OrderReader();
+            return reader.Load(stream);
         } // !Load()
 
 
         public static Order Load(string filename)
         {
-            return OrderReader.Load(filename);
+            OrderReader reader = new OrderReader();
+            return reader.Load(filename);
         } // !Load()
 
 

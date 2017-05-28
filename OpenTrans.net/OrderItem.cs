@@ -24,9 +24,9 @@ namespace OpenTrans.net
     {
         public string LineItemId { get; set; }
         public ProductId ProductId { get; set; }
-        public decimal Quantity { get; set; }
+        public decimal? Quantity { get; set; }
         public QuantityCodes OrderUnit { get; set; }
-        public decimal LineAmount { get; set; }
+        public decimal? LineAmount { get; set; }
         public List<string> Remarks { get; set; }
 
 

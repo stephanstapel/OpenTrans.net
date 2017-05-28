@@ -16,12 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+using System.Collections.Generic;
+
 namespace OpenTrans.net
 {
+    /**
+     * @todo add missing attribute: Phone, Fax (typed), page 62 of spec
+     */
     public class Contact
     {
-        /**
-         * @todo Attribute einfüllen und per XML ausgeben
-         */
+        public string Id { get; set; }
+        /// <summary>
+        /// Nachname des Ansprechpartners
+        /// </summary>
+        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string Title { get; set; }
+        public string AcademicTitle { get; set; }
+        public List<string> Roles { get; set; } = new List<string>();
+        public string Description { get; set; }
+        public string Url { get; set; }
+        public List<string> EmailAddresses { get; set; } = new List<string>();
+        public string Authentification { get; set; }
     }
 }
