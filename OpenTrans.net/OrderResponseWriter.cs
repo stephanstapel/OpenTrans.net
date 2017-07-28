@@ -17,28 +17,31 @@
  * under the License.
  */
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
 
 namespace OpenTrans.net
 {
-    internal class OrderWriter : BaseWriter
+    internal class OrderResponseWriter : BaseWriter
     {
-        private Order Order;
+        private OrderResponse OrderResponse;
 
 
-        public void Save(Order order, string filename)
+        public OrderResponseWriter()
+        {
+        }
+
+        public void Save(OrderResponse orderResponse, string filename)
         {
             FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
-            Save(order, fs);
+            Save(orderResponse, fs);
             fs.Flush();
             fs.Close();
-        } // !Save()
+        } //!Save()
 
 
-        public void Save(Order order, Stream stream)
+        public void Save(OrderResponse orderResponse, Stream stream)
         {
             if (!stream.CanWrite || !stream.CanSeek)
             {
@@ -47,11 +50,11 @@ namespace OpenTrans.net
 
             long streamPosition = stream.Position;
 
-            this.Order = order;
+            this.OrderResponse = orderResponse;
             this.Writer = new XmlTextWriter(stream, Encoding.UTF8);
             Writer.Formatting = Formatting.Indented;
             Writer.WriteStartDocument();
-            Writer.WriteStartElement("ORDER");
+            Writer.WriteStartElement("ORDERRESPONSE");
             Writer.WriteAttributeString("type", "standard");
             Writer.WriteAttributeString("version", "2.1");
             Writer.WriteAttributeString("xmlns", "http://www.opentrans.org/XMLSchema/2.1");
@@ -61,47 +64,43 @@ namespace OpenTrans.net
             Writer.WriteAttributeString("xmlns:xmime", "http://www.w3.org/2005/05/xmlmime");
             Writer.WriteAttributeString("xmlns:xsig", "http://www.w3.org/2000/09/xmldsig#");
 
-            Writer.WriteStartElement("ORDER_HEADER");
+            Writer.WriteStartElement("ORDERRESPONSE_HEADER");
             Writer.WriteStartElement("CONTROL_INFO");
             _writeDateTime(Writer, "GENERATION_DATE", DateTime.Now);
             Writer.WriteEndElement(); // !CONTROL_INFO
-            Writer.WriteStartElement("SOURCING_INFO");
-            Writer.WriteEndElement(); // !SOURCING_INFO
-            Writer.WriteStartElement("ORDER_INFO");
-            Writer.WriteEndElement(); // !ORDER_INFO
-            Writer.WriteElementString("ORDER_ID", order.Id);
-            _writeDateTime(Writer, "ORDER_DATE", order.OrderDate);
-            Writer.WriteStartElement("DELIVERY_DATE");
-            _writeDateTime(Writer, "DELIVERY_START_DATE", order.DesiredDeliveryDateStart);
-            _writeDateTime(Writer, "DELIVERY_END_DATE", order.DesiredDeliveryDateEnd);
-            Writer.WriteEndElement(); // !DELIVERY_DATE
 
+            Writer.WriteStartElement("ORDERRESPONSE_INFO");
+            Writer.WriteElementString("ORDER_ID", orderResponse.Id);
+            _writeDateTime(Writer, "ORDERRESPONSE_DATE", DateTime.Now);
+            _writeDateTime(Writer, "ORDER_DATE", orderResponse.OrderDate);
+            _writeAmount(Writer, "ORDERCHANGE_SEQUENCE_ID", orderResponse.OrderChangeSequenceId);
             Writer.WriteStartElement("PARTIES");
-            foreach (Party party in order.Parties)
+            foreach(Party party in orderResponse.Parties)
             {
                 _writeParty(Writer, party);
             }
             Writer.WriteEndElement(); // !PARTIES
+            Writer.WriteEndElement(); // !ORDERRESPONSE_INFO
 
-            Writer.WriteEndElement(); // !ORDER_INFO
-            Writer.WriteEndElement(); // !ORDER_HEADER
+            Writer.WriteEndElement(); // !ORDERRESPONSE_HEADER
 
-            Writer.WriteStartElement("ORDER_ITEM_LIST");
-            foreach (OrderItem _item in order.OrderItems)
+            Writer.WriteStartElement("ORDERRESPONSE_ITEM_LIST");
+            foreach(OrderItem item in orderResponse.OrderItems)
             {
-                _writeOrderItem(Writer, _item);
+                _writeOrderItem(Writer, item, "ORDERRESPONSE_ITEM");
             }
-            Writer.WriteEndElement(); // !ORDER_ITEM_LIST
+            Writer.WriteEndElement(); // !ORDERRESPONSE_ITEM_LIST
 
-            Writer.WriteStartElement("ORDER_SUMMARY");
-            _writeAmount(Writer, "TOTAL_ITEM_NUM", order.OrderItems.Count);
-            Writer.WriteEndElement(); // !ORDER_SUMMARY
+            Writer.WriteStartElement("ORDERRESPONSE_SUMMARY");
+            _writeAmount(Writer, "TOTAL_ITEM_NUM", orderResponse.OrderItems.Count);
+            Writer.WriteEndElement(); // !ORDERRESPONSE_SUMMARY
 
-            Writer.WriteEndElement(); // !ORDER
+            Writer.WriteEndElement(); // !ORDERRESPONSE
             Writer.WriteEndDocument();
+
             Writer.Flush();
 
             stream.Seek(streamPosition, SeekOrigin.Begin);
-        } // !Save()
+        } //!Save()
     }
 }

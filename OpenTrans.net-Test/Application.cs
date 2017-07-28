@@ -26,6 +26,121 @@ namespace OpenTrans.net_Test
     {
         internal void run()
         {
+            _createOrder();
+            _createOrderResponse();
+        }
+
+
+        private void _createOrderResponse()
+        {
+            OrderResponse response = new OrderResponse()
+            {
+                Id = "GWAHJV-160131-1470",
+                OrderDate = new DateTime(2016, 01, 31, 18, 29, 31),
+                OrderChangeSequenceId = 1
+            };
+
+            response.Parties.Add(new Party()
+            {
+                Id = "123456",
+                Roles = { "buyer" },
+                Name = "ITscope GmbH",
+                Name2 = "Online Plattform",
+                Name3 = String.Empty,
+                Department = "a",
+                Street = "Ludwig-Erhard-Allee 20",
+                Zip = "76131",
+                City = "Karlsruhe",
+                CountryCode = CountryCodes.DE,
+                ContactDetails = new Contact()
+                {
+                    Name = "Support",
+                    FirstName = "ITscope",
+                    EmailAddresses = { "support@itscope.com" }
+                }
+            });
+
+            response.Parties.Add(new Party()
+            {
+                Id = "123456",
+                Roles = { "delivery" },
+                Name = "ITscope GmbH",
+                Name2 = "Online Plattform",
+                Name3 = String.Empty,
+                Department = "a",
+                Street = "Ludwig-Erhard-Allee 20",
+                Zip = "76131",
+                City = "Karlsruhe",
+                CountryCode = CountryCodes.DE,
+                ContactDetails = new Contact()
+                {
+                    Name = "Support",
+                    FirstName = "ITscope",
+                    EmailAddresses = { "support@itscope.com" }
+                }
+            });
+
+            response.Parties.Add(new Party()
+            {
+                Id = "123456",
+                Roles = { "invoice_recipient" },
+                Name = "ITscope GmbH",
+                Name2 = "Online Plattform",
+                Name3 = String.Empty,
+                Department = "a",
+                Street = "Ludwig-Erhard-Allee 20",
+                Zip = "76131",
+                City = "Karlsruhe",
+                CountryCode = CountryCodes.DE,
+                ContactDetails = new Contact()
+                {
+                    Name = "Support",
+                    FirstName = "ITscope",
+                    EmailAddresses = { "support@itscope.com" }
+                }
+            });
+
+            response.Parties.Add(new Party()
+            {
+                Id = "10000735",
+                Roles = { "supplier" },
+                Name = "ITscope GmbH",
+                Name2 = "Online Plattform",
+                Name3 = String.Empty,
+                Department = "a",
+                Street = "Ludwig-Erhard-Allee 20",
+                Zip = "76131",
+                City = "Karlsruhe",
+                CountryCode = CountryCodes.DE,
+                ContactDetails = new Contact()
+                {
+                    Name = "Support",
+                    FirstName = "ITscope",
+                    EmailAddresses = { "support@itscope.com" }
+                }
+            });
+
+            response.OrderItems.Add(new OrderItem()
+            {
+                LineItemId = "100",
+                ProductId = new ProductId()
+                {
+                    SupplierPId = "123002",
+                    DescriptionShort = "APPLE iPad Air 2 64GB 3G 4G Grau",
+                    DescriptionLong = "APPLE iPad Air 2 64GB 3G 4G Grau&lt;br /&gt;24.63cm/9.7\" IPS(2048 x 1536), Kamera auf Rück - &lt; br / &gt; und Vorderseite, &lt; br / &gt; Bluetooth, Wi - Fi, 4G, Space - grau"
+                },
+                Quantity = 1,
+                OrderUnit = QuantityCodes.C62,
+                LineAmount = 562
+            });
+
+
+            response.Save("BE_RESPONSE.xml");
+        } // !_createOrderResponse()
+
+
+        private void _createOrder()
+        {
             Order order = new Order()
             {
                 Id = "OID1",
@@ -62,7 +177,9 @@ namespace OpenTrans.net_Test
                 Remarks = new List<string>() { "a" }
             });
 
-            order.Save("test.xml");
-        }
+            //order.Save("test.xml");
+
+            Order order2 = Order.Load("BE_4599027_20170528_113427.xml");
+        } // !_createOrder()
     }
 }

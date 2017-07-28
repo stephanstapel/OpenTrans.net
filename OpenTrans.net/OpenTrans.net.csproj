@@ -40,12 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseWriter.cs" />
     <Compile Include="Contact.cs" />
     <Compile Include="CountryCodes.cs" />
     <Compile Include="IllegalStreamException.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderItem.cs" />
     <Compile Include="OrderReader.cs" />
+    <Compile Include="OrderResponse.cs" />
+    <Compile Include="OrderResponseReader.cs" />
+    <Compile Include="OrderResponseWriter.cs" />
     <Compile Include="OrderWriter.cs" />
     <Compile Include="QuantityCodes.cs" />
     <Compile Include="Party.cs" />

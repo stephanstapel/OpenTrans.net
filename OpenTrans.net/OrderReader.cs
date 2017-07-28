@@ -60,7 +60,7 @@ namespace OpenTrans.net
             }
 
             XmlNodeList itemNodes = doc.SelectNodes("//openTrans:ORDER_ITEM_LIST/openTrans:ORDER_ITEM", nsmgr);
-            foreach(XmlNode itemNode in itemNodes)
+            foreach (XmlNode itemNode in itemNodes)
             {
                 retval.OrderItems.Add(_readOrderItem(itemNode, nsmgr));
             }

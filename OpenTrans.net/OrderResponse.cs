@@ -25,26 +25,26 @@ using System.Threading.Tasks;
 
 namespace OpenTrans.net
 {
-    public class Order
+    public class OrderResponse
     {
         public string Id { get; set; }
         public DateTime OrderDate { get; set; }
-        public DateTime DesiredDeliveryDateStart { get; set; }
-        public DateTime DesiredDeliveryDateEnd { get; set; }
+        public int OrderChangeSequenceId { get; set; }
         public List<Party> Parties { get; set; } = new List<Party>();
         public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
-        
 
-        public static Order Load(Stream stream)
+
+
+        public static OrderResponse Load(Stream stream)
         {
-            OrderReader reader = new OrderReader();
+            OrderResponseReader reader = new OrderResponseReader();
             return reader.Load(stream);
         } // !Load()
 
 
-        public static Order Load(string filename)
+        public static OrderResponse Load(string filename)
         {
-            OrderReader reader = new OrderReader();
+            OrderResponseReader reader = new OrderResponseReader();
             return reader.Load(filename);
         } // !Load()
 
@@ -58,14 +58,14 @@ namespace OpenTrans.net
         /// <param name="stream"></param>
         public void Save(Stream stream)
         {
-            OrderWriter writer = new OrderWriter();
+            OrderResponseWriter writer = new OrderResponseWriter();
             writer.Save(this, stream);
         } // !Save()
 
 
         public void Save(string filename)
         {
-            OrderWriter writer = new OrderWriter();
+            OrderResponseWriter writer = new OrderResponseWriter();
             writer.Save(this, filename);
         } // !Save()
     }
