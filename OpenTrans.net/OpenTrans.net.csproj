@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BaseWriter.cs" />
     <Compile Include="Contact.cs" />
+    <Compile Include="Countries.cs" />
     <Compile Include="CountryCodes.cs" />
     <Compile Include="IllegalStreamException.cs" />
     <Compile Include="Order.cs" />

@@ -47,7 +47,7 @@ namespace OpenTrans.net
             _writeOptionalElementString(writer, "bmecat:ZIPBOX", party.ZipBox);
             _writeOptionalElementString(writer, "bmecat:CITY", party.City);
             _writeOptionalElementString(writer, "bmecat:STATE", party.State);
-            _writeOptionalElementString(writer, "bmecat:COUNTRY", _translateCountry(party.CountryCode));
+            _writeOptionalElementString(writer, "bmecat:COUNTRY", Countries.GetCountry(party.CountryCode));
             _writeOptionalElementString(writer, "bmecat:COUNTRY_CODE", party.CountryCode.EnumToString());
             _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
             _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
@@ -117,18 +117,6 @@ namespace OpenTrans.net
             _writeOptionalElementString(Writer, "bmecat:DESCRIPTION_LONG", productId.DescriptionLong, new Dictionary<string, string> { { "lang", "deu" } });
             Writer.WriteEndElement(); // !PRODUCT_ID
         } // !_writeProductId()
-
-
-        internal string _translateCountry(CountryCodes countryCode)
-        {
-            switch (countryCode)
-            {
-                case CountryCodes.DE:
-                    return "Deutschland";
-                default:
-                    return "";
-            }
-        } // !_translateCountry()
 
 
         internal void _writeDateTime(XmlTextWriter writer, string nodeName, DateTime dt)

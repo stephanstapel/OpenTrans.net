@@ -27,23 +27,28 @@ namespace OpenTrans.net
     /// Country codes based on ISO 3166
     /// source:
     /// http://www.iso.org/iso/home/standards/country_codes/country_names_and_code_elements_txt.htm
+    /// https://datahub.io/core/country-list
     /// 
-    /// enum can be re-generated using:
+    /// enum can be re-generated using this file:
+    /// https://pkgstore.datahub.io/core/country-list/data_csv/data/d7c9d7cfb42cb69f4422dec222dbbaa8/data_csv.csv
     /// 
-    /// f = file("countries.txt")
+    /// and this python script:
+    /// 
+    /// f = file("data_csv.csv")
     /// g = file("output.cs", "w+")
+    /// csvfile = csv.reader(f, delimiter = ',', quotechar = '"')
+    /// next(csvfile, None) # skip header line
     /// 
-    /// for line in f.readlines():
-    ///     parts = line.replace("\n", "").split(";")
-    /// 
+    /// for line in csvfile:
     ///     g.write("/// <summary>\n")
-    ///     g.write("/// " + parts[0] + "\n")
+    ///     g.write("/// " + line[0] + "\n")
     ///     g.write("/// </summary>\n")
-    ///     g.write(parts[1] + ",\n")
+    ///     g.write(line[1] + ",\n")
     ///     g.write("\n")    
     /// 
     /// f.close()
     /// g.close()
+
 
     /// </summary>
     public enum CountryCodes
