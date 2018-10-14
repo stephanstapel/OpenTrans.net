@@ -68,7 +68,6 @@ namespace OpenTrans.net
             Writer.WriteStartElement("SOURCING_INFO");
             Writer.WriteEndElement(); // !SOURCING_INFO
             Writer.WriteStartElement("ORDER_INFO");
-            Writer.WriteEndElement(); // !ORDER_INFO
             Writer.WriteElementString("ORDER_ID", order.Id);
             _writeDateTime(Writer, "ORDER_DATE", order.OrderDate);
             Writer.WriteStartElement("DELIVERY_DATE");
@@ -82,7 +81,7 @@ namespace OpenTrans.net
                 _writeParty(Writer, party);
             }
             Writer.WriteEndElement(); // !PARTIES
-
+            
             Writer.WriteEndElement(); // !ORDER_INFO
             Writer.WriteEndElement(); // !ORDER_HEADER
 
@@ -96,7 +95,7 @@ namespace OpenTrans.net
             Writer.WriteStartElement("ORDER_SUMMARY");
             _writeAmount(Writer, "TOTAL_ITEM_NUM", order.OrderItems.Count);
             Writer.WriteEndElement(); // !ORDER_SUMMARY
-
+            
             Writer.WriteEndElement(); // !ORDER
             Writer.WriteEndDocument();
             Writer.Flush();

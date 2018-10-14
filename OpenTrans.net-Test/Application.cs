@@ -177,7 +177,7 @@ namespace OpenTrans.net_Test
                 Remarks = new List<string>() { "a" }
             });
 
-            //order.Save("test.xml");
+            order.Save("test.xml");
 
             Order order2 = Order.Load("BE_4599027_20170528_113427.xml");
         } // !_createOrder()
