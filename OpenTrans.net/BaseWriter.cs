@@ -48,7 +48,7 @@ namespace OpenTrans.net
             _writeOptionalElementString(writer, "bmecat:CITY", party.City);
             _writeOptionalElementString(writer, "bmecat:STATE", party.State);
             _writeOptionalElementString(writer, "bmecat:COUNTRY", Countries.GetCountry(party.CountryCode));
-            _writeOptionalElementString(writer, "bmecat:COUNTRY_CODE", party.CountryCode.EnumToString());
+            _writeOptionalElementString(writer, "bmecat:COUNTRY_CODED", party.CountryCode.EnumToString());
             _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
             _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
 
