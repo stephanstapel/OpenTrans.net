@@ -10,6 +10,24 @@ namespace OpenTrans.net
 {
     class XmlUtils
     {
+        public static string AttributeText(XmlNode node, string attributeName, string defaultText = "")
+        {
+            try
+            {
+                XmlAttribute attrib = node.Attributes[attributeName];
+                if (attrib != null)
+                {
+                    return attrib.Value;
+                }
+            }
+            catch
+            {
+            }
+
+            return defaultText;
+        } // !AttributeText()
+
+
         public static bool NodeAsBool(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null, bool defaultValue = true)
         {
             if (node == null)

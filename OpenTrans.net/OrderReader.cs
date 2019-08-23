@@ -150,8 +150,7 @@ namespace OpenTrans.net
             }
 
             Party retval = new Party()
-            {
-                Id = XmlUtils.NodeAsString(node, "./bmecat:PARTY_ID", nsmgr),
+            {                
                 Roles = roles,
                 Name = XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:NAME", nsmgr),
                 Name2 = XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:NAME2", nsmgr),
@@ -170,6 +169,16 @@ namespace OpenTrans.net
                 PhoneNo = XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:PHONE", nsmgr),
                 Url = XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:URL", nsmgr),
             };
+
+            foreach(XmlNode idNode in node.SelectNodes("./bmecat:PARTY_ID", nsmgr))
+            {
+                retval.Ids.Add(new PartyId()
+                {
+                    Id = idNode.InnerText,
+                    Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(idNode, "type"))
+                });
+            }
+            
 
             // email field can me used in single mode and multi address mode
             XmlNodeList emailAddressNodes = node.SelectNodes("./openTrans:ADDRESS/bmecat:EMAILS/bmecat:EMAIL", nsmgr);

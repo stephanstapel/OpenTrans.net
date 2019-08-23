@@ -22,7 +22,7 @@ namespace OpenTrans.net
 {
     public class Party
     {
-        public string Id { get; set; }
+        public List<PartyId> Ids { get; set; } = new List<PartyId>();
         public List<string> Roles { get; set; }
         public string Name { get; set; }
         public string Name2 { get; set; }

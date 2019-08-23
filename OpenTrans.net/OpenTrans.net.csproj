@@ -53,6 +53,8 @@
     <Compile Include="OrderResponseReader.cs" />
     <Compile Include="OrderResponseWriter.cs" />
     <Compile Include="OrderWriter.cs" />
+    <Compile Include="PartyId.cs" />
+    <Compile Include="PartyIdTypes.cs" />
     <Compile Include="QuantityCodes.cs" />
     <Compile Include="Party.cs" />
     <Compile Include="ProductId.cs" />

@@ -30,7 +30,12 @@ namespace OpenTrans.net
         internal void _writeParty(XmlTextWriter writer, Party party)
         {
             Writer.WriteStartElement("PARTY");
-            _writeOptionalElementString(Writer, "bmecat:PARTY_ID", party.Id, new Dictionary<string, string>() { { "type", "PredefinedOrCustomType" } });
+
+            foreach(PartyId id in party.Ids)
+            {
+                _writeOptionalElementString(Writer, "bmecat:PARTY_ID", id.Id, new Dictionary<string, string>() { { "type", id.Type.EnumToString() } });
+            }
+            
             foreach (string _role in party.Roles)
             {
                 Writer.WriteElementString("PARTY_ROLE", _role);
@@ -59,6 +64,7 @@ namespace OpenTrans.net
             Writer.WriteEndElement(); // !bmecat:EMAILS
             _writeOptionalElementString(writer, "bmecat:FAX", party.FaxNo);
             _writeOptionalElementString(writer, "bmecat:PHONE", party.PhoneNo);
+            _writeOptionalElementString(writer, "bmecat:URL", party.Url);
 
             if (party.ContactDetails != null)
             {
@@ -78,7 +84,7 @@ namespace OpenTrans.net
                 }
                 Writer.WriteEndElement(); // !bmecat:EMAILS
                 _writeOptionalElementString(writer, "bmecat:FAX", party.ContactDetails.FaxNo);
-                _writeOptionalElementString(writer, "bmecat:PHONE", party.ContactDetails.PhoneNo);
+                _writeOptionalElementString(writer, "bmecat:PHONE", party.ContactDetails.PhoneNo);                
 
                 writer.WriteEndElement(); // !CONTACT_DETAILS
             }

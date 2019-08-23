@@ -42,7 +42,7 @@ namespace OpenTrans.net_Test
 
             response.Parties.Add(new Party()
             {
-                Id = "123456",
+                Ids = new List<PartyId>() { new PartyId() { Id = "123456", Type = PartyIdTypes.SupplierSpecific } },
                 Roles = { "buyer" },
                 Name = "ITscope GmbH",
                 Name2 = "Online Plattform",
@@ -62,7 +62,7 @@ namespace OpenTrans.net_Test
 
             response.Parties.Add(new Party()
             {
-                Id = "123456",
+                Ids = new List<PartyId>() { new PartyId() { Id = "123456", Type = PartyIdTypes.SupplierSpecific } },
                 Roles = { "delivery" },
                 Name = "ITscope GmbH",
                 Name2 = "Online Plattform",
@@ -82,7 +82,7 @@ namespace OpenTrans.net_Test
 
             response.Parties.Add(new Party()
             {
-                Id = "123456",
+                Ids = new List<PartyId>() { new PartyId() { Id = "123456", Type = PartyIdTypes.SupplierSpecific } },
                 Roles = { "invoice_recipient" },
                 Name = "ITscope GmbH",
                 Name2 = "Online Plattform",
@@ -102,7 +102,7 @@ namespace OpenTrans.net_Test
 
             response.Parties.Add(new Party()
             {
-                Id = "10000735",
+                Ids = new List<PartyId>() { new PartyId() { Id = "10000735", Type = PartyIdTypes.SupplierSpecific } },
                 Roles = { "supplier" },
                 Name = "ITscope GmbH",
                 Name2 = "Online Plattform",
@@ -151,7 +151,7 @@ namespace OpenTrans.net_Test
 
             order.Parties.Add(new Party()
             {
-                Id = "a",
+                Ids = new List<PartyId>() { new PartyId() { Id = "a", Type = PartyIdTypes.SupplierSpecific } },
                 Roles = { "buyer" },
                 Name = "a",
                 Name2 = "a",
@@ -165,7 +165,15 @@ namespace OpenTrans.net_Test
                 State = "a",
                 CountryCode = CountryCodes.DE,
                 VATId = "a",
-                TaxNumber = "a"
+                TaxNumber = "a",
+                Url = "a",
+                FaxNo = "a",
+                PhoneNo = "a",
+                EmailAddresses = new List<string>()
+                {
+                    "a",
+                    "a"
+                }
             });
 
             order.OrderItems.Add(new OrderItem()
@@ -179,7 +187,7 @@ namespace OpenTrans.net_Test
 
             order.Save("test.xml");
 
-            Order order2 = Order.Load("BE_4599027_20170528_113427.xml");
+            Order order2 = Order.Load("test.xml");
         } // !_createOrder()
     }
 }
