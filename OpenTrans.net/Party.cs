@@ -38,6 +38,10 @@ namespace OpenTrans.net
         public string TaxNumber { get; set; }
         public CountryCodes CountryCode { get; set; }
         public Contact ContactDetails { get; set; }
+        public string FaxNo { get; set; }
+        public string PhoneNo { get; set; }
+        public List<string> EmailAddresses { get; set; } = new List<string>();
+        public string Url { get; set; }
 
 
         public Party()

@@ -86,7 +86,7 @@ namespace OpenTrans.net
         private DateTime _readDateTime(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null)
         {
             string _temp = XmlUtils.NodeAsString(node, xpath, nsmgr);
-            return DateTime.ParseExact(_temp, "yyyy-MM-ddThh:mm:ss", CultureInfo.InvariantCulture);
+            return DateTime.ParseExact(_temp, "yyyy-MM-ddThh:mm:sszzz", CultureInfo.InvariantCulture);
         } // !_readDateTime()
 
 
@@ -165,9 +165,30 @@ namespace OpenTrans.net
                 State = XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:STATE", nsmgr),
                 CountryCode = default(CountryCodes).FromString(XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:COUNTRY", nsmgr)),
                 VATId = XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:VAT_ID", nsmgr),
-                TaxNumber = XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:TAX_NUMBER", nsmgr)
+                TaxNumber = XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:TAX_NUMBER", nsmgr),
+                FaxNo = XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:FAX", nsmgr),
+                PhoneNo = XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:PHONE", nsmgr),
+                Url = XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:URL", nsmgr),
             };
 
+            // email field can me used in single mode and multi address mode
+            XmlNodeList emailAddressNodes = node.SelectNodes("./openTrans:ADDRESS/bmecat:EMAILS/bmecat:EMAIL", nsmgr);
+            if (emailAddressNodes.Count > 0)
+            {
+                foreach (XmlNode emailAddressNode in emailAddressNodes)
+                {
+                    retval.EmailAddresses.Add(XmlUtils.NodeAsString(emailAddressNode, ".", nsmgr));
+                }
+            }
+            else
+            {
+                string _emailAddress = XmlUtils.NodeAsString(node, "./openTrans:ADDRESS/bmecat:EMAIL", nsmgr);
+                if (!String.IsNullOrEmpty(_emailAddress))
+                {
+                    retval.EmailAddresses.Add(_emailAddress);
+                }
+            }
+            
             XmlNode contactNode = node.SelectSingleNode("./openTrans:ADDRESS/openTrans:CONTACT_DETAILS", nsmgr);
             if (contactNode != null)
             {
@@ -179,14 +200,23 @@ namespace OpenTrans.net
                     _roles.Add(XmlUtils.NodeAsString(roleNode, ".", nsmgr));
                 }
 
-                foreach (XmlNode emailAddressNode in contactNode.SelectNodes("./bmecat:EMAILS/bmecat:EMAIL", nsmgr))
+                XmlNodeList contactEmailAddressNodes = contactNode.SelectNodes("./bmecat:EMAILS/bmecat:EMAIL", nsmgr);
+                if (contactEmailAddressNodes.Count > 0)
                 {
-                    _emailAddresses.Add(XmlUtils.NodeAsString(emailAddressNode, ".", nsmgr));
+                    foreach (XmlNode emailAddressNode in contactEmailAddressNodes)
+                    {
+                        _emailAddresses.Add(XmlUtils.NodeAsString(emailAddressNode, ".", nsmgr));
+                    }
                 }
-
-                /**
-                 * @todo parse missing attribute: Phone, Fax (typed), page 62 of spec
-                 */
+                else
+                {
+                    string _emailAddress = XmlUtils.NodeAsString(node, "./bmecat:EMAIL", nsmgr);
+                    if (!String.IsNullOrEmpty(_emailAddress))
+                    {
+                        retval.EmailAddresses.Add(_emailAddress);
+                    }
+                }
+                
                 retval.ContactDetails = new Contact()
                 {
                     Id = XmlUtils.NodeAsString(contactNode, "./bmecat:CONTACT_ID", nsmgr),
@@ -196,6 +226,8 @@ namespace OpenTrans.net
                     AcademicTitle = XmlUtils.NodeAsString(contactNode, "./bmecat:ACADEMIC_TITLE", nsmgr),
                     Description = XmlUtils.NodeAsString(contactNode, "./bmecat:CONTACT_DESCR", nsmgr),
                     Url = XmlUtils.NodeAsString(contactNode, "./bmecat:URL", nsmgr),
+                    PhoneNo = XmlUtils.NodeAsString(contactNode, "./bmecat:PHONE", nsmgr),
+                    FaxNo = XmlUtils.NodeAsString(contactNode, "./bmecat:FAX", nsmgr),
                     Authentification = XmlUtils.NodeAsString(contactNode, "./bmecat:AUTHENTIFICATION", nsmgr),
                     Roles = _roles,
                     EmailAddresses = _emailAddresses

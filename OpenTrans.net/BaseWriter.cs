@@ -51,22 +51,34 @@ namespace OpenTrans.net
             _writeOptionalElementString(writer, "bmecat:COUNTRY_CODED", party.CountryCode.EnumToString());
             _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
             _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
+            Writer.WriteStartElement("bmecat:EMAILS");
+            foreach (string emailAddress in party.EmailAddresses)
+            {
+                _writeOptionalElementString(writer, "bmecat:EMAIL", emailAddress);
+            }
+            Writer.WriteEndElement(); // !bmecat:EMAILS
+            _writeOptionalElementString(writer, "bmecat:FAX", party.FaxNo);
+            _writeOptionalElementString(writer, "bmecat:PHONE", party.PhoneNo);
 
             if (party.ContactDetails != null)
             {
                 writer.WriteStartElement("CONTACT_DETAILS");
-                _writeOptionalElementString(writer, "CONTACT_ID", party.ContactDetails.Id);
-                _writeOptionalElementString(writer, "CONTACT_NAME", party.ContactDetails.Name);
-                _writeOptionalElementString(writer, "FIRST_NAME", party.ContactDetails.FirstName);
-                _writeOptionalElementString(writer, "TITLE", party.ContactDetails.Title);
-                _writeOptionalElementString(writer, "ACADEMIC_TITLE", party.ContactDetails.AcademicTitle);
-                _writeOptionalElementString(writer, "CONTACT_DESCR", party.ContactDetails.Description);
-                _writeOptionalElementString(writer, "URL", party.ContactDetails.Url);
-                _writeOptionalElementString(writer, "AUTHENTIFICATION", party.ContactDetails.Authentification);
-
-                /**
-                 * @todo write elements phone, fax, roles, emailAddresses
-                 */
+                _writeOptionalElementString(writer, "bmecat:CONTACT_ID", party.ContactDetails.Id);
+                _writeOptionalElementString(writer, "bmecat:CONTACT_NAME", party.ContactDetails.Name);
+                _writeOptionalElementString(writer, "bmecat:FIRST_NAME", party.ContactDetails.FirstName);
+                _writeOptionalElementString(writer, "bmecat:TITLE", party.ContactDetails.Title);
+                _writeOptionalElementString(writer, "bmecat:ACADEMIC_TITLE", party.ContactDetails.AcademicTitle);
+                _writeOptionalElementString(writer, "bmecat:CONTACT_DESCR", party.ContactDetails.Description);
+                _writeOptionalElementString(writer, "bmecat:URL", party.ContactDetails.Url);
+                _writeOptionalElementString(writer, "bmecat:AUTHENTIFICATION", party.ContactDetails.Authentification);
+                Writer.WriteStartElement("bmecat:EMAILS");
+                foreach(string emailAddress in party.ContactDetails.EmailAddresses)
+                {
+                    _writeOptionalElementString(writer, "bmecat:EMAIL", emailAddress);
+                }
+                Writer.WriteEndElement(); // !bmecat:EMAILS
+                _writeOptionalElementString(writer, "bmecat:FAX", party.ContactDetails.FaxNo);
+                _writeOptionalElementString(writer, "bmecat:PHONE", party.ContactDetails.PhoneNo);
 
                 writer.WriteEndElement(); // !CONTACT_DETAILS
             }
