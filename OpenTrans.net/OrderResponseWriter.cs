@@ -72,7 +72,10 @@ namespace OpenTrans.net
             Writer.WriteStartElement("ORDERRESPONSE_INFO");
             Writer.WriteElementString("ORDER_ID", orderResponse.Id);
             _writeDateTime(Writer, "ORDERRESPONSE_DATE", DateTime.Now);
-            _writeDateTime(Writer, "ORDER_DATE", orderResponse.OrderDate);
+            if (orderResponse.OrderDate.HasValue)
+            {
+                _writeDateTime(Writer, "ORDER_DATE", orderResponse.OrderDate.Value);
+            }
             _writeAmount(Writer, "ORDERCHANGE_SEQUENCE_ID", orderResponse.OrderChangeSequenceId);
             Writer.WriteStartElement("PARTIES");
             foreach(Party party in orderResponse.Parties)

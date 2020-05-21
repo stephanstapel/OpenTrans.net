@@ -28,7 +28,7 @@ namespace OpenTrans.net
     public class Order
     {
         public string Id { get; set; }
-        public DateTime OrderDate { get; set; }
+        public DateTime? OrderDate { get; set; }
         public DateTime DesiredDeliveryDateStart { get; set; }
         public DateTime DesiredDeliveryDateEnd { get; set; }
         public List<Party> Parties { get; set; } = new List<Party>();

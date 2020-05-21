@@ -69,7 +69,11 @@ namespace OpenTrans.net
             Writer.WriteEndElement(); // !SOURCING_INFO
             Writer.WriteStartElement("ORDER_INFO");
             Writer.WriteElementString("ORDER_ID", order.Id);
-            _writeDateTime(Writer, "ORDER_DATE", order.OrderDate);
+
+            if (order.OrderDate.HasValue)
+            {
+                _writeDateTime(Writer, "ORDER_DATE", order.OrderDate.Value);
+            }
             Writer.WriteStartElement("DELIVERY_DATE");
             _writeDateTime(Writer, "DELIVERY_START_DATE", order.DesiredDeliveryDateStart);
             _writeDateTime(Writer, "DELIVERY_END_DATE", order.DesiredDeliveryDateEnd);

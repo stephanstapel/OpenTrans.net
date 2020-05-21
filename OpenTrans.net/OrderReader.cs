@@ -47,7 +47,7 @@ namespace OpenTrans.net
             XmlNode headerNode = doc.SelectSingleNode("//openTrans:ORDER_HEADER", nsmgr);
             if (headerNode != null)
             {
-                DateTime generationDate = _readDateTime(headerNode, "./openTrans:CONTROL_INFO/openTrans:GENERATION_DATE", nsmgr);
+                DateTime? generationDate = _readDateTime(headerNode, "./openTrans:CONTROL_INFO/openTrans:GENERATION_DATE", nsmgr);
                 retval.Id = XmlUtils.NodeAsString(headerNode, "./openTrans:ORDER_INFO/openTrans:ORDER_ID", nsmgr);
                 retval.OrderDate = _readDateTime(headerNode, "./openTrans:ORDER_INFO/openTrans:ORDER_DATE", nsmgr);
 
@@ -83,10 +83,20 @@ namespace OpenTrans.net
         } // !Load()
 
 
-        private DateTime _readDateTime(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null)
+        private DateTime? _readDateTime(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null)
         {
             string _temp = XmlUtils.NodeAsString(node, xpath, nsmgr);
-            return DateTime.ParseExact(_temp, "yyyy-MM-ddThh:mm:sszzz", CultureInfo.InvariantCulture);
+            if (DateTime.TryParseExact(_temp, "yyyy-MM-ddThh:mm:sszzz", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime retval))
+            {
+                return retval;
+            }
+
+            if (DateTime.TryParseExact(_temp, "yyyy-MM-ddThh:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out retval))
+            {
+                return retval;
+            }
+
+            return null;
         } // !_readDateTime()
 
 
