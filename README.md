@@ -8,6 +8,7 @@ You can install it via nuget:
 https://www.nuget.org/packages/OpenTrans.net
 
 # Usage
+## Creating orders
 For creating orders, you can simply create Order objects like this:
 
 ```csharp
@@ -63,6 +64,77 @@ or into a file:
 
 ```csharp
 order.Save("order.xml");
+```
+
+## Loading orders
+Loading orders looks similar to saving orders. Again, you can use streams:
+
+```csharp
+Stream s = ...
+Order order = Order.Load(s);
+```
+
+and alternatively you can use file names to load orders:
+
+```csharp
+Order order = Order.Load("order.xml");
+```
+
+## Creating order responses
+After the order is received by the supplier, the supplier answers the order by an order response, in order to acknowledge the order.
+Most information can be copied from the order object which is simple with this library since the exact same types (Party, OrderItem) are used for Order and OrderResponse.
+
+```csharp
+OrderResponse response = new OrderResponse()
+{
+            Id = "Same id as in the order",
+            OrderDate = DateTime(... same date as in the order ...),
+            OrderChangeSequenceId = 0           
+};
+```
+
+Then, add the parties (just like in the order):
+
+```csharp
+response.Parties.Add(new Party(){
+  ...
+});
+```
+
+and finally, the order items:
+
+```csharp
+response.OrderItems.Add(new OrderItem(){
+  ...
+});
+```
+
+
+Save the order response works just like saving orders:
+
+```csharp
+Stream s = ...
+response.Save(s);
+```
+
+or into a file:
+
+```csharp
+response.Save("order-response.xml");
+```
+
+## Loading order responses
+As the buyer, you will receive the order response from the supplier. In order to read it, you just use:
+
+```csharp
+Stream s = ...
+OrderResponse response = OrderResponse.Load(s);
+```
+
+and alternatively you can use file names to load the order response:
+
+```csharp
+OrderResponse response = OrderResponse.Load("order-respons.xml");
 ```
 
 The demo application contains some simple examples. Please see here for more details:
