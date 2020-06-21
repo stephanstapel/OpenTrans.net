@@ -2,10 +2,14 @@
 
 .net library for reading and writing OpenTRANS orders and order responses.
 
-# Installation
-You can install it via nuget:
+The library has a sister library (https://github.com/stephanstapel/BMECat.net) which allows managing product catalogues.
 
-https://www.nuget.org/packages/OpenTrans.net
+# Installation
+You can get the library from nuget or from Visual Studio Package Manager under the name OpenTrans.net.
+
+The URL of the package is here:
+
+https://www.nuget.org/packages/OpenTrans.net/
 
 # Usage
 ## Creating orders
