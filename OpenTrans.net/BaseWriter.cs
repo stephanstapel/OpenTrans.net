@@ -36,9 +36,9 @@ namespace OpenTrans.net
                 _writeOptionalElementString(Writer, "bmecat:PARTY_ID", id.Id, new Dictionary<string, string>() { { "type", id.Type.EnumToString() } });
             }
             
-            foreach (string _role in party.Roles)
+            foreach (PartyRoles _role in party.Roles)
             {
-                Writer.WriteElementString("PARTY_ROLE", _role);
+                Writer.WriteElementString("PARTY_ROLE", _role.EnumToString());
             }
 
             writer.WriteStartElement("ADDRESS");

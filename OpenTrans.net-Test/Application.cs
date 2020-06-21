@@ -152,7 +152,7 @@ namespace OpenTrans.net_Test
             order.Parties.Add(new Party()
             {
                 Ids = new List<PartyId>() { new PartyId() { Id = "a", Type = PartyIdTypes.SupplierSpecific } },
-                Roles = { "buyer" },
+                Roles = { PartyRoles.Buyer },
                 Name = "a",
                 Name2 = "a",
                 Name3 = "a",

@@ -23,7 +23,7 @@ namespace OpenTrans.net
     public class Party
     {
         public List<PartyId> Ids { get; set; } = new List<PartyId>();
-        public List<string> Roles { get; set; }
+        public List<PartyRoles> Roles { get; set; } = new List<PartyRoles>();
         public string Name { get; set; }
         public string Name2 { get; set; }
         public string Name3 { get; set; }
@@ -42,11 +42,5 @@ namespace OpenTrans.net
         public string PhoneNo { get; set; }
         public List<string> EmailAddresses { get; set; } = new List<string>();
         public string Url { get; set; }
-
-
-        public Party()
-        {
-            this.Roles = new List<string>();
-        } // !Party()
     }
 }

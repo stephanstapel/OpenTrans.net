@@ -153,10 +153,10 @@ namespace OpenTrans.net
                 return null;
             }
 
-            List<string> roles = new List<string>();
+            List<PartyRoles> roles = new List<PartyRoles>();
             foreach(XmlNode roleNode in node.SelectNodes("./openTrans:PARTY_ROLE", nsmgr))
             {
-                roles.Add(XmlUtils.NodeAsString(roleNode, ".", nsmgr));
+                roles.Add(default(PartyRoles).FromString(XmlUtils.NodeAsString(roleNode, ".", nsmgr)));
             }
 
             Party retval = new Party()
