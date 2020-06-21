@@ -43,7 +43,7 @@ namespace OpenTrans.net_Test
             response.Parties.Add(new Party()
             {
                 Ids = new List<PartyId>() { new PartyId() { Id = "123456", Type = PartyIdTypes.SupplierSpecific } },
-                Roles = { "buyer" },
+                Roles = { PartyRoles.Buyer },
                 Name = "ITscope GmbH",
                 Name2 = "Online Plattform",
                 Name3 = String.Empty,
@@ -63,7 +63,7 @@ namespace OpenTrans.net_Test
             response.Parties.Add(new Party()
             {
                 Ids = new List<PartyId>() { new PartyId() { Id = "123456", Type = PartyIdTypes.SupplierSpecific } },
-                Roles = { "delivery" },
+                Roles = { PartyRoles.Delivery },
                 Name = "ITscope GmbH",
                 Name2 = "Online Plattform",
                 Name3 = String.Empty,
@@ -83,7 +83,7 @@ namespace OpenTrans.net_Test
             response.Parties.Add(new Party()
             {
                 Ids = new List<PartyId>() { new PartyId() { Id = "123456", Type = PartyIdTypes.SupplierSpecific } },
-                Roles = { "invoice_recipient" },
+                Roles = { PartyRoles.InvoiceRecipient },
                 Name = "ITscope GmbH",
                 Name2 = "Online Plattform",
                 Name3 = String.Empty,
@@ -103,7 +103,7 @@ namespace OpenTrans.net_Test
             response.Parties.Add(new Party()
             {
                 Ids = new List<PartyId>() { new PartyId() { Id = "10000735", Type = PartyIdTypes.SupplierSpecific } },
-                Roles = { "supplier" },
+                Roles = { PartyRoles.Supplier },
                 Name = "ITscope GmbH",
                 Name2 = "Online Plattform",
                 Name3 = String.Empty,
