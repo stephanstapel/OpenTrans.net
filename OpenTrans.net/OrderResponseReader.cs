@@ -22,7 +22,7 @@ using System.Xml;
 
 namespace OpenTrans.net
 {
-    internal class OrderResponseReader
+    internal class OrderResponseReader : ReaderBase
     {
         public OrderResponseReader()
         {
@@ -58,7 +58,30 @@ namespace OpenTrans.net
 
             OrderResponse retval = new OrderResponse();
 
+            XmlNode headerNode = doc.SelectSingleNode("//*[local-name()='ORDERRESPONSE_HEADER']", nsmgr);
+            if (headerNode != null)
+            {
+                DateTime? generationDate = _nodeAsDateTime(headerNode, "./*[local-name()='CONTROL_INFO']/*[local-name()='GENERATION_DATE']", nsmgr);
+                retval.Id = XmlUtils.NodeAsString(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDER_ID']", nsmgr);
+                retval.OrderDate = _nodeAsDateTime(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDER_DATE']", nsmgr);
+                retval.OrderChangeSequenceId = XmlUtils.NodeAsInt(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDERCHANGE_SEQUENCE_ID']", nsmgr);
+
+                XmlNodeList partyNodes = headerNode.SelectNodes(".//*[local-name()='PARTIES']/*[local-name()='PARTY']", nsmgr);
+                foreach (XmlNode partyNode in partyNodes)
+                {
+                    Party p = _readParty(partyNode, nsmgr);
+                    retval.Parties.Add(p);
+                }
+            }
+
+            XmlNodeList itemNodes = doc.SelectNodes("//*[local-name()='ORDERRESPONSE_ITEM_LIST']/*[local-name()='ORDERRESPONSE_ITEM']", nsmgr);
+            foreach (XmlNode itemNode in itemNodes)
+            {
+                retval.OrderItems.Add(_readItem(itemNode, nsmgr));
+            }
+
+
             return retval;
-        } // !Load()
+        } // !Load()        
     }
 }
