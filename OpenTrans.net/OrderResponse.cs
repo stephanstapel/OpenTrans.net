@@ -27,7 +27,8 @@ namespace OpenTrans.net
 {
     public class OrderResponse
     {
-        public string Id { get; set; }
+        public string OrderId { get; set; }
+        public string SupplierOrderId { get; set; }
         public DateTime? OrderDate { get; set; }
         public int OrderChangeSequenceId { get; set; }
         public List<Party> Parties { get; set; } = new List<Party>();

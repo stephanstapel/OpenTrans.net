@@ -35,7 +35,7 @@ namespace OpenTrans.net_Test
         {
             OrderResponse response = new OrderResponse()
             {
-                Id = "GWAHJV-160131-1470",
+                OrderId = "GWAHJV-160131-1470",
                 OrderDate = new DateTime(2016, 01, 31, 18, 29, 31),
                 OrderChangeSequenceId = 1
             };

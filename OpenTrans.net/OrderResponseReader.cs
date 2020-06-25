@@ -62,7 +62,8 @@ namespace OpenTrans.net
             if (headerNode != null)
             {
                 DateTime? generationDate = _nodeAsDateTime(headerNode, "./*[local-name()='CONTROL_INFO']/*[local-name()='GENERATION_DATE']", nsmgr);
-                retval.Id = XmlUtils.NodeAsString(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDER_ID']", nsmgr);
+                retval.OrderId = XmlUtils.NodeAsString(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDER_ID']", nsmgr);
+                retval.SupplierOrderId = XmlUtils.NodeAsString(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='SUPPLIER_ORDER_ID']", nsmgr);
                 retval.OrderDate = _nodeAsDateTime(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDER_DATE']", nsmgr);
                 retval.OrderChangeSequenceId = XmlUtils.NodeAsInt(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDERCHANGE_SEQUENCE_ID']", nsmgr);
 

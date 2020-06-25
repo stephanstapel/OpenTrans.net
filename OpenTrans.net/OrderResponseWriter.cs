@@ -70,7 +70,16 @@ namespace OpenTrans.net
             Writer.WriteEndElement(); // !CONTROL_INFO
 
             Writer.WriteStartElement("ORDERRESPONSE_INFO");
-            Writer.WriteElementString("ORDER_ID", orderResponse.Id);
+            if (!String.IsNullOrEmpty(orderResponse.OrderId))
+            {
+                Writer.WriteElementString("ORDER_ID", orderResponse.OrderId);
+            }
+
+            if (!String.IsNullOrEmpty(orderResponse.SupplierOrderId))
+            {
+                Writer.WriteElementString("SUPPLIER_ORDER_ID", orderResponse.OrderId);
+            }
+            
             _writeDateTime(Writer, "ORDERRESPONSE_DATE", DateTime.Now);
             if (orderResponse.OrderDate.HasValue)
             {
