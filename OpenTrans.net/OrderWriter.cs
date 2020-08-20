@@ -29,16 +29,16 @@ namespace OpenTrans.net
         private Order Order;
 
 
-        public void Save(Order order, string filename)
+        public void Save(Order order, string filename, string generatorInfo = null)
         {
             FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
-            Save(order, fs);
+            Save(order, fs, generatorInfo);
             fs.Flush();
             fs.Close();
         } // !Save()
 
 
-        public void Save(Order order, Stream stream)
+        public void Save(Order order, Stream stream, string generatorInfo = null)
         {
             if (!stream.CanWrite || !stream.CanSeek)
             {
@@ -64,6 +64,7 @@ namespace OpenTrans.net
             Writer.WriteStartElement("ORDER_HEADER");
             Writer.WriteStartElement("CONTROL_INFO");
             _writeDateTime(Writer, "GENERATION_DATE", DateTime.Now);
+            _writeOptionalElementString(Writer,"GENERATOR_INFO", generatorInfo);
             Writer.WriteEndElement(); // !CONTROL_INFO
             Writer.WriteStartElement("SOURCING_INFO");
             Writer.WriteEndElement(); // !SOURCING_INFO
@@ -85,7 +86,10 @@ namespace OpenTrans.net
                 _writeParty(Writer, party);
             }
             Writer.WriteEndElement(); // !PARTIES
-            
+            _writeCustomerOrderReference(Writer, order.CustomerOrderReference);
+            _writeOrderPartiesReference(Writer, order.OrderPartiesReference);
+            _writeOptionalElementString(Writer,"bmecat:CURRENCY", order.Currency);
+            _writeOptionalElementString(Writer,"PARTIAL_SHIPMENT_ALLOWED", order.PartialShipmentAllowed? "TRUE": "FALSE");
             Writer.WriteEndElement(); // !ORDER_INFO
             Writer.WriteEndElement(); // !ORDER_HEADER
 
@@ -97,6 +101,7 @@ namespace OpenTrans.net
             Writer.WriteEndElement(); // !ORDER_ITEM_LIST
 
             Writer.WriteStartElement("ORDER_SUMMARY");
+            _writeOptionalElementAmount(Writer, "TOTAL_AMOUNT ", order.OrderSummary.TotalAmount);
             _writeAmount(Writer, "TOTAL_ITEM_NUM", order.OrderItems.Count);
             Writer.WriteEndElement(); // !ORDER_SUMMARY
             
