@@ -25,7 +25,7 @@ namespace OpenTrans.net
 {
     internal class OrderResponseWriter : BaseWriter
     {
-        private OrderResponse OrderResponse;
+        internal XmlTextWriter Writer;
 
 
         public OrderResponseWriter()
@@ -49,8 +49,6 @@ namespace OpenTrans.net
             }
 
             long streamPosition = stream.Position;
-
-            this.OrderResponse = orderResponse;
             this.Writer = new XmlTextWriter(stream, Encoding.UTF8);
             Writer.Formatting = Formatting.Indented;
             Writer.WriteStartDocument();

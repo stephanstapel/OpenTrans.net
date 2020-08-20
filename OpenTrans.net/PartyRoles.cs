@@ -127,7 +127,7 @@ namespace OpenTrans.net
 
     public static class PartyRolesTypesExtensions
     {
-        private static List<KeyValuePair<string, PartyRoles>> _Mapping = new List<KeyValuePair<string, PartyRoles>>()
+        private static readonly List<KeyValuePair<string, PartyRoles>> _Mapping = new List<KeyValuePair<string, PartyRoles>>()
         {
             new KeyValuePair<string, PartyRoles>("buyer", PartyRoles.Buyer),
             new KeyValuePair<string, PartyRoles>("central_regulator", PartyRoles.CentralRegulator),

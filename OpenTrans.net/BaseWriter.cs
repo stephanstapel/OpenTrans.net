@@ -24,22 +24,20 @@ using System.Xml;
 namespace OpenTrans.net
 {
     internal class BaseWriter
-    {
-        internal XmlTextWriter Writer;
-
+    {      
 
         internal void _writeParty(XmlTextWriter writer, Party party)
         {
-            Writer.WriteStartElement("PARTY");
+            writer.WriteStartElement("PARTY");
 
             foreach(PartyId id in party.Ids)
             {
-                _writeOptionalElementString(Writer, "bmecat:PARTY_ID", id.Id, new Dictionary<string, string>() { { "type", id.Type.EnumToString() } });
+                _writeOptionalElementString(writer, "bmecat:PARTY_ID", id.Id, new Dictionary<string, string>() { { "type", id.Type.EnumToString() } });
             }
             
             foreach (PartyRoles _role in party.Roles)
             {
-                Writer.WriteElementString("PARTY_ROLE", _role.EnumToString());
+                writer.WriteElementString("PARTY_ROLE", _role.EnumToString());
             }
 
             writer.WriteStartElement("ADDRESS");
@@ -57,12 +55,12 @@ namespace OpenTrans.net
             _writeOptionalElementString(writer, "bmecat:COUNTRY_CODED", party.CountryCode.EnumToString());
             _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
             _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
-            Writer.WriteStartElement("bmecat:EMAILS");
+            writer.WriteStartElement("bmecat:EMAILS");
             foreach (string emailAddress in party.EmailAddresses)
             {
                 _writeOptionalElementString(writer, "bmecat:EMAIL", emailAddress);
             }
-            Writer.WriteEndElement(); // !bmecat:EMAILS
+            writer.WriteEndElement(); // !bmecat:EMAILS
             _writeOptionalElementString(writer, "bmecat:FAX", party.FaxNo);
             _writeOptionalElementString(writer, "bmecat:PHONE", party.PhoneNo);
             _writeOptionalElementString(writer, "bmecat:URL", party.Url);
@@ -78,110 +76,116 @@ namespace OpenTrans.net
                 _writeOptionalElementString(writer, "bmecat:CONTACT_DESCR", party.ContactDetails.Description);
                 _writeOptionalElementString(writer, "bmecat:URL", party.ContactDetails.Url);
                 _writeOptionalElementString(writer, "bmecat:AUTHENTIFICATION", party.ContactDetails.Authentification);
-                Writer.WriteStartElement("bmecat:EMAILS");
+                writer.WriteStartElement("bmecat:EMAILS");
                 foreach(string emailAddress in party.ContactDetails.EmailAddresses)
                 {
                     _writeOptionalElementString(writer, "bmecat:EMAIL", emailAddress);
                 }
-                Writer.WriteEndElement(); // !bmecat:EMAILS
+                writer.WriteEndElement(); // !bmecat:EMAILS
                 _writeOptionalElementString(writer, "bmecat:FAX", party.ContactDetails.FaxNo);
                 _writeOptionalElementString(writer, "bmecat:PHONE", party.ContactDetails.PhoneNo);                
 
                 writer.WriteEndElement(); // !CONTACT_DETAILS
             }
 
-            Writer.WriteEndElement(); // !ADDRESS
+            writer.WriteEndElement(); // !ADDRESS
 
-            Writer.WriteEndElement(); // !PARTY
+            writer.WriteEndElement(); // !PARTY
         } // !_writeParty()
+
+
         internal void _writeCustomerOrderReference(XmlTextWriter writer, CustomerOrderReference customerOrderReference)
         {
             if (customerOrderReference != null)
             {
-                Writer.WriteStartElement("CUSTOMER_ORDER_REFERENCE");
-                _writeOptionalElementString(Writer, "ORDER_ID", customerOrderReference.OrderId);
-                Writer.WriteEndElement(); // !CUSTOMER_ORDER_REFERENCE
+                writer.WriteStartElement("CUSTOMER_ORDER_REFERENCE");
+                _writeOptionalElementString(writer, "ORDER_ID", customerOrderReference.OrderId);
+                writer.WriteEndElement(); // !CUSTOMER_ORDER_REFERENCE
             }
         }
+
+
         internal void _writeOrderPartiesReference(XmlTextWriter writer, OrderPartiesReference orderPartiesReference)
         {
             if (orderPartiesReference != null)
             {
-                Writer.WriteStartElement("ORDER_PARTIES_REFERENCE");
-                _writeOptionalElementString(Writer, "bmecat:BUYER_IDREF", orderPartiesReference.BuyerIdRef.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.BuyerIdRef.Type.EnumToString() } });
-                _writeOptionalElementString(Writer, "bmecat:SUPPLIER_IDREF", orderPartiesReference.SupplierIdRef.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.SupplierIdRef.Type.EnumToString() } });
+                writer.WriteStartElement("ORDER_PARTIES_REFERENCE");
+                _writeOptionalElementString(writer, "bmecat:BUYER_IDREF", orderPartiesReference.BuyerIdRef.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.BuyerIdRef.Type.EnumToString() } });
+                _writeOptionalElementString(writer, "bmecat:SUPPLIER_IDREF", orderPartiesReference.SupplierIdRef.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.SupplierIdRef.Type.EnumToString() } });
                 if (orderPartiesReference.ShipmentPartiesReference != null)
                 {
-                    Writer.WriteStartElement("SHIPMENT_PARTIES_REFERENCE");
-                    _writeOptionalElementString(Writer, "DELIVERY_IDREF", orderPartiesReference.ShipmentPartiesReference.DeliveryIdRef);
-                    Writer.WriteEndElement(); // !SHIPMENT_PARTIES_REFERENCE
+                    writer.WriteStartElement("SHIPMENT_PARTIES_REFERENCE");
+                    _writeOptionalElementString(writer, "DELIVERY_IDREF", orderPartiesReference.ShipmentPartiesReference.DeliveryIdRef);
+                    writer.WriteEndElement(); // !SHIPMENT_PARTIES_REFERENCE
                 }
-                Writer.WriteEndElement(); // !ORDER_PARTIES_REFERENCE
+                writer.WriteEndElement(); // !ORDER_PARTIES_REFERENCE
             }
         }
+
+
         internal void _writeOrderItem(XmlTextWriter writer, OrderItem item, string startElementName = "ORDER_ITEM")
         {
-            Writer.WriteStartElement(startElementName);
-            _writeOptionalElementString(Writer, "LINE_ITEM_ID", item.LineItemId);
+            writer.WriteStartElement(startElementName);
+            _writeOptionalElementString(writer, "LINE_ITEM_ID", item.LineItemId);
             if (item.ProductId != null)
             {
-                _writeProductId(Writer, item.ProductId);
+                _writeProductId(writer, item.ProductId);
             }
 
             if (item.Quantity.HasValue)
             {
-                _writeAmount(Writer, "QUANTITY", item.Quantity.Value);
+                _writeAmount(writer, "QUANTITY", item.Quantity.Value);
             }
-            _writeOptionalElementString(Writer, "bmecat:ORDER_UNIT", item.OrderUnit.EnumToString());
+            _writeOptionalElementString(writer, "bmecat:ORDER_UNIT", item.OrderUnit.EnumToString());
             if (item.LineAmount.HasValue)
             {
-                _writeAmount(Writer, "PRICE_LINE_AMOUNT", item.LineAmount.Value);
+                _writeAmount(writer, "PRICE_LINE_AMOUNT", item.LineAmount.Value);
             }
             if (item.ProductPriceFix != null)
             {
-                Writer.WriteStartElement("PRODUCT_PRICE_FIX");
-                _writeAmount(Writer, "bmecat:PRICE_AMOUNT", item.ProductPriceFix.PriceAmount);
-                _writeAmount(Writer, "bmecat:PRICE_QUANTITY", item.ProductPriceFix.PriceQuantity);
-                Writer.WriteEndElement(); // !PRODUCT_PRICE_FIX
+                writer.WriteStartElement("PRODUCT_PRICE_FIX");
+                _writeAmount(writer, "bmecat:PRICE_AMOUNT", item.ProductPriceFix.PriceAmount);
+                _writeAmount(writer, "bmecat:PRICE_QUANTITY", item.ProductPriceFix.PriceQuantity);
+                writer.WriteEndElement(); // !PRODUCT_PRICE_FIX
             }
             foreach (string remark in item.Remarks)
             {
-                Writer.WriteStartElement("REMARKS");
+                writer.WriteStartElement("REMARKS");
                 writer.WriteAttributeString("lang", "deu");
-                Writer.WriteValue(remark);
+                writer.WriteValue(remark);
                 writer.WriteEndElement();
             }
             if (item.ProductFeatures.Any())
             {
-                Writer.WriteStartElement("PRODUCT_FEATURES");
+                writer.WriteStartElement("PRODUCT_FEATURES");
                 foreach (var features in item.ProductFeatures)
                 {
-                    Writer.WriteStartElement("FEATURE ");
-                    _writeOptionalElementString(Writer, "bmecat:FNAME", features.FName);
-                    _writeOptionalElementString(Writer, "bmecat:FVALUE", features.FValue);
-                    _writeOptionalElementString(Writer, "bmecat:FUNIT", features.FUnit);
-                    Writer.WriteEndElement(); // !FEATURE 
+                    writer.WriteStartElement("FEATURE ");
+                    _writeOptionalElementString(writer, "bmecat:FNAME", features.Name);
+                    _writeOptionalElementString(writer, "bmecat:FVALUE", features.Value);
+                    _writeOptionalElementString(writer, "bmecat:FUNIT", features.Unit.EnumToString());
+                    writer.WriteEndElement(); // !FEATURE 
                 }
-                Writer.WriteEndElement(); // !PRODUCT_FEATURES
+                writer.WriteEndElement(); // !PRODUCT_FEATURES
             }
-            Writer.WriteEndElement();
+            writer.WriteEndElement();
         } // !_writeOrderItem()
 
 
         internal void _writeProductId(XmlTextWriter writer, ProductId productId)
         {
-            Writer.WriteStartElement("PRODUCT_ID");
-            _writeOptionalElementString(Writer, "bmecat:SUPPLIER_PID", productId.SupplierPId, new Dictionary<string, string>() { { "type", "" } });
-            _writeOptionalElementString(Writer, "bmecat:SUPPLIER_IDREF", productId.SupplierIdRef, new Dictionary<string, string> { { "type", "" } });
-            _writeOptionalElementString(Writer, "bmecat:DESCRIPTION_SHORT", productId.DescriptionShort, new Dictionary<string, string> { { "lang", "deu" } });
-            _writeOptionalElementString(Writer, "bmecat:DESCRIPTION_LONG", productId.DescriptionLong, new Dictionary<string, string> { { "lang", "deu" } });
-            Writer.WriteEndElement(); // !PRODUCT_ID
+            writer.WriteStartElement("PRODUCT_ID");
+            _writeOptionalElementString(writer, "bmecat:SUPPLIER_PID", productId.SupplierPId, new Dictionary<string, string>() { { "type", "" } });
+            _writeOptionalElementString(writer, "bmecat:SUPPLIER_IDREF", productId.SupplierIdRef, new Dictionary<string, string> { { "type", "" } });
+            _writeOptionalElementString(writer, "bmecat:DESCRIPTION_SHORT", productId.DescriptionShort, new Dictionary<string, string> { { "lang", "deu" } });
+            _writeOptionalElementString(writer, "bmecat:DESCRIPTION_LONG", productId.DescriptionLong, new Dictionary<string, string> { { "lang", "deu" } });
+            writer.WriteEndElement(); // !PRODUCT_ID
         } // !_writeProductId()
 
 
         internal void _writeDateTime(XmlTextWriter writer, string nodeName, DateTime dt)
         {
-            Writer.WriteElementString(nodeName, dt.ToString("yyyy-MM-ddThh:mm:sszzz"));
+            writer.WriteElementString(nodeName, dt.ToString("yyyy-MM-ddThh:mm:sszzz"));
         } // !_writeDateTime()
 
 
@@ -199,8 +203,8 @@ namespace OpenTrans.net
                     }
                 }
 
-                Writer.WriteValue(value);
-                Writer.WriteEndElement();
+                writer.WriteValue(value);
+                writer.WriteEndElement();
             }
         } // !_writeOptionalElementString()
 
@@ -223,8 +227,8 @@ namespace OpenTrans.net
             if (value.HasValue)
             {
                 writer.WriteStartElement(tagName);
-                Writer.WriteValue(value.Value);
-                Writer.WriteEndElement();
+                writer.WriteValue(value.Value);
+                writer.WriteEndElement();
             }
         }
 

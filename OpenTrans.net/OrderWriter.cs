@@ -26,7 +26,7 @@ namespace OpenTrans.net
 {
     internal class OrderWriter : BaseWriter
     {
-        private Order Order;
+        internal XmlTextWriter Writer;
 
 
         public void Save(Order order, string filename, string generatorInfo = null)
@@ -47,7 +47,6 @@ namespace OpenTrans.net
 
             long streamPosition = stream.Position;
 
-            this.Order = order;
             this.Writer = new XmlTextWriter(stream, Encoding.UTF8);
             Writer.Formatting = Formatting.Indented;
             Writer.WriteStartDocument();
@@ -64,7 +63,7 @@ namespace OpenTrans.net
             Writer.WriteStartElement("ORDER_HEADER");
             Writer.WriteStartElement("CONTROL_INFO");
             _writeDateTime(Writer, "GENERATION_DATE", DateTime.Now);
-            _writeOptionalElementString(Writer,"GENERATOR_INFO", generatorInfo);
+            _writeOptionalElementString(Writer, "GENERATOR_INFO", generatorInfo);
             Writer.WriteEndElement(); // !CONTROL_INFO
             Writer.WriteStartElement("SOURCING_INFO");
             Writer.WriteEndElement(); // !SOURCING_INFO
@@ -88,8 +87,8 @@ namespace OpenTrans.net
             Writer.WriteEndElement(); // !PARTIES
             _writeCustomerOrderReference(Writer, order.CustomerOrderReference);
             _writeOrderPartiesReference(Writer, order.OrderPartiesReference);
-            _writeOptionalElementString(Writer,"bmecat:CURRENCY", order.Currency);
-            _writeOptionalElementString(Writer,"PARTIAL_SHIPMENT_ALLOWED", order.PartialShipmentAllowed? "TRUE": "FALSE");
+            _writeOptionalElementString(Writer, "bmecat:CURRENCY", order.Currency);
+            _writeOptionalElementString(Writer, "PARTIAL_SHIPMENT_ALLOWED", order.PartialShipmentAllowed? "TRUE": "FALSE");
             Writer.WriteEndElement(); // !ORDER_INFO
             Writer.WriteEndElement(); // !ORDER_HEADER
 

@@ -1,0 +1,1500 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OpenTrans.net</name>
+    </assembly>
+    <members>
+        <member name="T:OpenTrans.net.Contact">
+            @todo add missing attribute: Phone, Fax (typed), page 62 of spec
+        </member>
+        <member name="P:OpenTrans.net.Contact.Name">
+            <summary>
+            Nachname des Ansprechpartners
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:OpenTrans.net.Countries" -->
+        <!-- Badly formed XML comment ignored for member "T:OpenTrans.net.CountryCodes" -->
+        <member name="F:OpenTrans.net.CountryCodes.AF">
+            <summary>
+            AFGHANISTAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AX">
+            <summary>
+            ÅLAND ISLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AL">
+            <summary>
+            ALBANIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.DZ">
+            <summary>
+            ALGERIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AS">
+            <summary>
+            AMERICAN SAMOA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AD">
+            <summary>
+            ANDORRA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AO">
+            <summary>
+            ANGOLA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AI">
+            <summary>
+            ANGUILLA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AQ">
+            <summary>
+            ANTARCTICA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AG">
+            <summary>
+            ANTIGUA AND BARBUDA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AR">
+            <summary>
+            ARGENTINA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AM">
+            <summary>
+            ARMENIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AW">
+            <summary>
+            ARUBA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AU">
+            <summary>
+            AUSTRALIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AT">
+            <summary>
+            AUSTRIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AZ">
+            <summary>
+            AZERBAIJAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BS">
+            <summary>
+            BAHAMAS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BH">
+            <summary>
+            BAHRAIN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BD">
+            <summary>
+            BANGLADESH
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BB">
+            <summary>
+            BARBADOS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BY">
+            <summary>
+            BELARUS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BE">
+            <summary>
+            BELGIUM
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BZ">
+            <summary>
+            BELIZE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BJ">
+            <summary>
+            BENIN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BM">
+            <summary>
+            BERMUDA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BT">
+            <summary>
+            BHUTAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BO">
+            <summary>
+            BOLIVIA, PLURINATIONAL STATE OF
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BQ">
+            <summary>
+            BONAIRE, SINT EUSTATIUS AND SABA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BA">
+            <summary>
+            BOSNIA AND HERZEGOVINA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BW">
+            <summary>
+            BOTSWANA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BV">
+            <summary>
+            BOUVET ISLAND
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BR">
+            <summary>
+            BRAZIL
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.IO">
+            <summary>
+            BRITISH INDIAN OCEAN TERRITORY
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BN">
+            <summary>
+            BRUNEI DARUSSALAM
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BG">
+            <summary>
+            BULGARIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BF">
+            <summary>
+            BURKINA FASO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BI">
+            <summary>
+            BURUNDI
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.KH">
+            <summary>
+            CAMBODIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CM">
+            <summary>
+            CAMEROON
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CA">
+            <summary>
+            CANADA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CV">
+            <summary>
+            CAPE VERDE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.KY">
+            <summary>
+            CAYMAN ISLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CF">
+            <summary>
+            CENTRAL AFRICAN REPUBLIC
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TD">
+            <summary>
+            CHAD
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CL">
+            <summary>
+            CHILE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CN">
+            <summary>
+            CHINA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CX">
+            <summary>
+            CHRISTMAS ISLAND
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CC">
+            <summary>
+            COCOS (KEELING) ISLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CO">
+            <summary>
+            COLOMBIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.KM">
+            <summary>
+            COMOROS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CG">
+            <summary>
+            CONGO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CD">
+            <summary>
+            CONGO, THE DEMOCRATIC REPUBLIC OF THE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CK">
+            <summary>
+            COOK ISLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CR">
+            <summary>
+            COSTA RICA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CI">
+            <summary>
+            CÔTE D'IVOIRE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.HR">
+            <summary>
+            CROATIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CU">
+            <summary>
+            CUBA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CW">
+            <summary>
+            CURAÇAO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CY">
+            <summary>
+            CYPRUS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CZ">
+            <summary>
+            CZECH REPUBLIC
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.DK">
+            <summary>
+            DENMARK
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.DJ">
+            <summary>
+            DJIBOUTI
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.DM">
+            <summary>
+            DOMINICA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.DO">
+            <summary>
+            DOMINICAN REPUBLIC
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.EC">
+            <summary>
+            ECUADOR
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.EG">
+            <summary>
+            EGYPT
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SV">
+            <summary>
+            EL SALVADOR
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GQ">
+            <summary>
+            EQUATORIAL GUINEA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.ER">
+            <summary>
+            ERITREA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.EE">
+            <summary>
+            ESTONIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.ET">
+            <summary>
+            ETHIOPIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.FK">
+            <summary>
+            FALKLAND ISLANDS (MALVINAS)
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.FO">
+            <summary>
+            FAROE ISLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.FJ">
+            <summary>
+            FIJI
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.FI">
+            <summary>
+            FINLAND
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.FR">
+            <summary>
+            FRANCE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GF">
+            <summary>
+            FRENCH GUIANA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PF">
+            <summary>
+            FRENCH POLYNESIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TF">
+            <summary>
+            FRENCH SOUTHERN TERRITORIES
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GA">
+            <summary>
+            GABON
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GM">
+            <summary>
+            GAMBIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GE">
+            <summary>
+            GEORGIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.DE">
+            <summary>
+            GERMANY
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GH">
+            <summary>
+            GHANA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GI">
+            <summary>
+            GIBRALTAR
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GR">
+            <summary>
+            GREECE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GL">
+            <summary>
+            GREENLAND
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GD">
+            <summary>
+            GRENADA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GP">
+            <summary>
+            GUADELOUPE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GU">
+            <summary>
+            GUAM
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GT">
+            <summary>
+            GUATEMALA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GG">
+            <summary>
+            GUERNSEY
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GN">
+            <summary>
+            GUINEA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GW">
+            <summary>
+            GUINEA-BISSAU
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GY">
+            <summary>
+            GUYANA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.HT">
+            <summary>
+            HAITI
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.HM">
+            <summary>
+            HEARD ISLAND AND MCDONALD ISLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.VA">
+            <summary>
+            HOLY SEE (VATICAN CITY STATE)
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.HN">
+            <summary>
+            HONDURAS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.HK">
+            <summary>
+            HONG KONG
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.HU">
+            <summary>
+            HUNGARY
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.IS">
+            <summary>
+            ICELAND
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.IN">
+            <summary>
+            INDIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.ID">
+            <summary>
+            INDONESIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.IR">
+            <summary>
+            IRAN, ISLAMIC REPUBLIC OF
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.IQ">
+            <summary>
+            IRAQ
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.IE">
+            <summary>
+            IRELAND
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.IM">
+            <summary>
+            ISLE OF MAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.IL">
+            <summary>
+            ISRAEL
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.IT">
+            <summary>
+            ITALY
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.JM">
+            <summary>
+            JAMAICA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.JP">
+            <summary>
+            JAPAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.JE">
+            <summary>
+            JERSEY
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.JO">
+            <summary>
+            JORDAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.KZ">
+            <summary>
+            KAZAKHSTAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.KE">
+            <summary>
+            KENYA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.KI">
+            <summary>
+            KIRIBATI
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.KP">
+            <summary>
+            KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.KR">
+            <summary>
+            KOREA, REPUBLIC OF
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.KW">
+            <summary>
+            KUWAIT
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.KG">
+            <summary>
+            KYRGYZSTAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.LA">
+            <summary>
+            LAO PEOPLE'S DEMOCRATIC REPUBLIC
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.LV">
+            <summary>
+            LATVIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.LB">
+            <summary>
+            LEBANON
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.LS">
+            <summary>
+            LESOTHO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.LR">
+            <summary>
+            LIBERIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.LY">
+            <summary>
+            LIBYA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.LI">
+            <summary>
+            LIECHTENSTEIN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.LT">
+            <summary>
+            LITHUANIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.LU">
+            <summary>
+            LUXEMBOURG
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MO">
+            <summary>
+            MACAO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MK">
+            <summary>
+            MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MG">
+            <summary>
+            MADAGASCAR
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MW">
+            <summary>
+            MALAWI
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MY">
+            <summary>
+            MALAYSIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MV">
+            <summary>
+            MALDIVES
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.ML">
+            <summary>
+            MALI
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MT">
+            <summary>
+            MALTA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MH">
+            <summary>
+            MARSHALL ISLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MQ">
+            <summary>
+            MARTINIQUE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MR">
+            <summary>
+            MAURITANIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MU">
+            <summary>
+            MAURITIUS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.YT">
+            <summary>
+            MAYOTTE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MX">
+            <summary>
+            MEXICO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.FM">
+            <summary>
+            MICRONESIA, FEDERATED STATES OF
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MD">
+            <summary>
+            MOLDOVA, REPUBLIC OF
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MC">
+            <summary>
+            MONACO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MN">
+            <summary>
+            MONGOLIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.ME">
+            <summary>
+            MONTENEGRO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MS">
+            <summary>
+            MONTSERRAT
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MA">
+            <summary>
+            MOROCCO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MZ">
+            <summary>
+            MOZAMBIQUE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MM">
+            <summary>
+            MYANMAR
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.NA">
+            <summary>
+            NAMIBIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.NR">
+            <summary>
+            NAURU
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.NP">
+            <summary>
+            NEPAL
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.NL">
+            <summary>
+            NETHERLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.NC">
+            <summary>
+            NEW CALEDONIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.NZ">
+            <summary>
+            NEW ZEALAND
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.NI">
+            <summary>
+            NICARAGUA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.NE">
+            <summary>
+            NIGER
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.NG">
+            <summary>
+            NIGERIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.NU">
+            <summary>
+            NIUE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.NF">
+            <summary>
+            NORFOLK ISLAND
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MP">
+            <summary>
+            NORTHERN MARIANA ISLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.NO">
+            <summary>
+            NORWAY
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.OM">
+            <summary>
+            OMAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PK">
+            <summary>
+            PAKISTAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PW">
+            <summary>
+            PALAU
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PS">
+            <summary>
+            PALESTINE, STATE OF
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PA">
+            <summary>
+            PANAMA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PG">
+            <summary>
+            PAPUA NEW GUINEA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PY">
+            <summary>
+            PARAGUAY
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PE">
+            <summary>
+            PERU
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PH">
+            <summary>
+            PHILIPPINES
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PN">
+            <summary>
+            PITCAIRN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PL">
+            <summary>
+            POLAND
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PT">
+            <summary>
+            PORTUGAL
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PR">
+            <summary>
+            PUERTO RICO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.QA">
+            <summary>
+            QATAR
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.RE">
+            <summary>
+            RÉUNION
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.RO">
+            <summary>
+            ROMANIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.RU">
+            <summary>
+            RUSSIAN FEDERATION
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.RW">
+            <summary>
+            RWANDA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.BL">
+            <summary>
+            SAINT BARTHÉLEMY
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SH">
+            <summary>
+            SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.KN">
+            <summary>
+            SAINT KITTS AND NEVIS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.LC">
+            <summary>
+            SAINT LUCIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.MF">
+            <summary>
+            SAINT MARTIN (FRENCH PART)
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.PM">
+            <summary>
+            SAINT PIERRE AND MIQUELON
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.VC">
+            <summary>
+            SAINT VINCENT AND THE GRENADINES
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.WS">
+            <summary>
+            SAMOA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SM">
+            <summary>
+            SAN MARINO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.ST">
+            <summary>
+            SAO TOME AND PRINCIPE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SA">
+            <summary>
+            SAUDI ARABIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SN">
+            <summary>
+            SENEGAL
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.RS">
+            <summary>
+            SERBIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SC">
+            <summary>
+            SEYCHELLES
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SL">
+            <summary>
+            SIERRA LEONE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SG">
+            <summary>
+            SINGAPORE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SX">
+            <summary>
+            SINT MAARTEN (DUTCH PART)
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SK">
+            <summary>
+            SLOVAKIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SI">
+            <summary>
+            SLOVENIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SB">
+            <summary>
+            SOLOMON ISLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SO">
+            <summary>
+            SOMALIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.ZA">
+            <summary>
+            SOUTH AFRICA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GS">
+            <summary>
+            SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SS">
+            <summary>
+            SOUTH SUDAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.ES">
+            <summary>
+            SPAIN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.LK">
+            <summary>
+            SRI LANKA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SD">
+            <summary>
+            SUDAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SR">
+            <summary>
+            SURINAME
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SJ">
+            <summary>
+            SVALBARD AND JAN MAYEN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SZ">
+            <summary>
+            SWAZILAND
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SE">
+            <summary>
+            SWEDEN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.CH">
+            <summary>
+            SWITZERLAND
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.SY">
+            <summary>
+            SYRIAN ARAB REPUBLIC
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TW">
+            <summary>
+            TAIWAN, PROVINCE OF CHINA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TJ">
+            <summary>
+            TAJIKISTAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TZ">
+            <summary>
+            TANZANIA, UNITED REPUBLIC OF
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TH">
+            <summary>
+            THAILAND
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TL">
+            <summary>
+            TIMOR-LESTE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TG">
+            <summary>
+            TOGO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TK">
+            <summary>
+            TOKELAU
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TO">
+            <summary>
+            TONGA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TT">
+            <summary>
+            TRINIDAD AND TOBAGO
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TN">
+            <summary>
+            TUNISIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TR">
+            <summary>
+            TURKEY
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TM">
+            <summary>
+            TURKMENISTAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TC">
+            <summary>
+            TURKS AND CAICOS ISLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.TV">
+            <summary>
+            TUVALU
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.UG">
+            <summary>
+            UGANDA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.UA">
+            <summary>
+            UKRAINE
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.AE">
+            <summary>
+            UNITED ARAB EMIRATES
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.GB">
+            <summary>
+            UNITED KINGDOM
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.US">
+            <summary>
+            UNITED STATES
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.UM">
+            <summary>
+            UNITED STATES MINOR OUTLYING ISLANDS
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.UY">
+            <summary>
+            URUGUAY
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.UZ">
+            <summary>
+            UZBEKISTAN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.VU">
+            <summary>
+            VANUATU
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.VE">
+            <summary>
+            VENEZUELA, BOLIVARIAN REPUBLIC OF
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.VN">
+            <summary>
+            VIET NAM
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.VG">
+            <summary>
+            VIRGIN ISLANDS, BRITISH
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.VI">
+            <summary>
+            VIRGIN ISLANDS, U.S.
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.WF">
+            <summary>
+            WALLIS AND FUTUNA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.EH">
+            <summary>
+            WESTERN SAHARA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.YE">
+            <summary>
+            YEMEN
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.ZM">
+            <summary>
+            ZAMBIA
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.CountryCodes.ZW">
+            <summary>
+            ZIMBABWE
+            </summary>
+        </member>
+        <member name="M:OpenTrans.net.Order.Save(System.IO.Stream)">
+            <summary>
+            Saves the descriptor object into a stream.
+            
+            The stream position will be reset to the original position after writing is finished.
+            This allows easy further processing of the stream.
+            </summary>
+            <param name="stream"></param>
+        </member>
+        <member name="M:OpenTrans.net.OrderResponse.Save(System.IO.Stream)">
+            <summary>
+            Saves the descriptor object into a stream.
+            
+            The stream position will be reset to the original position after writing is finished.
+            This allows easy further processing of the stream.
+            </summary>
+            <param name="stream"></param>
+        </member>
+        <member name="F:OpenTrans.net.PartyIdTypes.BuyerSpecific">
+            Vom Einkäufer vergebene Identifikationsnummer
+        </member>
+        <member name="F:OpenTrans.net.PartyIdTypes.CustomerSpecific">
+            Vom Kunden vergebene Identifikationsnummer
+        </member>
+        <member name="F:OpenTrans.net.PartyIdTypes.DUNS">
+            DUNS-Kennung (siehe auch http://www.dnbgermany.de/datenbank/dunsnummer.html)
+        </member>
+        <member name="F:OpenTrans.net.PartyIdTypes.ILN">
+            ILN-Kennung (siehe auch http://www.gs1-germany.de/internet/content/e39/e50/e221/e222/index_ger.html)
+        </member>
+        <member name="F:OpenTrans.net.PartyIdTypes.GLN">
+            In Deutschland auch ILN genannt (siehe ILN)
+        </member>
+        <member name="F:OpenTrans.net.PartyIdTypes.PartySpecific">
+            Von der jeweiligen Organisation selbst definierte Identifikationsnummer
+        </member>
+        <member name="F:OpenTrans.net.PartyIdTypes.SupplierSpecific">
+            Vom Lieferanten vergebene Identifikationsnummer
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.Buyer">
+            The business partner is a buyer.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.CentralRegulator">
+            The business party is a centralized settlement and supports the business of several partners.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.Customer">
+            The business party is the customer of the buying company.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.Deliverer">
+            The business party is the carrier.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.Delivery">
+            The business party is the location of the product shipment or where the service is afforded.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.DocumentCreator">
+            The business partner is the creator of the document.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.FinalDelivery">
+            Reference to address and contact of the final recipient.
+            The federal office of export control currently only evaluates on order-header-level. Therefore orders related to exports should not use a party in this element
+            which is different to the header-level element FINAL_DELIVERY_PARTY.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.Intermediary">
+            The business party is an intermediate between product/service provider and benefit recipient.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.InvoiceIssuer">
+            The business party is the invoicing party.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.InvoiceRecipient">
+            The business party is the invoice receiving party.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.IPPOperator">
+            The business partner operatores an IPP application.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.Manufacturer">
+            The business partner is a manufacturer.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.Marketplace">
+            The business party runs an electronic market place supporting the processing of procurement and distribution of products and services.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.Payer">
+            The business party is the payer.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.Remittee">
+            The business party is the remittee.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.StandardizationBody">
+            The business partner is a standardization body. 
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.Supplier">
+            The business partner is a supplier. 
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.TrustedThirdParty">
+            A trusted instance that e.g. signed and verified the attached digital signature.
+        </member>
+        <member name="F:OpenTrans.net.PartyRoles.Other">
+            If no other role matches this value can be used.
+        </member>
+        <member name="T:OpenTrans.net.QuantityCodes">
+            <summary>
+            ISO Quantity Codes
+            
+            for web reference, see e.g.
+            http://www.robert-kuhlemann.de/iso_masseinheiten.htm
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.C62">
+            <summary>
+            Eins (Stück)
+            Abkürzung: Stk.
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.DAY">
+            <summary>
+            Tag
+            Abkürzung: Tag(e)
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.HAR">
+            <summary>
+            Hektar
+            Abkürzung: ha
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.HUR">
+            <summary>
+            Stunde
+            Abkürzung: Std.
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.KGM">
+            <summary>
+            Kilogramm
+            Abkürzung: kg
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.KTM">
+            <summary>
+            Kilometer
+            Abkürzung: km
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.KWH">
+            <summary>
+            Kilowattstune
+            Abkürzung: kWh
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.LS">
+            <summary>
+            Pauschale
+            Abkürzung: pausch.
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.LTR">
+            <summary>
+            Liter
+            Abkürzung: l
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.MIN">
+            <summary>
+            Minute
+            Abkürzung: min
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.MMK">
+            <summary>
+            Quadratmillimeter
+            Abkürzung: mm^2
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.MMT">
+            <summary>
+            Millimeter
+            Abkürzung: mm 
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.MTK">
+            <summary>
+            Kubikmeter
+            Abkürzung: m^2
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.MTQ">
+            <summary>
+            Kubikmeter
+            Abkürzung: m^3 
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.MTR">
+            <summary>
+            Meter
+            Abkürzung: m
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.NAR">
+            <summary>
+            Anzahl Artikel
+            Abkürzung: Anz.
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.NPR">
+            <summary>
+            Anzahl Paare
+            Abkürzung: Pr.
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.P1">
+            <summary>
+            Prozent
+            Abkürzung: %
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.PCE">
+            <summary>
+            Stück
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.SET">
+            <summary>
+            Set
+            Abkürzung: Set(s)
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.TNE">
+            <summary>
+            Tonne (metrisch)
+            Abkürzung:  t
+            </summary>
+        </member>
+        <member name="F:OpenTrans.net.QuantityCodes.WEE">
+            <summary>
+            Woche
+            Abkürzung: Woche(n)
+            </summary>
+        </member>
+    </members>
+</doc>
