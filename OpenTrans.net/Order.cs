@@ -31,9 +31,13 @@ namespace OpenTrans.net
         public DateTime? OrderDate { get; set; }
         public DateTime DesiredDeliveryDateStart { get; set; }
         public DateTime DesiredDeliveryDateEnd { get; set; }
+        public CustomerOrderReference CustomerOrderReference { get; set; }
+        public OrderPartiesReference OrderPartiesReference { get; set; }
+        public string Currency { get; set; }
+        public bool PartialShipmentAllowed { get; set; }
         public List<Party> Parties { get; set; } = new List<Party>();
         public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
-        
+        public OrderSummary OrderSummary { get; set; }
 
         public static Order Load(Stream stream)
         {

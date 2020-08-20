@@ -18,6 +18,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 
 namespace OpenTrans.net
@@ -93,8 +94,31 @@ namespace OpenTrans.net
 
             Writer.WriteEndElement(); // !PARTY
         } // !_writeParty()
-
-
+        internal void _writeCustomerOrderReference(XmlTextWriter writer, CustomerOrderReference customerOrderReference)
+        {
+            if (customerOrderReference != null)
+            {
+                Writer.WriteStartElement("CUSTOMER_ORDER_REFERENCE");
+                _writeOptionalElementString(Writer, "ORDER_ID", customerOrderReference.OrderId);
+                Writer.WriteEndElement(); // !CUSTOMER_ORDER_REFERENCE
+            }
+        }
+        internal void _writeOrderPartiesReference(XmlTextWriter writer, OrderPartiesReference orderPartiesReference)
+        {
+            if (orderPartiesReference != null)
+            {
+                Writer.WriteStartElement("ORDER_PARTIES_REFERENCE");
+                _writeOptionalElementString(Writer, "bmecat:BUYER_IDREF", orderPartiesReference.BuyerIdRef.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.BuyerIdRef.Type.EnumToString() } });
+                _writeOptionalElementString(Writer, "bmecat:SUPPLIER_IDREF", orderPartiesReference.SupplierIdRef.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.SupplierIdRef.Type.EnumToString() } });
+                if (orderPartiesReference.ShipmentPartiesReference != null)
+                {
+                    Writer.WriteStartElement("SHIPMENT_PARTIES_REFERENCE");
+                    _writeOptionalElementString(Writer, "DELIVERY_IDREF", orderPartiesReference.ShipmentPartiesReference.DeliveryIdRef);
+                    Writer.WriteEndElement(); // !SHIPMENT_PARTIES_REFERENCE
+                }
+                Writer.WriteEndElement(); // !ORDER_PARTIES_REFERENCE
+            }
+        }
         internal void _writeOrderItem(XmlTextWriter writer, OrderItem item, string startElementName = "ORDER_ITEM")
         {
             Writer.WriteStartElement(startElementName);
@@ -113,7 +137,13 @@ namespace OpenTrans.net
             {
                 _writeAmount(Writer, "PRICE_LINE_AMOUNT", item.LineAmount.Value);
             }
-
+            if (item.ProductPriceFix != null)
+            {
+                Writer.WriteStartElement("PRODUCT_PRICE_FIX");
+                _writeAmount(Writer, "bmecat:PRICE_AMOUNT", item.ProductPriceFix.PriceAmount);
+                _writeAmount(Writer, "bmecat:PRICE_QUANTITY", item.ProductPriceFix.PriceQuantity);
+                Writer.WriteEndElement(); // !PRODUCT_PRICE_FIX
+            }
             foreach (string remark in item.Remarks)
             {
                 Writer.WriteStartElement("REMARKS");
@@ -121,7 +151,19 @@ namespace OpenTrans.net
                 Writer.WriteValue(remark);
                 writer.WriteEndElement();
             }
-
+            if (item.ProductFeatures.Any())
+            {
+                Writer.WriteStartElement("PRODUCT_FEATURES");
+                foreach (var features in item.ProductFeatures)
+                {
+                    Writer.WriteStartElement("FEATURE ");
+                    _writeOptionalElementString(Writer, "bmecat:FNAME", features.FName);
+                    _writeOptionalElementString(Writer, "bmecat:FVALUE", features.FValue);
+                    _writeOptionalElementString(Writer, "bmecat:FUNIT", features.FUnit);
+                    Writer.WriteEndElement(); // !FEATURE 
+                }
+                Writer.WriteEndElement(); // !PRODUCT_FEATURES
+            }
             Writer.WriteEndElement();
         } // !_writeOrderItem()
 
@@ -170,13 +212,21 @@ namespace OpenTrans.net
             writer.WriteEndElement(); // !tagName
         } // !_writeOptionalAmount()
 
-
         internal void _writeAmount(XmlTextWriter writer, string tagName, decimal value, int numDecimals = 2)
         {
             writer.WriteStartElement(tagName);
             writer.WriteValue(_formatDecimal(value, numDecimals));
             writer.WriteEndElement(); // !tagName
         } // !_writeOptionalAmount()
+        internal void _writeOptionalElementAmount(XmlTextWriter writer, string tagName, decimal? value)
+        {
+            if (value.HasValue)
+            {
+                writer.WriteStartElement(tagName);
+                Writer.WriteValue(value.Value);
+                Writer.WriteEndElement();
+            }
+        }
 
 
         internal string _formatDecimal(decimal value, int numDecimals = 2)
