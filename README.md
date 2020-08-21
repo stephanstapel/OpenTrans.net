@@ -138,7 +138,7 @@ OrderResponse response = OrderResponse.Load(s);
 and alternatively you can use file names to load the order response:
 
 ```csharp
-OrderResponse response = OrderResponse.Load("order-respons.xml");
+OrderResponse response = OrderResponse.Load("order-response.xml");
 ```
 
 The demo application contains some simple examples. Please see here for more details:
