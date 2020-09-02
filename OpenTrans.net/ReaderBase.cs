@@ -143,23 +143,10 @@ namespace OpenTrans.net
                 });
             }
 
-
-            // email field can me used in single mode and multi address mode
-            XmlNodeList emailAddressNodes = node.SelectNodes("./*[local-name()='ADDRESS']/*[local-name()='EMAILS']/*[local-name()='EMAIL']", nsmgr);
-            if (emailAddressNodes.Count > 0)
+            string _emailAddress = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='EMAIL']", nsmgr);
+            if (!String.IsNullOrEmpty(_emailAddress))
             {
-                foreach (XmlNode emailAddressNode in emailAddressNodes)
-                {
-                    retval.EmailAddresses.Add(XmlUtils.NodeAsString(emailAddressNode, ".", nsmgr));
-                }
-            }
-            else
-            {
-                string _emailAddress = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='EMAIL']", nsmgr);
-                if (!String.IsNullOrEmpty(_emailAddress))
-                {
-                    retval.EmailAddresses.Add(_emailAddress);
-                }
+                retval.EmailAddress = _emailAddress;
             }
 
             XmlNode contactNode = node.SelectSingleNode("./*[local-name()='ADDRESS']/*[local-name()='CONTACT_DETAILS']", nsmgr);
@@ -183,10 +170,10 @@ namespace OpenTrans.net
                 }
                 else
                 {
-                    string _emailAddress = XmlUtils.NodeAsString(node, "./*[local-name()='EMAIL']", nsmgr);
+                    string _contactEmailAddress = XmlUtils.NodeAsString(node, "./*[local-name()='EMAIL']", nsmgr);
                     if (!String.IsNullOrEmpty(_emailAddress))
                     {
-                        retval.EmailAddresses.Add(_emailAddress);
+                        _emailAddresses.Add(_contactEmailAddress);
                     }
                 }
 

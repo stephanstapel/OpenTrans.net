@@ -55,12 +55,7 @@ namespace OpenTrans.net
             _writeOptionalElementString(writer, "bmecat:COUNTRY_CODED", party.CountryCode.EnumToString());
             _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
             _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
-            writer.WriteStartElement("bmecat:EMAILS");
-            foreach (string emailAddress in party.EmailAddresses)
-            {
-                _writeOptionalElementString(writer, "bmecat:EMAIL", emailAddress);
-            }
-            writer.WriteEndElement(); // !bmecat:EMAILS
+            _writeOptionalElementString(writer, "bmecat:EMAIL", party.EmailAddress);
             _writeOptionalElementString(writer, "bmecat:FAX", party.FaxNo);
             _writeOptionalElementString(writer, "bmecat:PHONE", party.PhoneNo);
             _writeOptionalElementString(writer, "bmecat:URL", party.Url);

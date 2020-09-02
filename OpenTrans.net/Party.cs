@@ -40,7 +40,7 @@ namespace OpenTrans.net
         public Contact ContactDetails { get; set; }
         public string FaxNo { get; set; }
         public string PhoneNo { get; set; }
-        public List<string> EmailAddresses { get; set; } = new List<string>();
+        public string EmailAddress { get; set; }
         public string Url { get; set; }
     }
 }
