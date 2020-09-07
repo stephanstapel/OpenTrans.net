@@ -20,8 +20,8 @@ namespace OpenTrans.net
 {
     public class ProductId
     {
-        public string SupplierPId { get; set; }
-        public string SupplierIdRef { get; set; }
+        public SupplierProductId SupplierPId { get; set; }
+        public PartyId SupplierIdRef { get; set; }
         public string DescriptionShort { get; set; }
         public string DescriptionLong { get; set; }
     }
