@@ -150,7 +150,7 @@ namespace OpenTrans.net
             new KeyValuePair<string, PartyRoles>("other", PartyRoles.Other),
         };
 
-        public static PartyRoles FromString(this PartyRoles _c, string s)
+        public static PartyRoles FromString(this PartyRoles _, string s)
         {
             s = s.ToLower().Trim();
 

@@ -18,8 +18,14 @@
  */
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// Identifier of the product. The included elements ensure the capability of a unique identification of a product.
+    /// </summary>
     public class ProductId
     {
+        /// <summary>
+        /// This element contains the product number issued by the supplier. It is determining for ordering the product; it identifies the product in the supplier catalog.
+        /// </summary>
         public SupplierProductId SupplierPId { get; set; }
         public PartyId SupplierIdRef { get; set; }
         public BuyerProductId BuyerPId { get; set; }        

@@ -1426,7 +1426,7 @@ namespace OpenTrans.net
 
     internal static class QuantityCodesExtensions
     {
-        public static QuantityCodes FromString(this QuantityCodes _c, string s)
+        public static QuantityCodes FromString(this QuantityCodes _, string s)
         {
             try
             {

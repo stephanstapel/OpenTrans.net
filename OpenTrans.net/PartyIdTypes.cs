@@ -63,7 +63,7 @@ namespace OpenTrans.net
 
     public static class PartyIdTypesExtensions
     {
-        public static PartyIdTypes FromString(this PartyIdTypes _c, string s)
+        public static PartyIdTypes FromString(this PartyIdTypes _, string s)
         {
             s = s.ToLower().Trim();
             switch (s)
