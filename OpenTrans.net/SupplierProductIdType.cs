@@ -6,29 +6,19 @@ namespace OpenTrans.net
 {
     public enum SupplierProductIdType
     {
-        /**
-         * Artikelnummer des einkaufenden Unternehmens
-         */
+        /// <summary> Artikelnummer des einkaufenden Unternehmen </summary>
         BuyerSpecific,
 
-        /**
-         * Europäische Artikelnummer (14 Zeichen), s. http://www.ean-int.org
-         */
+        /// <summary> Europäische Artikelnummer (14 Zeichen), s. http://www.ean-int.org </summary>
         EAN,
 
-        /**
-         * Global Trade Item Number, s. http://www.uc-council.org/2005sunrise/global_trade_item_number.html
-         */
+        /// <summary> Global Trade Item Number, s. http://www.uc-council.org/2005sunrise/global_trade_item_number.html </summary>
         GTIN,
 
-        /**
-         * Artikelnummer des Lieferanten
-         */
+        /// <summary> Artikelnummer des Lieferanten </summary>
         SupplierSpecific,
 
-        /**
-         * Universal Product Code, s. http://www.ean.de/ean/Inhalt/e2/e8/e335
-         */
+        /// <summary> Universal Product Code, s. http://www.ean.de/ean/Inhalt/e2/e8/e335</summary>
         UPC,
 
         Unknown
