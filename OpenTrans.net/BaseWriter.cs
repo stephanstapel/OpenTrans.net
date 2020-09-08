@@ -23,9 +23,11 @@ using System.Xml;
 
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// This class contains base functionality that is useable by writers for all OpenTrans message types
+    /// </summary>
     internal class BaseWriter
     {      
-
         internal void _writeParty(XmlTextWriter writer, Party party)
         {
             writer.WriteStartElement("PARTY");
@@ -97,7 +99,7 @@ namespace OpenTrans.net
                 _writeOptionalElementString(writer, "ORDER_ID", customerOrderReference.OrderId);
                 writer.WriteEndElement(); // !CUSTOMER_ORDER_REFERENCE
             }
-        }
+        }  // !_writeCustomerOrderReference()
 
 
         internal void _writeOrderPartiesReference(XmlTextWriter writer, OrderPartiesReference orderPartiesReference)
@@ -115,7 +117,7 @@ namespace OpenTrans.net
                 }
                 writer.WriteEndElement(); // !ORDER_PARTIES_REFERENCE
             }
-        }
+        } // !_writeOrderPartiesReference()
 
 
         internal void _writeOrderItem(XmlTextWriter writer, OrderItem item, string startElementName = "ORDER_ITEM")
@@ -218,12 +220,15 @@ namespace OpenTrans.net
             writer.WriteEndElement(); // !tagName
         } // !_writeOptionalAmount()
 
+
         internal void _writeAmount(XmlTextWriter writer, string tagName, decimal value, int numDecimals = 2)
         {
             writer.WriteStartElement(tagName);
             writer.WriteValue(_formatDecimal(value, numDecimals));
             writer.WriteEndElement(); // !tagName
         } // !_writeOptionalAmount()
+
+
         internal void _writeOptionalElementAmount(XmlTextWriter writer, string tagName, decimal? value)
         {
             if (value.HasValue)
@@ -232,7 +237,7 @@ namespace OpenTrans.net
                 writer.WriteValue(value.Value);
                 writer.WriteEndElement();
             }
-        }
+        } // !_writeOptionalElementAmount()
 
 
         internal string _formatDecimal(decimal value, int numDecimals = 2)

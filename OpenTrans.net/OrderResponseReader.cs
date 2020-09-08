@@ -22,7 +22,7 @@ using System.Xml;
 
 namespace OpenTrans.net
 {
-    internal class OrderResponseReader : ReaderBase
+    internal class OrderResponseReader : BaseReader
     {
         public OrderResponseReader()
         {

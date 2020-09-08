@@ -24,7 +24,7 @@ using System.Xml;
 
 namespace OpenTrans.net
 {
-    internal class OrderReader : ReaderBase
+    internal class OrderReader : BaseReader
     {
         public Order Load(Stream stream)
         {

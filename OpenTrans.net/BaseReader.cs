@@ -24,7 +24,10 @@ using System.Xml;
 
 namespace OpenTrans.net
 {
-    internal class ReaderBase
+    /// <summary>
+    /// This class contains base functionality that is useable by readers for all OpenTrans message types
+    /// </summary>
+    internal class BaseReader
     {
         protected DateTime? _nodeAsDateTime(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null)
         {
