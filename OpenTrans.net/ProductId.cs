@@ -22,6 +22,7 @@ namespace OpenTrans.net
     {
         public string SupplierPId { get; set; }
         public string SupplierIdRef { get; set; }
+        public BuyerProductId BuyerPId { get; set; }
         public string DescriptionShort { get; set; }
         public string DescriptionLong { get; set; }
     }
