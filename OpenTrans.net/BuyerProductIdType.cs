@@ -3,24 +3,16 @@ namespace OpenTrans.net
 {
     public enum BuyerProductIdType
     {
-        /**
-         * Artikelnummer des einkaufenden Unternehmens
-         */
+        /// <summary> Artikelnummer des einkaufenden Unternehmens </summary>
         BuyerSpecific,
 
-        /**
-         * Europäische Artikelnummer (14 Zeichen), s. http://www.ean-int.org
-         */
+        /// <summary> Europäische Artikelnummer (14 Zeichen), s. http://www.ean-int.org </summary>
         EAN,
 
-        /**
-         * Global Trade Item Number, s. http://www.uc-council.org/2005sunrise/global_trade_item_number.html
-         */
+        /// <summary> Global Trade Item Number, s. http://www.uc-council.org/2005sunrise/global_trade_item_number.html </summary>
         GTIN,
 
-        /**
-         * Universal Product Code, s. http://www.ean.de/ean/Inhalt/e2/e8/e335
-         */
+        /// <summary> Universal Product Code, s. http://www.ean.de/ean/Inhalt/e2/e8/e335 </summary>
         UPC,
 
         Unknown
