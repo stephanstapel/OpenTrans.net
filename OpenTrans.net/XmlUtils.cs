@@ -28,6 +28,9 @@ namespace OpenTrans.net
 {
     class XmlUtils
     {
+        /// <summary>
+        ///  reads a certain attribute value
+        /// </summary>
         public static string AttributeText(XmlNode node, string attributeName, string defaultText = "")
         {
             try
@@ -46,6 +49,9 @@ namespace OpenTrans.net
         } // !AttributeText()
 
 
+        /// <summary>
+        ///  reads the value from given xpath and interprets the value as boolean
+        /// </summary>
         public static bool NodeAsBool(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null, bool defaultValue = true)
         {
             if (node == null)
@@ -72,6 +78,9 @@ namespace OpenTrans.net
         } // !NodeAsBool()
 
 
+        /// <summary>
+        ///  reads the value from given xpath and interprets the value as string
+        /// </summary>
         public static string NodeAsString(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null, string defaultValue = "")
         {
             if (node == null)
@@ -121,6 +130,9 @@ namespace OpenTrans.net
         } // !NodeAsInt()
 
 
+        /// <summary>
+        ///  reads the value from given xpath and interprets the value as decimal
+        /// </summary>
         public static decimal? NodeAsDecimal(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null, decimal? defaultValue = null)
         {
             if (node == null)
