@@ -125,7 +125,7 @@ namespace OpenTrans.net_Test
                 LineItemId = "100",
                 ProductId = new ProductId()
                 {
-                    SupplierPId = "123002",
+                    SupplierPId = new SupplierProductId() { Id = "123002" },
                     DescriptionShort = "APPLE iPad Air 2 64GB 3G 4G Grau",
                     DescriptionLong = "APPLE iPad Air 2 64GB 3G 4G Grau&lt;br /&gt;24.63cm/9.7\" IPS(2048 x 1536), Kamera auf Rück - &lt; br / &gt; und Vorderseite, &lt; br / &gt; Bluetooth, Wi - Fi, 4G, Space - grau"
                 },
@@ -169,11 +169,7 @@ namespace OpenTrans.net_Test
                 Url = "a",
                 FaxNo = "a",
                 PhoneNo = "a",
-                EmailAddresses = new List<string>()
-                {
-                    "a",
-                    "a"
-                }
+                EmailAddress = "a"
             });
 
             order.OrderItems.Add(new OrderItem()

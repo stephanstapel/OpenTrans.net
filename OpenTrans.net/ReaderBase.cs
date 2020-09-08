@@ -87,11 +87,15 @@ namespace OpenTrans.net
             {
                 return null;
             }
-
+            XmlNode supplierPIdNode = node.SelectSingleNode("./*[local-name()='SUPPLIER_PID']", nsmgr);
+            SupplierProductId supplierPId = new SupplierProductId() { Id = supplierPIdNode?.InnerText, Type = default(SupplierProductIdType).FromString(XmlUtils.AttributeText(supplierPIdNode, "Type")) };
+            XmlNode supplierIdRefNode = node.SelectSingleNode("./*[local-name()='SUPPLIER_IDREF']", nsmgr);
+            PartyId supplierIdRef = new PartyId() { Id = supplierIdRefNode?.InnerText, Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(supplierIdRefNode, "Type")) };
             ProductId id = new ProductId()
             {
-                SupplierPId = XmlUtils.NodeAsString(node, "./*[local-name()='SUPPLIER_PID']", nsmgr),
-                SupplierIdRef = XmlUtils.NodeAsString(node, "./*[local-name()='SUPPLIER_IDREF']", nsmgr),
+                
+                SupplierPId = supplierPId,
+                SupplierIdRef = supplierIdRef,
                 DescriptionShort = XmlUtils.NodeAsString(node, "./*[local-name()='DESCRIPTION_SHORT']", nsmgr),
                 DescriptionLong = XmlUtils.NodeAsString(node, "./*[local-name()='DESCRIPTION_LONG']", nsmgr)
             };
