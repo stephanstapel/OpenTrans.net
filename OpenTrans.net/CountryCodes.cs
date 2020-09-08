@@ -544,9 +544,9 @@ namespace OpenTrans.net
 
         /// <summary>
         /// Ghana
-        /// GH = 28
+        /// GH = 288
         /// </summary>
-        GH = 28,
+        GH = 288,
 
         /// <summary>
         /// Gibraltar
