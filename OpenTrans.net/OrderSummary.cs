@@ -18,8 +18,14 @@
  */
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// The summary contains information on the number of item lines in the order. This figure is used for control purposes to make sure that all items have been transferred
+    /// </summary>
     public class OrderSummary
     {
+        /// <summary>
+        /// Total amount covering all items in this business document
+        /// </summary>
         public decimal? TotalAmount { get; set; }
     }
 }

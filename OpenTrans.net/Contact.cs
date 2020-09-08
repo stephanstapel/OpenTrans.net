@@ -23,22 +23,70 @@ namespace OpenTrans.net
     /**
      * @todo add missing attribute: Phone, Fax (typed), page 62 of spec
      */
+
+    /// <summary>
+    /// This element contains informations about a contact person.
+    /// </summary>
     public class Contact
     {
-        public string Id { get; set; }
         /// <summary>
-        /// Nachname des Ansprechpartners
+        /// Unique ID of the contact person
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Last name of the contact
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// First name of the contact person
+        /// </summary>
         public string FirstName { get; set; }
+
+        /// <summary>
+        /// Form of address, e.g., Mr., Ms.
+        /// </summary>
         public string Title { get; set; }
+
+        /// <summary>
+        /// Academic title of the contact person, e.g., Dr
+        /// </summary>
         public string AcademicTitle { get; set; }
+
+        /// <summary>
+        /// Roles or positions of a contact
+        /// </summary>
         public List<string> Roles { get; set; } = new List<string>();
+
+        /// <summary>
+        /// Additional information on the contact person
+        /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// URL of the web site
+        /// </summary>
         public string Url { get; set; }
+
+        /// <summary>
+        /// Phone number
+        /// </summary>
         public string PhoneNo { get; set; }
+
+        /// <summary>
+        /// Fax number
+        /// </summary>
         public string FaxNo { get; set; }
+
+        /// <summary>
+        /// List of e-mail addresses
+        /// </summary>
         public List<string> EmailAddresses { get; set; } = new List<string>();
+
+        /// <summary>
+        /// Authentification information
+        /// </summary>
         public string Authentification { get; set; }
     }
 }

@@ -51,7 +51,7 @@ namespace OpenTrans.net
 
 
         /// <summary>
-        /// Saves the descriptor object into a stream.
+        /// Saves the order response object into a stream.
         /// 
         /// The stream position will be reset to the original position after writing is finished.
         /// This allows easy further processing of the stream.
