@@ -170,11 +170,14 @@ namespace OpenTrans.net
         internal void _writeProductId(XmlTextWriter writer, ProductId productId)
         {
             writer.WriteStartElement("PRODUCT_ID");
-            _writeOptionalElementString(writer, "bmecat:SUPPLIER_PID", productId?.SupplierPId.Id, new Dictionary<string, string>() { { "type", productId.SupplierPId?.Type.EnumToString() } });
-            _writeOptionalElementString(writer, "bmecat:SUPPLIER_IDREF", productId?.SupplierIdRef.Id, new Dictionary<string, string> { { "type", productId.SupplierIdRef?.Type.EnumToString() } });
-			_writeOptionalElementString(writer, "bmecat:BUYER_PID", productId.BuyerPId?.Id, new Dictionary<string, string> { { "type", productId.BuyerPId?.Type.EnumToString() } });
-            _writeOptionalElementString(writer, "bmecat:DESCRIPTION_SHORT", productId.DescriptionShort, new Dictionary<string, string> { { "lang", "deu" } });
-            _writeOptionalElementString(writer, "bmecat:DESCRIPTION_LONG", productId.DescriptionLong, new Dictionary<string, string> { { "lang", "deu" } });
+            if (productId != null)
+            {
+                _writeOptionalElementString(writer, "bmecat:SUPPLIER_PID", productId.SupplierPId?.Id, new Dictionary<string, string>() { { "type", productId.SupplierPId?.Type.EnumToString() } });
+                _writeOptionalElementString(writer, "bmecat:SUPPLIER_IDREF", productId.SupplierIdRef?.Id, new Dictionary<string, string> { { "type", productId.SupplierIdRef?.Type.EnumToString() } });
+                _writeOptionalElementString(writer, "bmecat:BUYER_PID", productId.BuyerPId?.Id, new Dictionary<string, string> { { "type", productId.BuyerPId?.Type.EnumToString() } });
+                _writeOptionalElementString(writer, "bmecat:DESCRIPTION_SHORT", productId.DescriptionShort, new Dictionary<string, string> { { "lang", "deu" } });
+                _writeOptionalElementString(writer, "bmecat:DESCRIPTION_LONG", productId.DescriptionLong, new Dictionary<string, string> { { "lang", "deu" } });
+            }
             writer.WriteEndElement(); // !PRODUCT_ID
         } // !_writeProductId()
 
