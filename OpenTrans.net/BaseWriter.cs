@@ -47,20 +47,6 @@ namespace OpenTrans.net
             _writeOptionalElementString(writer, "bmecat:NAME2", party.Name2);
             _writeOptionalElementString(writer, "bmecat:NAME3", party.Name3);
             _writeOptionalElementString(writer, "bmecat:DEPARTMENT", party.Department);
-            _writeOptionalElementString(writer, "bmecat:STREET", party.Street);
-            _writeOptionalElementString(writer, "bmecat:ZIP", party.Zip);
-            _writeOptionalElementString(writer, "bmecat:BOXNO", party.BoxNo);
-            _writeOptionalElementString(writer, "bmecat:ZIPBOX", party.ZipBox);
-            _writeOptionalElementString(writer, "bmecat:CITY", party.City);
-            _writeOptionalElementString(writer, "bmecat:STATE", party.State);
-            _writeOptionalElementString(writer, "bmecat:COUNTRY", Countries.GetCountry(party.CountryCode));
-            _writeOptionalElementString(writer, "bmecat:COUNTRY_CODED", party.CountryCode.EnumToString());
-            _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
-            _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
-            _writeOptionalElementString(writer, "bmecat:EMAIL", party.EmailAddress);
-            _writeOptionalElementString(writer, "bmecat:FAX", party.FaxNo);
-            _writeOptionalElementString(writer, "bmecat:PHONE", party.PhoneNo);
-            _writeOptionalElementString(writer, "bmecat:URL", party.Url);
 
             if (party.ContactDetails != null)
             {
@@ -71,20 +57,38 @@ namespace OpenTrans.net
                 _writeOptionalElementString(writer, "bmecat:TITLE", party.ContactDetails.Title);
                 _writeOptionalElementString(writer, "bmecat:ACADEMIC_TITLE", party.ContactDetails.AcademicTitle);
                 _writeOptionalElementString(writer, "bmecat:CONTACT_DESCR", party.ContactDetails.Description);
-                _writeOptionalElementString(writer, "bmecat:URL", party.ContactDetails.Url);
-                _writeOptionalElementString(writer, "bmecat:AUTHENTIFICATION", party.ContactDetails.Authentification);
-                writer.WriteStartElement("bmecat:EMAILS");
-                foreach(string emailAddress in party.ContactDetails.EmailAddresses)
-                {
-                    _writeOptionalElementString(writer, "bmecat:EMAIL", emailAddress);
-                }
-                writer.WriteEndElement(); // !bmecat:EMAILS
-                _writeOptionalElementString(writer, "bmecat:FAX", party.ContactDetails.FaxNo);
                 _writeOptionalElementString(writer, "bmecat:PHONE", party.ContactDetails.PhoneNo);                
+                _writeOptionalElementString(writer, "bmecat:FAX", party.ContactDetails.FaxNo);
+                _writeOptionalElementString(writer, "bmecat:URL", party.ContactDetails.Url);
+                if (party.ContactDetails.EmailAddresses.Any())
+                {
+                    writer.WriteStartElement("bmecat:EMAILS");
+                    foreach (string emailAddress in party.ContactDetails.EmailAddresses)
+                    {
+                        _writeOptionalElementString(writer, "bmecat:EMAIL", emailAddress);
+                    }
+                    writer.WriteEndElement(); // !bmecat:EMAILS
+                }
+
+                _writeOptionalElementString(writer, "bmecat:AUTHENTIFICATION", party.ContactDetails.Authentification);
 
                 writer.WriteEndElement(); // !CONTACT_DETAILS
             }
 
+            _writeOptionalElementString(writer, "bmecat:STREET", party.Street);
+            _writeOptionalElementString(writer, "bmecat:ZIP", party.Zip);
+            _writeOptionalElementString(writer, "bmecat:BOXNO", party.BoxNo);
+            _writeOptionalElementString(writer, "bmecat:ZIPBOX", party.ZipBox);
+            _writeOptionalElementString(writer, "bmecat:CITY", party.City);
+            _writeOptionalElementString(writer, "bmecat:STATE", party.State);
+            _writeOptionalElementString(writer, "bmecat:COUNTRY", Countries.GetCountry(party.CountryCode));
+            _writeOptionalElementString(writer, "bmecat:COUNTRY_CODED", party.CountryCode.EnumToString());
+            _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
+            _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
+            _writeOptionalElementString(writer, "bmecat:PHONE", party.PhoneNo);
+            _writeOptionalElementString(writer, "bmecat:FAX", party.FaxNo);
+            _writeOptionalElementString(writer, "bmecat:EMAIL", party.EmailAddress);
+            _writeOptionalElementString(writer, "bmecat:URL", party.Url);
             writer.WriteEndElement(); // !ADDRESS
 
             writer.WriteEndElement(); // !PARTY
@@ -128,30 +132,6 @@ namespace OpenTrans.net
             {
                 _writeProductId(writer, item.ProductId);
             }
-
-            if (item.Quantity.HasValue)
-            {
-                _writeAmount(writer, "QUANTITY", item.Quantity.Value);
-            }
-            _writeOptionalElementString(writer, "bmecat:ORDER_UNIT", item.OrderUnit.EnumToString());
-            if (item.LineAmount.HasValue)
-            {
-                _writeAmount(writer, "PRICE_LINE_AMOUNT", item.LineAmount.Value);
-            }
-            if (item.ProductPriceFix != null)
-            {
-                writer.WriteStartElement("PRODUCT_PRICE_FIX");
-                _writeAmount(writer, "bmecat:PRICE_AMOUNT", item.ProductPriceFix.PriceAmount);
-                _writeAmount(writer, "bmecat:PRICE_QUANTITY", item.ProductPriceFix.PriceQuantity);
-                writer.WriteEndElement(); // !PRODUCT_PRICE_FIX
-            }
-            foreach (string remark in item.Remarks)
-            {
-                writer.WriteStartElement("REMARKS");
-                writer.WriteAttributeString("lang", "deu");
-                writer.WriteValue(remark);
-                writer.WriteEndElement();
-            }
             if (item.ProductFeatures.Any())
             {
                 writer.WriteStartElement("PRODUCT_FEATURES");
@@ -164,6 +144,30 @@ namespace OpenTrans.net
                     writer.WriteEndElement(); // !FEATURE 
                 }
                 writer.WriteEndElement(); // !PRODUCT_FEATURES
+            }
+
+            if (item.Quantity.HasValue)
+            {
+                _writeAmount(writer, "QUANTITY", item.Quantity.Value);
+            }
+            _writeOptionalElementString(writer, "bmecat:ORDER_UNIT", item.OrderUnit.EnumToString());
+            if (item.ProductPriceFix != null)
+            {
+                writer.WriteStartElement("PRODUCT_PRICE_FIX");
+                _writeAmount(writer, "bmecat:PRICE_AMOUNT", item.ProductPriceFix.PriceAmount);
+                _writeAmount(writer, "bmecat:PRICE_QUANTITY", item.ProductPriceFix.PriceQuantity);
+                writer.WriteEndElement(); // !PRODUCT_PRICE_FIX
+            }
+            if (item.LineAmount.HasValue)
+            {
+                _writeAmount(writer, "PRICE_LINE_AMOUNT", item.LineAmount.Value);
+            }
+            foreach (string remark in item.Remarks)
+            {
+                writer.WriteStartElement("REMARKS");
+                writer.WriteAttributeString("lang", "deu");
+                writer.WriteValue(remark);
+                writer.WriteEndElement();
             }
             writer.WriteEndElement();
         } // !_writeOrderItem()
