@@ -21,9 +21,16 @@ namespace OpenTrans.net
     /// <summary>
     /// Identifier of the product from the perspective of the buyer. The included elements ensure the capability of a unique identification of a product.
     /// </summary>
-    public class BuyerProductId
+    public class BuyerProductId    
     {
+        /// <summary>
+        /// The actual Id that is assigned from the perspective of the buyer
+        /// </summary>
         public string Id { get; set; }
+
+        /// <summary>
+        /// This attribute specifies the type of ID, i.e. indicates the organization that has issued the ID.
+        /// </summary>
         public BuyerProductIdTypes Type { get; set; }
     }
 }

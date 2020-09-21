@@ -18,6 +18,9 @@
  */
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// Types for the product number used by the buying company.
+    /// </summary>
     public enum BuyerProductIdTypes
     {
         /// <summary> Artikelnummer des einkaufenden Unternehmens </summary>

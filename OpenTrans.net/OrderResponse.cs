@@ -36,6 +36,16 @@ namespace OpenTrans.net
 
 
 
+        /// <summary>
+        /// Loads an order response from the given stream.
+        /// 
+        /// Make sure that the stream is open. After successful reading, the stream is left open, i.e.
+        /// the caller of the library has to take care of the stream lifecycle.
+        /// 
+        /// If the stream is not open or readable, an IllegalStreamException exception is raised.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
         public static OrderResponse Load(Stream stream)
         {
             OrderResponseReader reader = new OrderResponseReader();
@@ -43,6 +53,12 @@ namespace OpenTrans.net
         } // !Load()
 
 
+        /// <summary>
+        /// Loads an order response from the given file.
+        /// If the file does not exist, a FileNotFoundException exception is raised.
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public static OrderResponse Load(string filename)
         {
             OrderResponseReader reader = new OrderResponseReader();
@@ -64,6 +80,10 @@ namespace OpenTrans.net
         } // !Save()
 
 
+        /// <summary>
+        /// Saves the order response into the given file.
+        /// </summary>
+        /// <param name="filename"></param>
         public void Save(string filename)
         {
             OrderResponseWriter writer = new OrderResponseWriter();
