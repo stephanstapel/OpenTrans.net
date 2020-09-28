@@ -41,5 +41,9 @@ namespace OpenTrans.net
         /// Unit of measurement of the feature
         /// </summary>
         public QuantityCodes Unit { get; set; }
+
+        public string Description { get; set; }
+        public string Order { get; set; }
+        public string Template { get; set; }
     }
 }
