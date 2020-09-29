@@ -64,6 +64,13 @@ namespace OpenTrans.net
         public decimal? LineAmount { get; set; }
 
         /// <summary>
+        /// Date of shipment. The delivery date specifies the date the commissioned goods are accepted by
+        /// the buyer. If the delivery date deviates from the one specified in the header, the delivery
+        /// date on item level is valid.
+        /// </summary>
+        public DeliveryDate DeliveryDate { get; set; }
+
+        /// <summary>
         /// Remark related to a business document
         /// </summary>
         public List<string> Remarks { get; set; }

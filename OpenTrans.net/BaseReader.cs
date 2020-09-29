@@ -40,6 +40,13 @@ namespace OpenTrans.net
                     return retval;
                 }
             }
+            else if (_temp.Length == 10)
+            {
+                if (DateTime.TryParseExact(_temp, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime retval))
+                {
+                    return retval;
+                }
+            }
             else
             {
                 if (DateTime.TryParseExact(_temp, "yyyy-MM-ddThh:mm:sszzz", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime retval))
@@ -77,6 +84,17 @@ namespace OpenTrans.net
                 remarks.Add(XmlUtils.NodeAsString(remarkNode, ".", nsmgr));
             }
 
+            DeliveryDate deliveryDate = default;
+            XmlNode deliveryDateRefNode = node.SelectSingleNode("./*[local-name()='DELIVERY_DATE']", nsmgr);
+            if (deliveryDateRefNode != null)
+            {
+                deliveryDate = new DeliveryDate
+                {
+                    StartDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_START_DATE']", nsmgr),
+                    EndDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_END_DATE']", nsmgr),
+                };
+            }
+
             OrderItem item = new OrderItem()
             {
                 LineItemId = XmlUtils.NodeAsString(node, "./*[local-name()='LINE_ITEM_ID']", nsmgr),
@@ -84,7 +102,9 @@ namespace OpenTrans.net
                 Quantity = XmlUtils.NodeAsDecimal(node, "./*[local-name()='QUANTITY']", nsmgr),
                 OrderUnit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='ORDER_UNIT']", nsmgr)),
                 LineAmount = XmlUtils.NodeAsDecimal(node, "./*[local-name()='PRICE_LINE_AMOUNT']", nsmgr),
+                DeliveryDate = deliveryDate,
                 ProductFeatures = features,
+                ProductPriceFix = _readProductPriceFix(node.SelectSingleNode("./*[local-name()='PRODUCT_PRICE_FIX']", nsmgr), nsmgr),
                 Remarks = remarks
             };
 
@@ -128,7 +148,7 @@ namespace OpenTrans.net
             }
             ProductId id = new ProductId()
             {
-                
+
                 SupplierPId = supplierPId,
                 SupplierIdRef = supplierIdRef,
                 DescriptionShort = XmlUtils.NodeAsString(node, "./*[local-name()='DESCRIPTION_SHORT']", nsmgr),
@@ -137,6 +157,33 @@ namespace OpenTrans.net
 
             return id;
         } // !_readProductId() 
+
+
+        private ProductPriceFix _readProductPriceFix(XmlNode node, XmlNamespaceManager nsmgr = null)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+            PriceBaseFix priceBaseFix = default;
+
+            XmlNode priceBaseFixRefNode = node.SelectSingleNode("./*[local-name()='PRICE_BASE_FIX']", nsmgr);
+            if (priceBaseFixRefNode != null)
+            {
+                priceBaseFix = new PriceBaseFix
+                {
+                    PriceUnitValue = XmlUtils.NodeAsDecimal(priceBaseFixRefNode, "./*[local-name()='PRICE_UNIT_VALUE']", nsmgr) ?? 0,
+                    PriceUnit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(priceBaseFixRefNode, "./*[local-name()='PRICE_UNIT']", nsmgr)),
+                };
+            }
+
+            return new ProductPriceFix
+            {
+                PriceAmount = XmlUtils.NodeAsDecimal(node, "./*[local-name()='PRICE_AMOUNT']", nsmgr) ?? 0,
+                PriceQuantity = XmlUtils.NodeAsDecimal(node, "./*[local-name()='PRICE_QUANTITY']", nsmgr) ?? 0,
+                PriceBaseFix = priceBaseFix,
+            };
+        } // !_readProductId()
 
 
         protected Party _readParty(XmlNode node, XmlNamespaceManager nsmgr = null)
