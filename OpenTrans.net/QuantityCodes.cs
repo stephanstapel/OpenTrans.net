@@ -1430,7 +1430,9 @@ namespace OpenTrans.net
         {
             try
             {
-                return (QuantityCodes)Enum.Parse(typeof(QuantityCodes), s);
+                return string.IsNullOrWhiteSpace(s) 
+                    ? QuantityCodes.Unknown
+                    : (QuantityCodes)Enum.Parse(typeof(QuantityCodes), s);
             }
             catch
             {
