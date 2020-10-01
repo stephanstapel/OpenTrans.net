@@ -17,8 +17,6 @@
  * under the License.
  */
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Xml;
 
@@ -52,7 +50,7 @@ namespace OpenTrans.net
                 retval.OrderDate = _nodeAsDateTime(headerNode, "./*[local-name()='ORDER_INFO']/*[local-name()='ORDER_DATE']", nsmgr);
 
                 XmlNodeList partyNodes = headerNode.SelectNodes(".//*[local-name()='PARTIES']/*[local-name()='PARTY']", nsmgr);
-                foreach(XmlNode partyNode in partyNodes)
+                foreach (XmlNode partyNode in partyNodes)
                 {
                     Party p = _readParty(partyNode, nsmgr);
                     retval.Parties.Add(p);
@@ -83,4 +81,3 @@ namespace OpenTrans.net
         } // !Load()       
     }
 }
- 

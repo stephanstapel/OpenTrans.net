@@ -19,7 +19,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Xml;
 
 namespace OpenTrans.net
@@ -72,7 +71,7 @@ namespace OpenTrans.net
             }
 
             List<Feature> features = new List<Feature>();
-            XmlNodeList featureNodes = node.SelectNodes("//*[local-name()='PRODUCT_FEATURES']/*[local-name()='FEATURE']", nsmgr);
+            XmlNodeList featureNodes = node.SelectNodes("./*[local-name()='PRODUCT_FEATURES']/*[local-name()='FEATURE']", nsmgr);
             foreach (XmlNode featureNode in featureNodes)
             {
                 features.Add(_readFeature(featureNode, nsmgr));
