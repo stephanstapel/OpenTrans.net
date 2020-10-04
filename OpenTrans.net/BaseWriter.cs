@@ -156,6 +156,16 @@ namespace OpenTrans.net
                 writer.WriteStartElement("PRODUCT_PRICE_FIX");                
                 _writeOptionalAmount(writer, "bmecat:PRICE_AMOUNT", item.ProductPriceFix.PriceAmount);
                 _writeOptionalAmount(writer, "bmecat:PRICE_QUANTITY", item.ProductPriceFix.PriceQuantity);
+
+                if (item.ProductPriceFix.PriceBaseFix != null)
+                {
+                    writer.WriteStartElement("PRICE_BASE_FIX");
+                    _writeOptionalAmount(writer, "PRICE_UNIT_VALUE", item.ProductPriceFix.PriceBaseFix.PriceUnitValue);
+                    _writeOptionalElementString(writer, "PRICE_UNIT", item.ProductPriceFix.PriceBaseFix.PriceUnit.EnumToString());
+                    _writeOptionalAmount(writer, "PRICE_UNIT_FACTOR", item.ProductPriceFix.PriceBaseFix.PriceUnitFactor);
+                    writer.WriteEndElement(); // !PRICE_BASE_FIX
+                }
+
                 writer.WriteEndElement(); // !PRODUCT_PRICE_FIX
             }
             if (item.LineAmount.HasValue)
