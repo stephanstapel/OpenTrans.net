@@ -101,7 +101,7 @@ namespace OpenTrans.net
 
             Writer.WriteStartElement("ORDER_SUMMARY");
             _writeAmount(Writer, "TOTAL_ITEM_NUM", order.OrderItems.Count);
-            _writeOptionalElementAmount(Writer, "TOTAL_AMOUNT ", order.OrderSummary.TotalAmount);
+            _writeOptionalAmount(Writer, "TOTAL_AMOUNT ", order.OrderSummary.TotalAmount);
             Writer.WriteEndElement(); // !ORDER_SUMMARY
             
             Writer.WriteEndElement(); // !ORDER

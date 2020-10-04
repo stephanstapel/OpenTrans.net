@@ -148,19 +148,19 @@ namespace OpenTrans.net
 
             if (item.Quantity.HasValue)
             {
-                _writeAmount(writer, "QUANTITY", item.Quantity.Value);
+                _writeOptionalAmount(writer, "QUANTITY", item.Quantity.Value);
             }
             _writeOptionalElementString(writer, "bmecat:ORDER_UNIT", item.OrderUnit.EnumToString());
             if (item.ProductPriceFix != null)
             {
                 writer.WriteStartElement("PRODUCT_PRICE_FIX");
-                _writeAmount(writer, "bmecat:PRICE_AMOUNT", item.ProductPriceFix.PriceAmount);
-                _writeAmount(writer, "bmecat:PRICE_QUANTITY", item.ProductPriceFix.PriceQuantity);
+                _writeOptionalAmount(writer, "bmecat:PRICE_AMOUNT", item.ProductPriceFix.PriceAmount);
+                _writeOptionalAmount(writer, "bmecat:PRICE_QUANTITY", item.ProductPriceFix.PriceQuantity);
                 writer.WriteEndElement(); // !PRODUCT_PRICE_FIX
             }
             if (item.LineAmount.HasValue)
             {
-                _writeAmount(writer, "PRICE_LINE_AMOUNT", item.LineAmount.Value);
+                _writeOptionalAmount(writer, "PRICE_LINE_AMOUNT", item.LineAmount.Value);
             }
             foreach (string remark in item.Remarks)
             {
@@ -225,23 +225,17 @@ namespace OpenTrans.net
         } // !_writeOptionalAmount()
 
 
-        internal void _writeAmount(XmlTextWriter writer, string tagName, decimal value, int numDecimals = 2)
+        internal void _writeOptionalAmount(XmlTextWriter writer, string tagName, decimal? value, int numDecimals = 2)
         {
+            if (!value.HasValue)
+            {
+                return;
+            }
+
             writer.WriteStartElement(tagName);
-            writer.WriteValue(_formatDecimal(value, numDecimals));
+            writer.WriteValue(_formatDecimal(value.Value, numDecimals));
             writer.WriteEndElement(); // !tagName
         } // !_writeOptionalAmount()
-
-
-        internal void _writeOptionalElementAmount(XmlTextWriter writer, string tagName, decimal? value)
-        {
-            if (value.HasValue)
-            {
-                writer.WriteStartElement(tagName);
-                writer.WriteValue(value.Value);
-                writer.WriteEndElement();
-            }
-        } // !_writeOptionalElementAmount()
 
 
         internal string _formatDecimal(decimal value, int numDecimals = 2)

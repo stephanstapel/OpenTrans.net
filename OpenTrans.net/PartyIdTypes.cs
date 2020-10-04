@@ -57,11 +57,14 @@ namespace OpenTrans.net
          */
         SupplierSpecific,
 
+        /// <summary>
+        /// Unknown (error) value
+        /// </summary>
         Unknown
     }
 
 
-    public static class PartyIdTypesExtensions
+    internal static class PartyIdTypesExtensions
     {
         public static PartyIdTypes FromString(this PartyIdTypes _, string s)
         {

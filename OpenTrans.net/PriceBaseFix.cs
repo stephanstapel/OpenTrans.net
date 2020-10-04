@@ -19,9 +19,29 @@
 
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// The element specifies on how the price is calculated based on the price-base. The calculation relies on the price-factor, the price-unit and the amount/number of supplied
+    /// price-units.
+    /// </summary>
     public class PriceBaseFix
     {
+        /// <summary>
+        /// Number of supplied price units. In the case of product prices not related to an order unit
+        /// the total price of an item-line(PRICE_LINE_AMOUNT) is calculated using a price unit.
+        /// Then the calculation of the total price of an item-line is the result of the multiplication of
+        /// PRICE_UNIT_VALUE and PRICE_AMOUNT.
+        /// </summary>
         public decimal PriceUnitValue { get; set; }
+
+        /// <summary>
+        /// Unit of measurement on which the price is calculated
+        /// </summary>
         public QuantityCodes PriceUnit { get; set; }
+
+        /// <summary>
+        /// The price factor is the conversion factor for price unit and order unit. The underlying formula
+        /// is: PRICE_UNIT equals PRICE_UNIT_FACTOR* ORDER_UNIT
+        /// </summary>
+        public decimal? PriceUnitFactor { get; set; }
     }
 }

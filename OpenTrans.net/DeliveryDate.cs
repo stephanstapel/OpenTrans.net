@@ -21,9 +21,26 @@
 
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// Specifies the delivery date.
+    /// </summary>
     public class DeliveryDate
     {
+        /// <summary>
+        /// Unique date for the start of the delivery period. If an exact delivery date has to be determined,
+        /// e.g. in the RECEIPTACKNOWLEDGEMENT-document, DELIVERY_START_DATE = DELIVERY_END_DATE is set.
+        /// </summary>
         public DateTime? StartDate { get; set; }
+
+        /// <summary>
+        /// Unique date for the end of the delivery period. If an exact delivery date has to be determined,
+        /// e.g. in the RECEIPTACKNOWLEDGEMENT-document, DELIVERY_START_DATE = DELIVERY_END_DATE is set.
+        /// </summary>
         public DateTime? EndDate { get; set; }
+
+        /// <summary>
+        /// Specifies the delivery date type.
+        /// </summary>
+        public DeliveryDateTypes Type { get; set; }
     }
 }

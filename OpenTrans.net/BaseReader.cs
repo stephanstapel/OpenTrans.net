@@ -91,6 +91,7 @@ namespace OpenTrans.net
                 {
                     StartDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_START_DATE']", nsmgr),
                     EndDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_END_DATE']", nsmgr),
+                    Type = default(DeliveryDateTypes).FromString(XmlUtils.AttributeText(deliveryDateRefNode, "type"))
                 };
             }
 
@@ -173,6 +174,7 @@ namespace OpenTrans.net
                 {
                     PriceUnitValue = XmlUtils.NodeAsDecimal(priceBaseFixRefNode, "./*[local-name()='PRICE_UNIT_VALUE']", nsmgr) ?? 0,
                     PriceUnit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(priceBaseFixRefNode, "./*[local-name()='PRICE_UNIT']", nsmgr)),
+                    PriceUnitFactor = XmlUtils.NodeAsDecimal(priceBaseFixRefNode, "./*[local-name()='PRICE_UNIT_FACTOR']", nsmgr),
                 };
             }
 
