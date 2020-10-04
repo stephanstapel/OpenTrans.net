@@ -41,6 +41,6 @@ namespace OpenTrans.net
         /// <summary>
         /// Specifies the delivery date type.
         /// </summary>
-        public DeliveryDateTypes Type { get; set; }
+        public DeliveryDateTypes Type { get; set; } = DeliveryDateTypes.Unknown;
     }
 }

@@ -153,7 +153,7 @@ namespace OpenTrans.net
             _writeOptionalElementString(writer, "bmecat:ORDER_UNIT", item.OrderUnit.EnumToString());
             if (item.ProductPriceFix != null)
             {
-                writer.WriteStartElement("PRODUCT_PRICE_FIX");
+                writer.WriteStartElement("PRODUCT_PRICE_FIX");                
                 _writeOptionalAmount(writer, "bmecat:PRICE_AMOUNT", item.ProductPriceFix.PriceAmount);
                 _writeOptionalAmount(writer, "bmecat:PRICE_QUANTITY", item.ProductPriceFix.PriceQuantity);
                 writer.WriteEndElement(); // !PRODUCT_PRICE_FIX
@@ -162,6 +162,19 @@ namespace OpenTrans.net
             {
                 _writeOptionalAmount(writer, "PRICE_LINE_AMOUNT", item.LineAmount.Value);
             }
+
+            if (item.DeliveryDate != null)
+            {
+                writer.WriteStartElement("DELIVERY_DATE");
+                if (item.DeliveryDate.Type != DeliveryDateTypes.Unknown)
+                {
+                    writer.WriteAttributeString("type", item.DeliveryDate.Type.EnumToString());
+                }
+                _writeDateTime(writer, "DELIVERY_START_DATE", item.DeliveryDate.StartDate);
+                _writeDateTime(writer, "DELIVERY_END_DATE", item.DeliveryDate.EndDate);
+                writer.WriteEndElement(); // !DELIVERY_DATE
+            }
+
             foreach (string remark in item.Remarks)
             {
                 writer.WriteStartElement("REMARKS");
@@ -188,9 +201,21 @@ namespace OpenTrans.net
         } // !_writeProductId()
 
 
-        internal void _writeDateTime(XmlTextWriter writer, string nodeName, DateTime dt)
+        internal void _writeDate(XmlTextWriter writer, string nodeName, DateTime? dt)
         {
-            writer.WriteElementString(nodeName, dt.ToString("yyyy-MM-ddThh:mm:sszzz"));
+            if (dt.HasValue)
+            {
+                writer.WriteElementString(nodeName, dt.Value.ToString("yyyy-MM-dd"));
+            }
+        } // !_writeDate()
+
+
+        internal void _writeDateTime(XmlTextWriter writer, string nodeName, DateTime? dt)
+        {
+            if (dt.HasValue)
+            {
+                writer.WriteElementString(nodeName, dt.Value.ToString("yyyy-MM-ddThh:mm:sszzz"));
+            }
         } // !_writeDateTime()
 
 
