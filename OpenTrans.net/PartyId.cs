@@ -24,9 +24,20 @@ using System.Threading.Tasks;
 
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// This element contains the unique identifier of the business partner. 
+    /// PARTY_ID has to be specified as the document contains references to this element
+    /// </summary>
     public class PartyId
     {
+        /// <summary>
+        /// The id itself
+        /// </summary>
         public string Id { get; set; }
+
+        /// <summary>
+        /// The type of the id
+        /// </summary>
         public PartyIdTypes Type { get; set; }
     }
 }

@@ -18,8 +18,15 @@
  */
 namespace OpenTrans.net
 {
+    /// <summary>
+    ///  Refers to business partners integrated in the process of the goods delivery procedure.
+    /// </summary>
     public class ShipmentPartiesReference
     {
+        /// <summary>
+        /// Reference to the unique identifier of the final recipient (shipping address and contact). The
+        /// element has to refer to a PARTY_ID in the same document.
+        /// </summary>
         public string DeliveryIdRef { get; set; }
     }
 }

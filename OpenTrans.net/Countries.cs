@@ -21,37 +21,38 @@ namespace OpenTrans.net
 {
     /// <summary>
     /// data from here:
-    /// https://datahub.io/core/country-list
-    /// 
-    /// to regenerate this file use:
-    /// import os
-    /// import sys
-    /// import csv
-    /// 
-    /// 
-    /// f = file("data_csv.csv")
-    /// g = file("output.cs", "w+")
-    /// 
-    /// csvfile = csv.reader(f, delimiter = ',', quotechar = '"')
-    /// next(csvfile, None) # skip header line
-    /// 
-    /// g.write("switch (code)\n")
-    /// g.write("{\n")
-    /// for line in csvfile:    
-    /// g.write("\tcase CountryCodes." + line[1] + ":\n")
-    /// g.write("\t\treturn \"" + line[0] + "\";\n")
-
-    /// g.write("\tdefault:\n")
-    /// g.write("\t\t{\n")
-    /// g.write("\t\t\treturn \"\";\n")
-    /// g.write("\t\t}\n")
-    /// g.write("}\n")
-    /// f.close()
-    /// g.close()
+    /// https://datahub.io/core/country-list    
     /// </summary>
+    /*
+     *
+     * to regenerate this file use:
+     * import os
+     * import sys
+     * import csv
+     * 
+     * 
+     * f = file("data_csv.csv")
+     * g = file("output.cs", "w+")
+     * 
+     * csvfile = csv.reader(f, delimiter = ',', quotechar = '"')
+     * next(csvfile, None) # skip header line
+     * 
+     * g.write("switch (code)\n")
+     * g.write("{\n")
+     * for line in csvfile:    
+     * g.write("\tcase CountryCodes." + line[1] + ":\n")
+     * g.write("\t\treturn \"" + line[0] + "\";\n")
+     * g.write("\tdefault:\n")
+     * g.write("\t\t{\n")
+     * g.write("\t\t\treturn \"\";\n")
+     * g.write("\t\t}\n")
+     * g.write("}\n")
+     * f.close()
+     * g.close()
+     */
     public class Countries
     {
-        public static string GetCountry(CountryCodes code)
+        internal static string GetCountry(CountryCodes code)
         {
             switch (code)
             {

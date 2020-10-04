@@ -20,41 +20,45 @@
 
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// States the coding standard to which the identifier (PARTY_ID) adheres. The
+    /// most common coding standards are predefined.
+    /// </summary>
     public enum PartyIdTypes
     {
-        /**
-         * Vom Einkäufer vergebene Identifikationsnummer
-         */
+        /// <summary>
+        /// Identification number defined by the buyer
+        /// </summary>
         BuyerSpecific,
 
-        /**
-         * Vom Kunden vergebene Identifikationsnummer
-         */
+        /// <summary>
+        /// Identification number defined by the customer
+        /// </summary>
         CustomerSpecific,
 
-        /**
-         * DUNS-Kennung (siehe auch http://www.dnbgermany.de/datenbank/dunsnummer.html)
-         */
+        ///
+        /// DUNS number (see http://www.dnbgermany.de/datenbank/dunsnummer.html)
+        ///
         DUNS,
 
-        /**
-         * ILN-Kennung (siehe auch http://www.gs1-germany.de/internet/content/e39/e50/e221/e222/index_ger.html)
-         */
+        ///
+        /// ILN number (see http://www.gs1-germany.de/internet/content/e39/e50/e221/e222/index_ger.html)
+        ///
         ILN,
 
-        /**
-         * In Deutschland auch ILN genannt (siehe ILN)
-         */
+        /// <summary>
+        /// Global Location Number GLN
+        /// </summary>
         GLN,
 
-        /**
-         * Von der jeweiligen Organisation selbst definierte Identifikationsnummer
-         */
+        /// <summary>
+        /// Identification number defined by the respective party
+        /// </summary>
         PartySpecific,
 
-        /**
-         * Vom Lieferanten vergebene Identifikationsnummer
-         */
+        /// <summary>
+        /// Identification number defined by the supplier
+        /// </summary>
         SupplierSpecific,
 
         /// <summary>

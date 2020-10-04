@@ -73,18 +73,11 @@ namespace OpenTrans.net
         /// <summary>
         /// Remark related to a business document
         /// </summary>
-        public List<string> Remarks { get; set; }
+        public List<string> Remarks { get; set; } = new List<string>();
 
         /// <summary>
         /// Description of the product by features and/or classification of the product
         /// </summary>
-        public List<Feature> ProductFeatures { get; set; }
-
-
-        public OrderItem()
-        {
-            this.Remarks = new List<string>();
-            this.ProductFeatures = new List<Feature>();
-        }
+        public List<Feature> ProductFeatures { get; set; } = new List<Feature>();
     }
 }

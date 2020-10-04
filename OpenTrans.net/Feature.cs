@@ -42,8 +42,25 @@ namespace OpenTrans.net
         /// </summary>
         public QuantityCodes Unit { get; set; }
 
+        /// <summary>
+        /// Element which can be used to describe the exact meaning of the feature;
+        /// the purpose of this element is not to explain the value of the feature in more
+        /// detail.
+        /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Order in which the feature must appear in the referenced group in the target system; the
+        /// order is fixed using ascending integer values
+        /// If the element references a standard classification system which also pre-defines feature
+        /// orders for features, the entry for the order in this element must correspond to the one predefined
+        /// or the element can be left empty.
+        /// </summary>
         public string Order { get; set; }
+
+        /// <summary>
+        /// Definition of the feature
+        /// </summary>
         public string Template { get; set; }
     }
 }

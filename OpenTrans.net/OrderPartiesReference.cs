@@ -18,10 +18,28 @@
  */
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// Reference to the business partners integrated in the process of the document flow.
+    /// 
+    /// In combination with the element PARTY, this new element replaces the element ORDER_PARTIES.
+    /// </summary>
     public class OrderPartiesReference
     {
+        /// <summary>
+        /// Reference to the buyer. It contains the unique identifier (PARTY_ID) of the respective party
+        /// that is defined in the document(PARTY element).
+        /// </summary>
         public PartyId BuyerIdRef;
+
+        /// <summary>
+        /// Reference to the supplier. It contains the unique identifier (PARTY_ID) of the respective
+        /// party that is defined in the document(element PARTY).
+        /// </summary>
         public PartyId SupplierIdRef;
+
+        /// <summary>
+        /// Refers to business partners integrated in the process of the goods delivery procedure.
+        /// </summary>
         public ShipmentPartiesReference ShipmentPartiesReference;
     }
 }

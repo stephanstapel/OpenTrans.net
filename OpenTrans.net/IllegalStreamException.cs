@@ -21,9 +21,12 @@ using System.Runtime.Serialization;
 
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// Custom exception for handling illegal streams that are passed to the library
+    /// </summary>
     public class IllegalStreamException : Exception
     {
-        public IllegalStreamException(string message = "")
+        internal IllegalStreamException(string message = "")
             : base(message)
         {
         }

@@ -22,6 +22,9 @@ using System.Text;
 
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// Specifies the delivery date.
+    /// </summary>
     public enum DeliveryDateTypes
     {
         /// <summary>

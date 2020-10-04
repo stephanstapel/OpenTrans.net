@@ -23,109 +23,115 @@ using System.Text;
 
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// Role of the business partner in the context of this document
+    /// </summary>
     public enum PartyRoles
     {
-        /**
-         * The business partner is a buyer.
-         */
+        /// <summary>
+        /// The business partner is a buyer.
+        /// </summary>
         Buyer,
 
-        /**
-         * The business party is a centralized settlement and supports the business of several partners.
-         */
+        /// <summary>
+        /// The business party is a centralized settlement and supports the business of several partners.
+        /// </summary>
         CentralRegulator,
 
-        /**
-         * The business party is the customer of the buying company.
-         */
+        /// <summary>
+        /// The business party is the customer of the buying company.
+        /// </summary>
         Customer,
 
-        /**
-         * The business party is the carrier.
-         */
+        /// <summary>
+        /// The business party is the carrier.
+        /// </summary>
         Deliverer,
 
-        /**
-         * The business party is the location of the product shipment or where the service is afforded.
-         */
+        /// <summary>
+        /// The business party is the location of the product shipment or where the service is afforded.
+        /// </summary>
         Delivery,
 
-        /**
-         * The business partner is the creator of the document.
-         */
+        /// <summary>
+        /// The business partner is the creator of the document.
+        /// </summary>
         DocumentCreator,
 
-        /**
-         * Reference to address and contact of the final recipient.
-         * The federal office of export control currently only evaluates on order-header-level. Therefore orders related to exports should not use a party in this element
-         * which is different to the header-level element FINAL_DELIVERY_PARTY.
-         */
+        ///
+        /// Reference to address and contact of the final recipient.
+        /// The federal office of export control currently only evaluates on order-header-level. Therefore orders related to exports should not use a party in this element
+        /// which is different to the header-level element FINAL_DELIVERY_PARTY.
+        ///
         FinalDelivery,
 
-        /**
-         * The business party is an intermediate between product/service provider and benefit recipient.
-         */
+        /// <summary>
+        /// The business party is an intermediate between product/service provider and benefit recipient.
+        /// </summary>
         Intermediary,
 
-        /**
-         * The business party is the invoicing party.
-         */
+        /// <summary>
+        /// The business party is the invoicing party.
+        /// </summary>
         InvoiceIssuer,
 
-        /**
-         * The business party is the invoice receiving party.
-         */
+        /// <summary>
+        ///  The business party is the invoice receiving party.
+        /// </summary>
         InvoiceRecipient,
 
-        /**
-         * The business partner operatores an IPP application.
-         */
+        /// <summary>
+        /// The business partner operatores an IPP application.
+        /// </summary>
         IPPOperator,
 
-        /**
-         * The business partner is a manufacturer.
-         */
+        /// <summary>
+        /// The business partner is a manufacturer.
+        /// </summary>
         Manufacturer,
 
-        /**
-         * The business party runs an electronic market place supporting the processing of procurement and distribution of products and services.
-         */
+        /// <summary>
+        /// The business party runs an electronic market place supporting the processing of procurement and distribution of products and services.
+        /// </summary>
         Marketplace,
 
-        /**
-         * The business party is the payer.
-         */
+        /// <summary>
+        /// The business party is the payer.
+        /// </summary>
         Payer,
 
-        /**
-         * The business party is the remittee.
-         */
+        /// <summary>
+        /// The business party is the remittee.
+        /// </summary>
         Remittee,
 
-        /**
-         * The business partner is a standardization body. 
-         */
+        /// <summary>
+        /// The business partner is a standardization body. 
+        /// </summary>
         StandardizationBody,
 
-        /**
-         * The business partner is a supplier. 
-         */
+        /// <summary>
+        /// The business partner is a supplier. 
+        /// </summary>
         Supplier,
 
-        /**
-         * A trusted instance that e.g. signed and verified the attached digital signature.
-         */
+        /// <summary>
+        /// A trusted instance that e.g. signed and verified the attached digital signature.
+        /// </summary>
         TrustedThirdParty,
 
-        /**
-         * If no other role matches this value can be used.
-         */
+        /// <summary>
+        /// If no other role matches this value can be used.
+        /// </summary>
         Other,
 
+        /// <summary>
+        /// Unknown/ error value
+        /// </summary>
         Unknown
     }
 
-    public static class PartyRolesTypesExtensions
+    internal static class PartyRolesTypesExtensions
     {
         private static readonly List<KeyValuePair<string, PartyRoles>> _Mapping = new List<KeyValuePair<string, PartyRoles>>()
         {
@@ -150,7 +156,7 @@ namespace OpenTrans.net
             new KeyValuePair<string, PartyRoles>("other", PartyRoles.Other),
         };
 
-        public static PartyRoles FromString(this PartyRoles _, string s)
+        internal static PartyRoles FromString(this PartyRoles _, string s)
         {
             s = s.ToLower().Trim();
 
@@ -165,7 +171,7 @@ namespace OpenTrans.net
         } // !FromString()
 
 
-        public static string EnumToString(this PartyRoles c)
+        internal static string EnumToString(this PartyRoles c)
         {
             try
             {

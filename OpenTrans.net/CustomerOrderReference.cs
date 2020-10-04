@@ -18,8 +18,14 @@
  */
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// The element is related to an item and refers to the previous order where the item was ordered by the customer (purchasing party).
+    /// </summary>
     public class CustomerOrderReference
     {
+        /// <summary>
+        /// Unique order number of the buyer
+        /// </summary>
         public string OrderId { get; set; }
     }
 }

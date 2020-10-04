@@ -35,9 +35,13 @@ namespace OpenTrans.net
         /// <summary> Universal Product Code, s. http://www.ean.de/ean/Inhalt/e2/e8/e335 </summary>
         UPC,
 
+        /// <summary>
+        /// Unknown (error) value
+        /// </summary>
         Unknown
     }
-    public static class BuyerProductIdTypesExtensions
+
+    internal static class BuyerProductIdTypesExtensions
     {
         public static BuyerProductIdTypes FromString(this BuyerProductIdTypes _, string s)
         {

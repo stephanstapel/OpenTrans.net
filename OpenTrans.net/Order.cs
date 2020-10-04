@@ -88,7 +88,15 @@ namespace OpenTrans.net
         /// List of parties that are relevant to this business document
         /// </summary>
         public List<Party> Parties { get; set; } = new List<Party>();
+
+        /// <summary>
+        /// The item level lists the individual positions of the order.
+        /// </summary>
         public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+
+        /// <summary>
+        /// Summary of the order information. The information in this element is redundant.
+        /// </summary>
         public OrderSummary OrderSummary { get; set; }
 
 

@@ -22,6 +22,15 @@ using System.Text;
 
 namespace OpenTrans.net
 {
+    /// <summary>
+    /// This element contains the product number issued by the supplier. It is determining for ordering the product; it identifies 
+    /// the product in the supplier catalog. In multi-supplier
+    /// catalogs, however, only the combination of SUPPLIER_PID and SUPPLIER_IDREF identifies a product.
+    /// 
+    /// Please note:
+    /// Some target systems are not able to accept all 32 characters (e.g., SAP max. 18 characters). It is therefore 
+    /// advisable to keep product identifications as short as possible
+    /// </summary>
     public enum SupplierProductIdTypes
     {
         /// <summary> Artikelnummer des einkaufenden Unternehmen </summary>
@@ -39,9 +48,13 @@ namespace OpenTrans.net
         /// <summary> Universal Product Code, s. http://www.ean.de/ean/Inhalt/e2/e8/e335</summary>
         UPC,
 
+        /// <summary>
+        /// Unknown (error) value
+        /// </summary>
         Unknown
     }
-    public static class SupplierProductIdTypesExtensions
+    
+    internal static class SupplierProductIdTypesExtensions
     {
         public static SupplierProductIdTypes FromString(this SupplierProductIdTypes _, string s)
         {
