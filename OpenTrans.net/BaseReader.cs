@@ -19,7 +19,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Xml;
 
 namespace OpenTrans.net
@@ -36,6 +35,13 @@ namespace OpenTrans.net
             if (_temp.Length == 8)
             {
                 if (DateTime.TryParseExact(_temp, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime retval))
+                {
+                    return retval;
+                }
+            }
+            else if (_temp.Length == 10)
+            {
+                if (DateTime.TryParseExact(_temp, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime retval))
                 {
                     return retval;
                 }
@@ -64,10 +70,28 @@ namespace OpenTrans.net
                 return null;
             }
 
+            List<Feature> features = new List<Feature>();
+            XmlNodeList featureNodes = node.SelectNodes("./*[local-name()='PRODUCT_FEATURES']/*[local-name()='FEATURE']", nsmgr);
+            foreach (XmlNode featureNode in featureNodes)
+            {
+                features.Add(_readFeature(featureNode, nsmgr));
+            }
+
             List<string> remarks = new List<string>();
             foreach (XmlNode remarkNode in node.SelectNodes("./*[local-name()='REMARKS']", nsmgr))
             {
                 remarks.Add(XmlUtils.NodeAsString(remarkNode, ".", nsmgr));
+            }
+
+            DeliveryDate deliveryDate = default;
+            XmlNode deliveryDateRefNode = node.SelectSingleNode("./*[local-name()='DELIVERY_DATE']", nsmgr);
+            if (deliveryDateRefNode != null)
+            {
+                deliveryDate = new DeliveryDate
+                {
+                    StartDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_START_DATE']", nsmgr),
+                    EndDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_END_DATE']", nsmgr),
+                };
             }
 
             OrderItem item = new OrderItem()
@@ -77,11 +101,33 @@ namespace OpenTrans.net
                 Quantity = XmlUtils.NodeAsDecimal(node, "./*[local-name()='QUANTITY']", nsmgr),
                 OrderUnit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='ORDER_UNIT']", nsmgr)),
                 LineAmount = XmlUtils.NodeAsDecimal(node, "./*[local-name()='PRICE_LINE_AMOUNT']", nsmgr),
+                DeliveryDate = deliveryDate,
+                ProductFeatures = features,
+                ProductPriceFix = _readProductPriceFix(node.SelectSingleNode("./*[local-name()='PRODUCT_PRICE_FIX']", nsmgr), nsmgr),
                 Remarks = remarks
             };
 
             return item;
         } // !_readItem()
+
+
+        protected Feature _readFeature(XmlNode node, XmlNamespaceManager nsmgr = null)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+
+            return new Feature
+            {
+                Name = XmlUtils.NodeAsString(node, "./*[local-name()='FNAME']", nsmgr),
+                Value = XmlUtils.NodeAsString(node, "./*[local-name()='FVALUE']", nsmgr),
+                Description = XmlUtils.NodeAsString(node, "./*[local-name()='FDESCRIPTION']", nsmgr),
+                Order = XmlUtils.NodeAsString(node, "./*[local-name()='FORDER']", nsmgr),
+                Template = XmlUtils.NodeAsString(node, "./*[local-name()='FTEMPLATE']", nsmgr),
+                Unit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='FUNIT']", nsmgr)),
+            };
+        } // !_readFeature()
 
 
         private ProductId _readProductId(XmlNode node, XmlNamespaceManager nsmgr = null)
@@ -90,13 +136,18 @@ namespace OpenTrans.net
             {
                 return null;
             }
+            PartyId supplierIdRef = default;
+
             XmlNode supplierPIdNode = node.SelectSingleNode("./*[local-name()='SUPPLIER_PID']", nsmgr);
             SupplierProductId supplierPId = new SupplierProductId() { Id = supplierPIdNode?.InnerText, Type = default(SupplierProductIdTypes).FromString(XmlUtils.AttributeText(supplierPIdNode, "Type")) };
             XmlNode supplierIdRefNode = node.SelectSingleNode("./*[local-name()='SUPPLIER_IDREF']", nsmgr);
-            PartyId supplierIdRef = new PartyId() { Id = supplierIdRefNode?.InnerText, Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(supplierIdRefNode, "Type")) };
+            if (supplierIdRefNode != null)
+            {
+                supplierIdRef = new PartyId() { Id = supplierIdRefNode.InnerText, Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(supplierIdRefNode, "Type")) };
+            }
             ProductId id = new ProductId()
             {
-                
+
                 SupplierPId = supplierPId,
                 SupplierIdRef = supplierIdRef,
                 DescriptionShort = XmlUtils.NodeAsString(node, "./*[local-name()='DESCRIPTION_SHORT']", nsmgr),
@@ -105,6 +156,33 @@ namespace OpenTrans.net
 
             return id;
         } // !_readProductId() 
+
+
+        private ProductPriceFix _readProductPriceFix(XmlNode node, XmlNamespaceManager nsmgr = null)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+            PriceBaseFix priceBaseFix = default;
+
+            XmlNode priceBaseFixRefNode = node.SelectSingleNode("./*[local-name()='PRICE_BASE_FIX']", nsmgr);
+            if (priceBaseFixRefNode != null)
+            {
+                priceBaseFix = new PriceBaseFix
+                {
+                    PriceUnitValue = XmlUtils.NodeAsDecimal(priceBaseFixRefNode, "./*[local-name()='PRICE_UNIT_VALUE']", nsmgr) ?? 0,
+                    PriceUnit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(priceBaseFixRefNode, "./*[local-name()='PRICE_UNIT']", nsmgr)),
+                };
+            }
+
+            return new ProductPriceFix
+            {
+                PriceAmount = XmlUtils.NodeAsDecimal(node, "./*[local-name()='PRICE_AMOUNT']", nsmgr) ?? 0,
+                PriceQuantity = XmlUtils.NodeAsDecimal(node, "./*[local-name()='PRICE_QUANTITY']", nsmgr) ?? 0,
+                PriceBaseFix = priceBaseFix,
+            };
+        } // !_readProductId()
 
 
         protected Party _readParty(XmlNode node, XmlNamespaceManager nsmgr = null)
@@ -133,7 +211,8 @@ namespace OpenTrans.net
                 ZipBox = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='ZIPBOX']", nsmgr),
                 City = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='CITY']", nsmgr),
                 State = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='STATE']", nsmgr),
-                CountryCode = default(CountryCodes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='COUNTRY']", nsmgr)),
+                Country = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='COUNTRY']", nsmgr),
+                CountryCode = default(CountryCodes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='COUNTRY_CODED']", nsmgr)),
                 VATId = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='VAT_ID']", nsmgr),
                 TaxNumber = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='TAX_NUMBER']", nsmgr),
                 FaxNo = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='FAX']", nsmgr),

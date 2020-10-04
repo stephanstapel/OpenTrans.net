@@ -96,6 +96,11 @@ namespace OpenTrans.net
         public string TaxNumber { get; set; }
 
         /// <summary>
+        /// Country
+        /// </summary>
+        public string Country { get; set; }
+
+        /// <summary>
         /// Country code
         /// </summary>
         public CountryCodes CountryCode { get; set; }

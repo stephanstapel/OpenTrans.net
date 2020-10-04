@@ -19,10 +19,9 @@
 
 namespace OpenTrans.net
 {
-    public class ProductPriceFix
+    public class PriceBaseFix
     {
-        public decimal PriceAmount { get; set; }
-        public decimal PriceQuantity { get; set; }
-        public PriceBaseFix PriceBaseFix { get; set; }
+        public decimal PriceUnitValue { get; set; }
+        public QuantityCodes PriceUnit { get; set; }
     }
 }
