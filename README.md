@@ -145,7 +145,8 @@ The demo application contains some simple examples. Please see here for more det
 
 https://github.com/stephanstapel/OpenTrans.net/blob/master/OpenTrans.net-Test/Application.cs 
 
-Additional transactions will be added as soon as possible.
+## Dispatch Notification, Receipt Acknowledgement
+The other message types will be implemented when someone should require it.
 
 # More information
 * https://www.opentrans.de/
