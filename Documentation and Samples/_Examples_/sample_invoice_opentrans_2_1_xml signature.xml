@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<INVOICE version="2.1" xmlns="http://www.opentrans.org/XMLSchema/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opentrans.org/XMLSchema/2.1 opentrans_2_1.xsd" xmlns:bmecat="http://www.bmecat.org/bmecat/2005" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsig="http://www.w3.org/2000/09/xmldsig#">
+<INVOICE version="2.1" xmlns="http://www.opentrans.org/XMLSchema/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opentrans.org/XMLSchema/2.1/opentrans_2_1.xsd" xmlns:bmecat="http://www.bmecat.org/bmecat/2005" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsig="http://www.w3.org/2000/09/xmldsig#">
 	<INVOICE_HEADER>
 		<CONTROL_INFO>
 			<GENERATION_DATE>2009-05-13T06:20:00+01:00</GENERATION_DATE>
@@ -60,7 +60,7 @@
 						<bmecat:STREET>shopppingstr.102</bmecat:STREET>
 						<bmecat:ZIP>70199</bmecat:ZIP>
 						<bmecat:CITY>Stuttgart</bmecat:CITY>
-						<bmecat:STATE>Baden Württemberg</bmecat:STATE>
+						<bmecat:STATE>Baden WÃ¼rttemberg</bmecat:STATE>
 					</ADDRESS>
 				</PARTY>
 				<PARTY>
@@ -75,7 +75,7 @@
 			<INVOICE_ISSUER_IDREF type="supplier_specific">108304</INVOICE_ISSUER_IDREF>
 			<INVOICE_RECIPIENT_IDREF type="supplier_specific">968314</INVOICE_RECIPIENT_IDREF>
 			<bmecat:CURRENCY>EUR</bmecat:CURRENCY>
-			<TERMS_AND_CONDITIONS>Können unter www.supershopstore.com/agb abgerufen werden</TERMS_AND_CONDITIONS>
+			<TERMS_AND_CONDITIONS>KÃ¶nnen unter www.supershopstore.com/agb abgerufen werden</TERMS_AND_CONDITIONS>
 			<E_BILLING>
 				<SIGNATURE_AND_VERIFICATION>
 					<SIGNATURE>
@@ -141,7 +141,7 @@
 					<bmecat:FNAME>Gewicht</bmecat:FNAME>
 					<bmecat:FVALUE>1</bmecat:FVALUE>
 					<bmecat:FUNIT>KG</bmecat:FUNIT>
-					<bmecat:FDESCR>Das Gewicht wird standardmäßig ohne Akku angegeben.</bmecat:FDESCR>
+					<bmecat:FDESCR>Das Gewicht wird standardmÃ¤ÃŸig ohne Akku angegeben.</bmecat:FDESCR>
 				</FEATURE>
 			</PRODUCT_FEATURES>
 			<PRODUCT_COMPONENTS>
