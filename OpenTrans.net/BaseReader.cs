@@ -52,7 +52,6 @@ namespace OpenTrans.net
                 {
                     return retval;
                 }
-
                 if (DateTime.TryParseExact(_temp, "yyyy-MM-ddThh:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out retval))
                 {
                     return retval;
@@ -70,49 +69,54 @@ namespace OpenTrans.net
                 return null;
             }
 
-            List<Feature> features = new List<Feature>();
+            OrderItem item = new OrderItem();
+            
             XmlNodeList featureNodes = node.SelectNodes("./*[local-name()='PRODUCT_FEATURES']/*[local-name()='FEATURE']", nsmgr);
-            foreach (XmlNode featureNode in featureNodes)
+            if (featureNodes != null) {
+                foreach (XmlNode featureNode in featureNodes)
+                {
+                    item.ProductFeatures.Add(_readFeature(featureNode, nsmgr));
+                }
+            } // !featureNodes
+            
+            XmlNodeList remarkNodes = node.SelectNodes("./*[local-name()='REMARKS']", nsmgr);
+            if (remarkNodes != null)
             {
-                features.Add(_readFeature(featureNode, nsmgr));
-            }
-
-            List<string> remarks = new List<string>();
-            foreach (XmlNode remarkNode in node.SelectNodes("./*[local-name()='REMARKS']", nsmgr))
-            {
-                remarks.Add(XmlUtils.NodeAsString(remarkNode, ".", nsmgr));
-            }
-
-            DeliveryDate deliveryDate = default;
+                foreach (XmlNode remarkNode in remarkNodes)
+                {
+                    Remark remark = new Remark
+                    {
+                        Value = XmlUtils.NodeAsString(remarkNode, ".", nsmgr),
+                        Type = XmlUtils.AttributeText(remarkNode, "type")
+                    };
+                    item.Remarks.Add(remark);
+                }
+            } // !remarkNodes
+            
             XmlNode deliveryDateRefNode = node.SelectSingleNode("./*[local-name()='DELIVERY_DATE']", nsmgr);
             if (deliveryDateRefNode != null)
             {
-                deliveryDate = new DeliveryDate
+                DeliveryDate deliveryDate = new DeliveryDate
                 {
                     StartDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_START_DATE']", nsmgr),
                     EndDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_END_DATE']", nsmgr),
                     Type = default(DeliveryDateTypes).FromString(XmlUtils.AttributeText(deliveryDateRefNode, "type"))
                 };
-            }
+                item.DeliveryDate = deliveryDate;
+            } // !deliveryDateRefNode
 
-            OrderItem item = new OrderItem()
-            {
-                LineItemId = XmlUtils.NodeAsString(node, "./*[local-name()='LINE_ITEM_ID']", nsmgr),
-                ProductId = _readProductId(node.SelectSingleNode("./*[local-name()='PRODUCT_ID']", nsmgr), nsmgr),
-                Quantity = XmlUtils.NodeAsDecimal(node, "./*[local-name()='QUANTITY']", nsmgr),
-                OrderUnit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='ORDER_UNIT']", nsmgr)),
-                LineAmount = XmlUtils.NodeAsDecimal(node, "./*[local-name()='PRICE_LINE_AMOUNT']", nsmgr),
-                DeliveryDate = deliveryDate,
-                ProductFeatures = features,
-                ProductPriceFix = _readProductPriceFix(node.SelectSingleNode("./*[local-name()='PRODUCT_PRICE_FIX']", nsmgr), nsmgr),
-                Remarks = remarks
-            };
+            item.LineItemId = XmlUtils.NodeAsString(node, "./*[local-name()='LINE_ITEM_ID']", nsmgr);
+            item.ProductId = _readProductId(node.SelectSingleNode("./*[local-name()='PRODUCT_ID']", nsmgr), nsmgr);
+            item.Quantity = XmlUtils.NodeAsDecimal(node, "./*[local-name()='QUANTITY']", nsmgr);
+            item.OrderUnit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='ORDER_UNIT']", nsmgr));
+            item.LineAmount = XmlUtils.NodeAsDecimal(node, "./*[local-name()='PRICE_LINE_AMOUNT']", nsmgr);
+            item.ProductPriceFix = _readProductPriceFix(node.SelectSingleNode("./*[local-name()='PRODUCT_PRICE_FIX']", nsmgr), nsmgr);
 
             return item;
         } // !_readItem()
 
 
-        protected Feature _readFeature(XmlNode node, XmlNamespaceManager nsmgr = null)
+        private Feature _readFeature(XmlNode node, XmlNamespaceManager nsmgr = null)
         {
             if (node == null)
             {
@@ -137,25 +141,36 @@ namespace OpenTrans.net
             {
                 return null;
             }
-            PartyId supplierIdRef = default;
-
+            
+            SupplierProductId supplierPId = default;
             XmlNode supplierPIdNode = node.SelectSingleNode("./*[local-name()='SUPPLIER_PID']", nsmgr);
-            SupplierProductId supplierPId = new SupplierProductId() { Id = supplierPIdNode?.InnerText, Type = default(SupplierProductIdTypes).FromString(XmlUtils.AttributeText(supplierPIdNode, "Type")) };
+            if (supplierPIdNode != null)
+            {
+                supplierPId = new SupplierProductId
+                {
+                    Id = supplierPIdNode.InnerText,
+                    Type = default(SupplierProductIdTypes).FromString(XmlUtils.AttributeText(supplierPIdNode, "type"))
+                };
+            } // !supplierPIdNode
+            
+            PartyId supplierIdRef = default;
             XmlNode supplierIdRefNode = node.SelectSingleNode("./*[local-name()='SUPPLIER_IDREF']", nsmgr);
             if (supplierIdRefNode != null)
             {
-                supplierIdRef = new PartyId() { Id = supplierIdRefNode.InnerText, Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(supplierIdRefNode, "Type")) };
-            }
-            ProductId id = new ProductId()
+                supplierIdRef = new PartyId
+                {
+                    Id = supplierIdRefNode.InnerText,
+                    Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(supplierIdRefNode, "type"))
+                };
+            } // !supplierIdRefNode
+            
+            return new ProductId
             {
-
                 SupplierPId = supplierPId,
                 SupplierIdRef = supplierIdRef,
                 DescriptionShort = XmlUtils.NodeAsString(node, "./*[local-name()='DESCRIPTION_SHORT']", nsmgr),
                 DescriptionLong = XmlUtils.NodeAsString(node, "./*[local-name()='DESCRIPTION_LONG']", nsmgr)
             };
-
-            return id;
         } // !_readProductId() 
 
 
@@ -165,25 +180,24 @@ namespace OpenTrans.net
             {
                 return null;
             }
-            PriceBaseFix priceBaseFix = default;
 
+            ProductPriceFix productPriceFix = new ProductPriceFix();
+            
             XmlNode priceBaseFixRefNode = node.SelectSingleNode("./*[local-name()='PRICE_BASE_FIX']", nsmgr);
             if (priceBaseFixRefNode != null)
             {
-                priceBaseFix = new PriceBaseFix
+                productPriceFix.PriceBaseFix = new PriceBaseFix
                 {
                     PriceUnitValue = XmlUtils.NodeAsDecimal(priceBaseFixRefNode, "./*[local-name()='PRICE_UNIT_VALUE']", nsmgr) ?? 0,
                     PriceUnit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(priceBaseFixRefNode, "./*[local-name()='PRICE_UNIT']", nsmgr)),
                     PriceUnitFactor = XmlUtils.NodeAsDecimal(priceBaseFixRefNode, "./*[local-name()='PRICE_UNIT_FACTOR']", nsmgr),
                 };
-            }
+            } // !priceBaseFixRefNode
 
-            return new ProductPriceFix
-            {
-                PriceAmount = XmlUtils.NodeAsDecimal(node, "./*[local-name()='PRICE_AMOUNT']", nsmgr) ?? 0,
-                PriceQuantity = XmlUtils.NodeAsDecimal(node, "./*[local-name()='PRICE_QUANTITY']", nsmgr) ?? 0,
-                PriceBaseFix = priceBaseFix,
-            };
+            productPriceFix.PriceAmount = XmlUtils.NodeAsDecimal(node, "./*[local-name()='PRICE_AMOUNT']", nsmgr) ?? 0;
+            productPriceFix.PriceQuantity = XmlUtils.NodeAsDecimal(node, "./*[local-name()='PRICE_QUANTITY']", nsmgr);
+
+            return productPriceFix;
         } // !_readProductId()
 
 
@@ -194,15 +208,19 @@ namespace OpenTrans.net
                 return null;
             }
 
-            List<PartyRoles> roles = new List<PartyRoles>();
-            foreach (XmlNode roleNode in node.SelectNodes("./*[local-name()='PARTY_ROLE']", nsmgr))
+            List<PartyRoles> partyRoles = new List<PartyRoles>();
+            XmlNodeList partyRoleNodes = node.SelectNodes("./*[local-name()='PARTY_ROLE']", nsmgr);
+            if (partyRoleNodes != null)
             {
-                roles.Add(default(PartyRoles).FromString(XmlUtils.NodeAsString(roleNode, ".", nsmgr)));
-            }
+                foreach (XmlNode roleNode in partyRoleNodes)
+                {
+                    partyRoles.Add(default(PartyRoles).FromString(XmlUtils.NodeAsString(roleNode, ".", nsmgr)));
+                }
+            } // !roleNodes
 
-            Party retval = new Party()
+            Party party = new Party
             {
-                Roles = roles,
+                Roles = partyRoles,
                 Name = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='NAME']", nsmgr),
                 Name2 = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='NAME2']", nsmgr),
                 Name3 = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='NAME3']", nsmgr),
@@ -222,50 +240,58 @@ namespace OpenTrans.net
                 Url = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='URL']", nsmgr),
             };
 
-            foreach (XmlNode idNode in node.SelectNodes("./*[local-name()='PARTY_ID']", nsmgr))
+            XmlNodeList idNodes = node.SelectNodes("./*[local-name()='PARTY_ID']", nsmgr);
+            if (idNodes != null)
             {
-                retval.Ids.Add(new PartyId()
+                foreach (XmlNode idNode in idNodes)
                 {
-                    Id = idNode.InnerText,
-                    Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(idNode, "type"))
-                });
-            }
+                    party.Ids.Add(new PartyId
+                    {
+                        Id = idNode.InnerText,
+                        Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(idNode, "type"))
+                    });
+                }
+            } // !idNodes
 
-            string _emailAddress = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='EMAIL']", nsmgr);
-            if (!String.IsNullOrEmpty(_emailAddress))
+            string email = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='EMAIL']", nsmgr);
+            if (!string.IsNullOrEmpty(email))
             {
-                retval.EmailAddress = _emailAddress;
+                party.EmailAddress = email;
             }
 
             XmlNode contactNode = node.SelectSingleNode("./*[local-name()='ADDRESS']/*[local-name()='CONTACT_DETAILS']", nsmgr);
             if (contactNode != null)
             {
-                List<string> _roles = new List<string>();
-                List<string> _emailAddresses = new List<string>();
+                List<string> contactRoles = new List<string>();
+                List<string> contactEmailAddresses = new List<string>();
 
-                foreach (XmlNode roleNode in contactNode.SelectNodes("./*[local-name()='CONTACT_ROLE']", nsmgr))
+                XmlNodeList contactRoleNodes = contactNode.SelectNodes("./*[local-name()='CONTACT_ROLE']", nsmgr);
+                if (contactRoleNodes != null)
                 {
-                    _roles.Add(XmlUtils.NodeAsString(roleNode, ".", nsmgr));
-                }
+                    foreach (XmlNode roleNode in contactRoleNodes)
+                    {
+                        contactRoles.Add(XmlUtils.NodeAsString(roleNode, ".", nsmgr));
+                    }
+                } // !contactRoleNodes
 
                 XmlNodeList contactEmailAddressNodes = contactNode.SelectNodes("./*[local-name()='EMAILS']/*[local-name()='EMAIL']", nsmgr);
-                if (contactEmailAddressNodes.Count > 0)
+                if (contactEmailAddressNodes != null && 0 < contactEmailAddressNodes.Count)
                 {
                     foreach (XmlNode emailAddressNode in contactEmailAddressNodes)
                     {
-                        _emailAddresses.Add(XmlUtils.NodeAsString(emailAddressNode, ".", nsmgr));
+                        contactEmailAddresses.Add(XmlUtils.NodeAsString(emailAddressNode, ".", nsmgr));
                     }
                 }
                 else
                 {
-                    string _contactEmailAddress = XmlUtils.NodeAsString(node, "./*[local-name()='EMAIL']", nsmgr);
-                    if (!String.IsNullOrEmpty(_emailAddress))
+                    string contactEmailAddress = XmlUtils.NodeAsString(node, "./*[local-name()='EMAIL']", nsmgr);
+                    if (!String.IsNullOrEmpty(contactEmailAddress))
                     {
-                        _emailAddresses.Add(_contactEmailAddress);
+                        contactEmailAddresses.Add(contactEmailAddress);
                     }
-                }
+                } // !contactEmailAddressNodes
 
-                retval.ContactDetails = new Contact()
+                party.ContactDetails = new Contact
                 {
                     Id = XmlUtils.NodeAsString(contactNode, "./*[local-name()='CONTACT_ID']", nsmgr),
                     Name = XmlUtils.NodeAsString(contactNode, "./*[local-name()='CONTACT_NAME']", nsmgr),
@@ -277,12 +303,12 @@ namespace OpenTrans.net
                     PhoneNo = XmlUtils.NodeAsString(contactNode, "./*[local-name()='PHONE']", nsmgr),
                     FaxNo = XmlUtils.NodeAsString(contactNode, "./*[local-name()='FAX']", nsmgr),
                     Authentification = XmlUtils.NodeAsString(contactNode, "./*[local-name()='AUTHENTIFICATION']", nsmgr),
-                    Roles = _roles,
-                    EmailAddresses = _emailAddresses
+                    Roles = contactRoles,
+                    EmailAddresses = contactEmailAddresses
                 };
             }
 
-            return retval;
+            return party;
         } // !_readParty()
     }
 }

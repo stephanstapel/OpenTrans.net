@@ -31,33 +31,23 @@ namespace OpenTrans.net
         /// Unique order number of the buyer
         /// </summary>
         public string Id { get; set; }
-
+        
+        /// <summary>
+        /// Date of creation
+        /// </summary>
+        public DateTime? GenerationDate { get; set; }
+        
         /// <summary>
         /// Date of the order
         /// </summary>
         public DateTime? OrderDate { get; set; }
 
         /// <summary>
-        /// Date of shipment. The delivery date specifies the date the commissioned goods are accepted
-        /// by the buyer.If the delivery date deviates from the one specified in the header, the
-        /// delivery date on item level is valid.To specify exact one date for the shipment, e.g. in the
-        /// RECEIPTACKNOWLEDGEMENT-document.
-        /// 
-        /// This property is accompanied by the property DesiredDeliveryDateEnd which specifies the end of the 
-        /// delivery window.
+        /// Date of shipment. The delivery date specifies the date the commissioned goods are accepted by
+        /// the buyer. If the delivery date deviates from the one specified in the header, the delivery
+        /// date on item level is valid.
         /// </summary>
-        public DateTime DesiredDeliveryDateStart { get; set; }
-
-        /// <summary>
-        /// Date of shipment. The delivery date specifies the date the commissioned goods are accepted
-        /// by the buyer.If the delivery date deviates from the one specified in the header, the
-        /// delivery date on item level is valid.To specify exact one date for the shipment, e.g. in the
-        /// RECEIPTACKNOWLEDGEMENT-document.
-        /// 
-        /// This property is accompanied by the property DesiredDeliveryDateStart which specifies the start of the 
-        /// delivery window.
-        /// </summary>
-        public DateTime DesiredDeliveryDateEnd { get; set; }
+        public DeliveryDate DeliveryDate { get; set; }
 
         /// <summary>
         /// The element is related to an item and refers to the previous order where the item was ordered
@@ -82,7 +72,7 @@ namespace OpenTrans.net
         /// otherwise.The flag is binding for the order, i.e. if the value is set to FALSE and only partial
         ///  shipments can be made by the recipient of the order, the order shall be invalid.
         /// </summary>
-        public bool PartialShipmentAllowed { get; set; }
+        public bool? PartialShipmentAllowed { get; set; }
 
         /// <summary>
         /// List of parties that are relevant to this business document
@@ -93,12 +83,16 @@ namespace OpenTrans.net
         /// The item level lists the individual positions of the order.
         /// </summary>
         public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        
+        /// <summary>
+        /// Remark related to a business document
+        /// </summary>
+        public List<Remark> Remarks { get; set; } = new List<Remark>();
 
         /// <summary>
         /// Summary of the order information. The information in this element is redundant.
         /// </summary>
         public OrderSummary OrderSummary { get; set; }
-
 
         /// <summary>
         /// Loads an order from the given stream.

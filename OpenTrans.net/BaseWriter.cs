@@ -81,8 +81,11 @@ namespace OpenTrans.net
             _writeOptionalElementString(writer, "bmecat:ZIPBOX", party.ZipBox);
             _writeOptionalElementString(writer, "bmecat:CITY", party.City);
             _writeOptionalElementString(writer, "bmecat:STATE", party.State);
-            _writeOptionalElementString(writer, "bmecat:COUNTRY", Countries.GetCountry(party.CountryCode));
-            _writeOptionalElementString(writer, "bmecat:COUNTRY_CODED", party.CountryCode.EnumToString());
+            if (party.CountryCode != CountryCodes.Unknown)
+            {
+                _writeOptionalElementString(writer, "bmecat:COUNTRY", Countries.GetCountry(party.CountryCode));
+                _writeOptionalElementString(writer, "bmecat:COUNTRY_CODED", party.CountryCode.EnumToString());
+            }
             _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
             _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
             _writeOptionalElementString(writer, "bmecat:PHONE", party.PhoneNo);
@@ -172,26 +175,9 @@ namespace OpenTrans.net
             {
                 _writeOptionalAmount(writer, "PRICE_LINE_AMOUNT", item.LineAmount.Value);
             }
-
-            if (item.DeliveryDate != null)
-            {
-                writer.WriteStartElement("DELIVERY_DATE");
-                if (item.DeliveryDate.Type != DeliveryDateTypes.Unknown)
-                {
-                    writer.WriteAttributeString("type", item.DeliveryDate.Type.EnumToString());
-                }
-                _writeDateTime(writer, "DELIVERY_START_DATE", item.DeliveryDate.StartDate);
-                _writeDateTime(writer, "DELIVERY_END_DATE", item.DeliveryDate.EndDate);
-                writer.WriteEndElement(); // !DELIVERY_DATE
-            }
-
-            foreach (string remark in item.Remarks)
-            {
-                writer.WriteStartElement("REMARKS");
-                writer.WriteAttributeString("lang", "deu");
-                writer.WriteValue(remark);
-                writer.WriteEndElement();
-            }
+            
+            _writeDeliveryDate(writer, item.DeliveryDate);
+            _writeRemarks(writer, item.Remarks);
             writer.WriteEndElement();
         } // !_writeOrderItem()
 
@@ -209,7 +195,28 @@ namespace OpenTrans.net
             }
             writer.WriteEndElement(); // !PRODUCT_ID
         } // !_writeProductId()
-
+        
+        internal void _writeRemarks(XmlTextWriter writer, List<Remark> remarks)
+        {
+            foreach (Remark remark in remarks)
+            {
+                if (string.IsNullOrWhiteSpace(remark.Value))
+                {
+                    continue;
+                }
+                writer.WriteStartElement("REMARKS");
+                if (!string.IsNullOrWhiteSpace(remark.Type))
+                {
+                    writer.WriteAttributeString("type", remark.Type);
+                }
+                if (!string.IsNullOrWhiteSpace(remark.Lang))
+                {
+                    writer.WriteAttributeString("lang", remark.Lang);
+                }
+                writer.WriteValue(remark.Value);
+                writer.WriteEndElement(); // !REMARKS
+            }
+        } // !_writeRemarks()
 
         internal void _writeDate(XmlTextWriter writer, string nodeName, DateTime? dt)
         {
@@ -218,8 +225,7 @@ namespace OpenTrans.net
                 writer.WriteElementString(nodeName, dt.Value.ToString("yyyy-MM-dd"));
             }
         } // !_writeDate()
-
-
+        
         internal void _writeDateTime(XmlTextWriter writer, string nodeName, DateTime? dt)
         {
             if (dt.HasValue)
@@ -227,7 +233,22 @@ namespace OpenTrans.net
                 writer.WriteElementString(nodeName, dt.Value.ToString("yyyy-MM-ddThh:mm:sszzz"));
             }
         } // !_writeDateTime()
-
+        
+        internal void _writeDeliveryDate(XmlTextWriter writer, DeliveryDate deliveryDate)
+        {
+            if (deliveryDate?.EndDate == null || !deliveryDate.StartDate.HasValue)
+            {
+                return;
+            }
+            writer.WriteStartElement("DELIVERY_DATE");
+            if (deliveryDate.Type != DeliveryDateTypes.Unknown)
+            {
+                writer.WriteAttributeString("type", deliveryDate.Type.EnumToString());
+            }
+            _writeDateTime(writer, "DELIVERY_START_DATE", deliveryDate.StartDate);
+            _writeDateTime(writer, "DELIVERY_END_DATE", deliveryDate.EndDate);
+            writer.WriteEndElement(); // !DELIVERY_DATE
+        } // !_writeDeliveryDate()
 
         internal void _writeOptionalElementString(XmlTextWriter writer, string tagName, string value, Dictionary<string, string> attributes = null)
         {
@@ -250,7 +271,16 @@ namespace OpenTrans.net
                 writer.WriteEndElement();
             }
         } // !_writeOptionalElementString()
-
+        
+        internal void _writeOptionalElementBool(XmlTextWriter writer, string tagName, bool? value, Dictionary<string, string> attributes = null)
+        {
+            if (value == null)
+            {
+                return;
+            }
+            var boolAsString = value == true ? "TRUE" : "FALSE";
+            _writeOptionalElementString(writer, tagName ,boolAsString, attributes);
+        } // !_writeOptionalElementBool()
 
         internal void _writeAmount(XmlTextWriter writer, string tagName, int value)
         {
