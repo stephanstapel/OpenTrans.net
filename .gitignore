@@ -14,6 +14,13 @@
 *.user
 *.userosscache
 *.sln.docstates
+.nupkg
+nuget/
+OpenTrans.net-Test/.vs/*
+OpenTrans.net/.vs/*
+/Documentation and Samples/*.py
+/Documentation and Samples/*.csv
+/Documentation and Samples/_Examples_/Example_ORDERRESPONSE_Testdistributor_Bestellantwort.xml
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
