@@ -131,21 +131,22 @@ namespace OpenTrans.net
         /// This allows easy further processing of the stream.
         /// </summary>
         /// <param name="stream"></param>
-        public void Save(Stream stream)
+        /// /// <param name="generatorInfo"></param>
+        public void Save(Stream stream, string generatorInfo = null)
         {
             OrderWriter writer = new OrderWriter();
-            writer.Save(this, stream);
+            writer.Save(this, stream, generatorInfo);
         } // !Save()
-
 
         /// <summary>
         /// Saves the order into the given file.
         /// </summary>
         /// <param name="fileName"></param>
-        public void Save(string fileName)
+        /// <param name="generatorInfo"></param>
+        public void Save(string fileName, string generatorInfo = null)
         {
             OrderWriter writer = new OrderWriter();
-            writer.Save(this, fileName);
+            writer.Save(this, fileName, generatorInfo);
         } // !Save()
     }
 }
