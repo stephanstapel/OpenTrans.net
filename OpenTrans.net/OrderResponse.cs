@@ -84,12 +84,12 @@ namespace OpenTrans.net
         /// Loads an order response from the given file.
         /// If the file does not exist, a FileNotFoundException exception is raised.
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="fileName"></param>
         /// <returns></returns>
-        public static OrderResponse Load(string filename)
+        public static OrderResponse Load(string fileName)
         {
             OrderResponseReader reader = new OrderResponseReader();
-            return reader.Load(filename);
+            return reader.Load(fileName);
         } // !Load()
 
 
@@ -110,11 +110,11 @@ namespace OpenTrans.net
         /// <summary>
         /// Saves the order response into the given file.
         /// </summary>
-        /// <param name="filename"></param>
-        public void Save(string filename)
+        /// <param name="fileName"></param>
+        public void Save(string fileName)
         {
             OrderResponseWriter writer = new OrderResponseWriter();
-            writer.Save(this, filename);
+            writer.Save(this, fileName);
         } // !Save()
     }
 }

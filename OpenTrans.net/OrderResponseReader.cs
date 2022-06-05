@@ -29,14 +29,14 @@ namespace OpenTrans.net
         }
 
 
-        internal OrderResponse Load(string filename)
+        internal OrderResponse Load(string fileName)
         {
-            if (!System.IO.File.Exists(filename))
+            if (!System.IO.File.Exists(fileName))
             {
                 throw new FileNotFoundException();
             }
 
-            return Load(new FileStream(filename, FileMode.Open, FileAccess.Read));
+            return Load(new FileStream(fileName, FileMode.Open, FileAccess.Read));
         } // !Load()
 
 
