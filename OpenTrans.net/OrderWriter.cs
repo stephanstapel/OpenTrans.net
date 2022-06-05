@@ -27,19 +27,20 @@ namespace OpenTrans.net
     {
         internal XmlTextWriter Writer;
         
-        public void Save(Order order, string filename, string generatorInfo = null)
+        public void Save(Order order, string fileName, string generatorInfo = null)
         {
-            FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
-            Save(order, fs, generatorInfo);
-            fs.Flush();
-            fs.Close();
+            using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+            {
+                Save(order, stream, generatorInfo);
+                stream.Flush();
+            }
         } // !Save()
         
         public void Save(Order order, Stream stream, string generatorInfo = null)
         {
             if (!stream.CanWrite || !stream.CanSeek)
             {
-                throw new IllegalStreamException("Cannot write to stream");
+                throw new IllegalStreamException("Cannot write to stream.");
             }
 
             long streamPosition = stream.Position;
@@ -85,9 +86,9 @@ namespace OpenTrans.net
             Writer.WriteEndElement(); // !ORDER_HEADER
 
             Writer.WriteStartElement("ORDER_ITEM_LIST");
-            foreach (OrderItem _item in order.OrderItems)
+            foreach (OrderItem item in order.OrderItems)
             {
-                _writeOrderItem(Writer, _item);
+                _writeOrderItem(Writer, item);
             }
             Writer.WriteEndElement(); // !ORDER_ITEM_LIST
 

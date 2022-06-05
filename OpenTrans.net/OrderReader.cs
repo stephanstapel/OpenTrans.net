@@ -24,6 +24,23 @@ namespace OpenTrans.net
 {
     internal class OrderReader : BaseReader
     {
+        public Order Load(string fileName)
+        {
+            if (!File.Exists(fileName))
+            {
+                throw new FileNotFoundException();
+            }
+            
+            Order order;
+            
+            using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            {
+                order = Load(stream);
+            }
+
+            return order;
+        } // !Load()       
+        
         public Order Load(Stream stream)
         {
             if (!stream.CanRead)
@@ -140,22 +157,5 @@ namespace OpenTrans.net
 
             return order;
         } // !Load()
-        
-        public Order Load(string filename)
-        {
-            if (!File.Exists(filename))
-            {
-                throw new FileNotFoundException();
-            }
-            
-            Order order;
-            using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
-            {
-                order = Load(fs);
-                fs.Close();
-            }
-
-            return order;
-        } // !Load()       
     }
 }
