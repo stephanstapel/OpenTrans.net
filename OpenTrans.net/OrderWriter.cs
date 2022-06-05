@@ -52,7 +52,7 @@ namespace OpenTrans.net
             Writer.WriteAttributeString("version", "2.1");
             Writer.WriteAttributeString("xmlns", "http://www.opentrans.org/XMLSchema/2.1");
             Writer.WriteAttributeString("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-            Writer.WriteAttributeString("xsi:schemaLocation", "http://www.opentrans.org/XMLSchema/2.1 opentrans_2_1.xsd");
+            Writer.WriteAttributeString("xsi:schemaLocation", "http://www.opentrans.org/XMLSchema/2.1 http://www.opentrans.org/XMLSchema/2.1/opentrans_2_1.xsd");
             Writer.WriteAttributeString("xmlns:bmecat", "http://www.bmecat.org/bmecat/2005");
             Writer.WriteAttributeString("xmlns:xmime", "http://www.w3.org/2005/05/xmlmime");
             Writer.WriteAttributeString("xmlns:xsig", "http://www.w3.org/2000/09/xmldsig#");
