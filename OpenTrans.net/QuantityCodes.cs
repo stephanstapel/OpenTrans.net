@@ -343,11 +343,13 @@ namespace OpenTrans.net
     
     internal static class QuantityCodesExtensions
     {
-        public static QuantityCodes FromString(this QuantityCodes c, string s)
+        public static QuantityCodes FromString(this QuantityCodes _, string s)
         {
             try
             {
-                return (QuantityCodes) Enum.Parse(typeof(QuantityCodes), s);
+                return string.IsNullOrWhiteSpace(s)
+                    ? QuantityCodes.Unknown
+                    : (QuantityCodes)Enum.Parse(typeof(QuantityCodes), s);
             }
             catch
             {
