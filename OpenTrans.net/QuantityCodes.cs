@@ -104,7 +104,7 @@ namespace OpenTrans.net
         
         /// <summary>
         /// English: Pallet (unit load)
-        /// German: Pallet
+        /// German: Palette (Einheitsladung)
         /// </summary>
         D97,
         
@@ -249,7 +249,7 @@ namespace OpenTrans.net
         PCE,
         
         /// <summary>
-        /// English: Pallet (lift)
+        /// English: Pallet
         /// German: Palette
         /// </summary>
         PF,
