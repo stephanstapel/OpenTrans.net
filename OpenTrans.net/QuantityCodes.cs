@@ -85,10 +85,28 @@ namespace OpenTrans.net
         CH,
         
         /// <summary>
+        /// English: Crate
+        /// German: Kiste
+        /// </summary>
+        CR,
+        
+        /// <summary>
+        /// English: Case
+        /// German: Kasten
+        /// </summary>
+        CS,
+
+        /// <summary>
         /// English: Carton
         /// German: Karton
         /// </summary>
         CT,
+        
+        /// <summary>
+        /// English: Pallet (unit load)
+        /// German: Pallet
+        /// </summary>
+        D97,
         
         /// <summary>
         /// English: Day
@@ -229,6 +247,12 @@ namespace OpenTrans.net
         /// German: Stück
         /// </summary>
         PCE,
+        
+        /// <summary>
+        /// English: Pallet (lift)
+        /// German: Palette
+        /// </summary>
+        PF,
         
         /// <summary>
         /// English: Package
