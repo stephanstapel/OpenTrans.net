@@ -60,8 +60,8 @@ namespace OpenTrans.net
 
             Writer.WriteStartElement("ORDER_HEADER");
             Writer.WriteStartElement("CONTROL_INFO");
-            _writeDateTime(Writer, "GENERATION_DATE", DateTime.Now);
             _writeOptionalElementString(Writer, "GENERATOR_INFO", generatorInfo);
+            _writeDateTime(Writer, "GENERATION_DATE", DateTime.Now);
             Writer.WriteEndElement(); // !CONTROL_INFO
             Writer.WriteStartElement("SOURCING_INFO");
             Writer.WriteEndElement(); // !SOURCING_INFO
