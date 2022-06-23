@@ -87,7 +87,8 @@ namespace OpenTrans.net
                     Remark remark = new Remark
                     {
                         Value = XmlUtils.NodeAsString(remarkNode, ".", nsmgr),
-                        Type = XmlUtils.AttributeText(remarkNode, "type")
+                        Type = XmlUtils.AttributeText(remarkNode, "type"),
+                        Lang = XmlUtils.AttributeText(remarkNode, "lang")
                     };
                     item.Remarks.Add(remark);
                 }
