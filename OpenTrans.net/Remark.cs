@@ -20,29 +20,26 @@
 namespace OpenTrans.net
 {
     /// <summary>
-    /// This element contains the notes for a business document. 
-    /// VALUE has to be specified, else the remark will be ignored.
+    /// This element contains remarks related to a business document. The remark is identified with the
+    /// attribute "type" for use in different business documents. It is only permissible to identify remarks
+    /// for use in this or the following business documents using the attribute "type".
     /// </summary>
     public class Remark
     {
         /// <summary>
-        /// The remark itself
+        /// The remark itself.
         /// </summary>
         public string Value { get; set; }
 
         /// <summary>
-        /// The type of the remark. Custom types are allowed.
-        ///
-        /// List of predefined types:
-        /// deliverynote, dispatchnotification, general, invoice,
-        /// order, orderchange, orderresponse, quotation,
-        /// receiptacknowledgement, remittanceadvice, invoicelist,
-        /// rfqrfq, transport
+        /// Specifies the type of remark. The remark is identified for use in a variety of business
+        /// documents. The business partner processing the document which matches the attribute evaluates
+        /// the information contained, otherwise the information is passed on along the process chain.
         /// </summary>
         public string Type { get; set; }
         
         /// <summary>
-        /// The language used for the remark
+        /// Specifies the used language for the remark.
         /// </summary>
         public string Lang { get; set; }
     }
