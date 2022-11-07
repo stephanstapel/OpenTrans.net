@@ -145,8 +145,6 @@ namespace OpenTrans.net_Test
             {
                 Id = "OID1",
                 OrderDate = new DateTime(2009, 05, 13, 6, 20, 0),
-                DesiredDeliveryDateStart = new DateTime(2009, 05, 20, 10, 0, 0),
-                DesiredDeliveryDateEnd = new DateTime(2009, 05, 20, 10, 0, 0),
             };
 
             order.Parties.Add(new Party()
