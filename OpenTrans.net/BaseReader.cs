@@ -48,11 +48,11 @@ namespace OpenTrans.net
             }
             else
             {
-                if (DateTime.TryParseExact(_temp, "yyyy-MM-ddThh:mm:sszzz", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime retval))
+                if (DateTime.TryParseExact(_temp, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime retval))
                 {
                     return retval;
                 }
-                if (DateTime.TryParseExact(_temp, "yyyy-MM-ddThh:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out retval))
+                if (DateTime.TryParseExact(_temp, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out retval))
                 {
                     return retval;
                 }

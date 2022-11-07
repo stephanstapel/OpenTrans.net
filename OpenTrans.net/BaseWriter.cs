@@ -230,7 +230,7 @@ namespace OpenTrans.net
         {
             if (dt.HasValue)
             {
-                writer.WriteElementString(nodeName, dt.Value.ToString("yyyy-MM-ddThh:mm:sszzz"));
+                writer.WriteElementString(nodeName, dt.Value.ToString("yyyy-MM-ddTHH:mm:sszzz"));
             }
         } // !_writeDateTime()
         
