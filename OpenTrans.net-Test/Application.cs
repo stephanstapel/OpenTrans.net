@@ -144,7 +144,8 @@ namespace OpenTrans.net_Test
             Order order = new Order()
             {
                 Id = "OID1",
-                OrderDate = new DateTime(2009, 05, 13, 6, 20, 0),
+                OrderDate = new DateTime(2009, 05, 13, 16, 20, 0),
+                GenerationDate = new DateTime(2009, 05, 13, 06, 20, 0),
             };
 
             order.Parties.Add(new Party()
@@ -186,7 +187,42 @@ namespace OpenTrans.net_Test
 
             order.Save("test.xml");
 
-            Order order2 = Order.Load("test.xml");
+            Order loadedOrder = Order.Load("test.xml");
+
+            _validateCreateAndReadOrder(order, loadedOrder);
+
         } // !_createOrder()
+
+        private void _validateCreateAndReadOrder(Order initialOrder, Order loadedOrder)
+        {
+            _validateGenerationDate(initialOrder.OrderDate, loadedOrder.OrderDate);
+
+            _validateOrderDate(initialOrder.OrderDate, loadedOrder.OrderDate);
+        }
+
+        private void _validateGenerationDate(DateTime? initialOrderDate, DateTime? loadedOrderDate)
+        {
+            if (!_areDatesEqual(initialOrderDate, loadedOrderDate))
+            {
+                throw new Exception($"Generation date wasn't parse correctly: " +
+                    $"Initial Order: {initialOrderDate}. " +
+                    $"Loaded Order: {loadedOrderDate}");
+            }
+        }
+
+        private void _validateOrderDate(DateTime? initialOrderDate, DateTime? loadedOrderDate)
+        {
+            if (!_areDatesEqual(initialOrderDate,loadedOrderDate))
+            {
+                throw new Exception($"Order date wasn't parse correctly: " +
+                    $"Initial Order: {initialOrderDate}. " +
+                    $"Loaded Order: {loadedOrderDate}");
+            }
+        }
+
+        private bool _areDatesEqual(DateTime? dateTime, DateTime? dateTimeToCompereWith) => dateTime == dateTimeToCompereWith;
+
+
+
     }
 }
