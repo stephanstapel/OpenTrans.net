@@ -176,7 +176,12 @@ namespace OpenTrans.net_Test
                 OrderUnit = QuantityCodes.C62,
                 Quantity = 1.0m,
                 LineAmount = 1111,
-                Remarks = new List<string>() { "a" }
+                Remarks = new List<Remark>() { new Remark()
+                {
+                    Lang = "EN",
+                    Type = "a",
+                    Value = "a"
+                }}
             });
 
             order.Save("test.xml");
