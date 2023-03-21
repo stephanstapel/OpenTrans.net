@@ -11,6 +11,7 @@ You can get the library from nuget or from Visual Studio Package Manager under t
 The URL of the package is here:
 
 [![NuGet](https://img.shields.io/nuget/v/OpenTrans.net?color=blue)](https://www.nuget.org/packages/OpenTrans.net/)
+
 https://www.nuget.org/packages/OpenTrans.net/
 
 # Usage
