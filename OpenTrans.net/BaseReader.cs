@@ -46,6 +46,14 @@ namespace OpenTrans.net
                     return retval;
                 }
             }
+            else if ((_temp.Length > 20) && (_temp.Contains("+")))
+            {
+
+                if (DateTimeOffset.TryParse(_temp, out DateTimeOffset retval))
+                {
+                    return retval.UtcDateTime;
+                }
+            }
             else
             {
                 if (DateTime.TryParseExact(_temp, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime retval))
