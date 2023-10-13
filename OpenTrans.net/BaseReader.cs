@@ -210,18 +210,26 @@ namespace OpenTrans.net
             }
 
             List<PartyRoles> partyRoles = new List<PartyRoles>();
+            List<string> partyRolesUnknown = new List<string>();
             XmlNodeList partyRoleNodes = node.SelectNodes("./*[local-name()='PARTY_ROLE']", nsmgr);
             if (partyRoleNodes != null)
             {
                 foreach (XmlNode roleNode in partyRoleNodes)
                 {
-                    partyRoles.Add(default(PartyRoles).FromString(XmlUtils.NodeAsString(roleNode, ".", nsmgr)));
+                    string stringValue = XmlUtils.NodeAsString(roleNode, ".", nsmgr);
+                    PartyRoles v = default(PartyRoles).FromString(stringValue);
+                    partyRoles.Add(v);
+                    if (v == PartyRoles.Unknown) 
+                    { 
+                        partyRolesUnknown.Add(stringValue);
+                    }
                 }
             } // !roleNodes
 
             Party party = new Party
             {
                 Roles = partyRoles,
+                RolesUnknown = partyRolesUnknown,
                 Name = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='NAME']", nsmgr),
                 Name2 = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='NAME2']", nsmgr),
                 Name3 = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='NAME3']", nsmgr),

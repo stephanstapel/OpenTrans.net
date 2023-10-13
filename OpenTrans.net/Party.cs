@@ -36,6 +36,11 @@ namespace OpenTrans.net
         public List<PartyRoles> Roles { get; set; } = new List<PartyRoles>();
 
         /// <summary>
+        /// Original string values of each "unknown" party role 
+        /// </summary>
+        public List<string> RolesUnknown { get; set; } = new List<string>();
+
+        /// <summary>
         /// First address line, in most cases the name of the organisation
         /// </summary>
         public string Name { get; set; }
