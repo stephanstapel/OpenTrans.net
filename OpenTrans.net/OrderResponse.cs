@@ -48,6 +48,11 @@ namespace OpenTrans.net
         public DateTime? OrderDate { get; set; }
 
         /// <summary>
+        /// Date of the order response - required field
+        /// </summary>
+        public DateTime? OrderResponseDate { get; set; }
+
+        /// <summary>
         /// The alteration sequence is increased by one with the dispatch of each ORDERCHANGE
         /// business document.The numbering begins at 1.
         /// </summary>

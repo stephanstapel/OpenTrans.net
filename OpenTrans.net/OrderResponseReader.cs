@@ -65,6 +65,7 @@ namespace OpenTrans.net
                 retval.OrderId = XmlUtils.NodeAsString(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDER_ID']", nsmgr);
                 retval.SupplierOrderId = XmlUtils.NodeAsString(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='SUPPLIER_ORDER_ID']", nsmgr);
                 retval.OrderDate = _nodeAsDateTime(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDER_DATE']", nsmgr);
+                retval.OrderResponseDate = _nodeAsDateTime(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDERRESPONSE_DATE']", nsmgr);
                 retval.OrderChangeSequenceId = XmlUtils.NodeAsInt(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDERCHANGE_SEQUENCE_ID']", nsmgr);
 
                 XmlNodeList partyNodes = headerNode.SelectNodes(".//*[local-name()='PARTIES']/*[local-name()='PARTY']", nsmgr);

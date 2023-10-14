@@ -31,39 +31,20 @@ namespace OpenTrans.net
         protected DateTime? _nodeAsDateTime(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null)
         {
             string _temp = XmlUtils.NodeAsString(node, xpath, nsmgr);
+            DateTime retval;
 
-            if (_temp.Length == 8)
+            try 
             {
-                if (DateTime.TryParseExact(_temp, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime retval))
-                {
-                    return retval;
-                }
+                retval = XmlConvert.ToDateTime(_temp, XmlDateTimeSerializationMode.RoundtripKind);
+                return retval;
+            } catch (FormatException) 
+            {
             }
-            else if (_temp.Length == 10)
-            {
-                if (DateTime.TryParseExact(_temp, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime retval))
-                {
-                    return retval;
-                }
-            }
-            else if ((_temp.Length > 20) && (_temp.Contains("+")))
-            {
 
-                if (DateTimeOffset.TryParse(_temp, out DateTimeOffset retval))
-                {
-                    return retval.UtcDateTime;
-                }
-            }
-            else
+            // for compatibility
+            if (DateTime.TryParseExact(_temp, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out retval))
             {
-                if (DateTime.TryParseExact(_temp, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime retval))
-                {
-                    return retval;
-                }
-                if (DateTime.TryParseExact(_temp, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out retval))
-                {
-                    return retval;
-                }
+                return retval;
             }
 
             return null;
