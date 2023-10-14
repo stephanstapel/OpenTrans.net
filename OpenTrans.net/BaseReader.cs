@@ -28,7 +28,7 @@ namespace OpenTrans.net
     /// </summary>
     internal class BaseReader
     {
-        protected DateTime? _readDateTime(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null)
+        protected DateTime? _nodeAsDateTime(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null)
         {
             string _temp = XmlUtils.NodeAsString(node, xpath, nsmgr);
             
