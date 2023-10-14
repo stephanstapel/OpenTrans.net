@@ -94,6 +94,10 @@ namespace OpenTrans.net
             _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
             _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
             _writeOptionalElementString(writer, "bmecat:PHONE", party.PhoneNo);
+            foreach (var phoneNo in party.AdditionalPhoneNo) 
+            {
+                _writeOptionalElementString(writer, "bmecat:PHONE", phoneNo);
+            }
             _writeOptionalElementString(writer, "bmecat:FAX", party.FaxNo);
             _writeOptionalElementString(writer, "bmecat:EMAIL", party.EmailAddress);
             _writeOptionalElementString(writer, "bmecat:URL", party.Url);

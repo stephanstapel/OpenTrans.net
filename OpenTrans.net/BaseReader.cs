@@ -217,6 +217,22 @@ namespace OpenTrans.net
                 }
             } // !roleNodes
 
+            // reading phone numbers
+            XmlNodeList phoneNoNodes = node.SelectNodes("./*[local-name()='ADDRESS']/*[local-name()='PHONE']", nsmgr);
+            string firstphoneNo = null;
+            List<string> additionalPhoneNo = new List<string>();
+            for (int i = 0; i < phoneNoNodes.Count; i++) 
+            {
+                var phoneNo = XmlUtils.NodeAsString(phoneNoNodes[i], ".", nsmgr);
+                if (i == 0) {
+                    firstphoneNo = phoneNo;
+                } 
+                else 
+                {
+                    additionalPhoneNo.Add(phoneNo);
+                }
+            }
+
             Party party = new Party
             {
                 Roles = partyRoles,
@@ -236,7 +252,8 @@ namespace OpenTrans.net
                 VATId = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='VAT_ID']", nsmgr),
                 TaxNumber = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='TAX_NUMBER']", nsmgr),
                 FaxNo = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='FAX']", nsmgr),
-                PhoneNo = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='PHONE']", nsmgr),
+                PhoneNo = firstphoneNo,
+                AdditionalPhoneNo = additionalPhoneNo,
                 Url = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='URL']", nsmgr),
             };
 

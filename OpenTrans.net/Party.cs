@@ -126,6 +126,11 @@ namespace OpenTrans.net
         public string PhoneNo { get; set; }
 
         /// <summary>
+        /// Additional phone numbers all read / written as the XML "PHONE" element
+        /// </summary>
+        public List<string> AdditionalPhoneNo { get; set; } = new List<string>();
+
+        /// <summary>
         /// e-mail address
         /// </summary>
         public string EmailAddress { get; set; }
