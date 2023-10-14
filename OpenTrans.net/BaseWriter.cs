@@ -18,6 +18,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml;
 
@@ -62,8 +63,8 @@ namespace OpenTrans.net
                 _writeOptionalElementString(writer, "bmecat:TITLE", party.ContactDetails.Title);
                 _writeOptionalElementString(writer, "bmecat:ACADEMIC_TITLE", party.ContactDetails.AcademicTitle);
                 _writeOptionalElementString(writer, "bmecat:CONTACT_DESCR", party.ContactDetails.Description);
-                _writeOptionalElementString(writer, "bmecat:PHONE", party.ContactDetails.PhoneNo);                
-                _writeOptionalElementString(writer, "bmecat:FAX", party.ContactDetails.FaxNo);
+                _writePhoneNumbers(writer, "bmecat:PHONE", party.ContactDetails.PhoneNo);
+                _writePhoneNumbers(writer, "bmecat:FAX", party.ContactDetails.FaxNo);
                 _writeOptionalElementString(writer, "bmecat:URL", party.ContactDetails.Url);
                 if (party.ContactDetails.EmailAddresses.Any())
                 {
@@ -93,12 +94,8 @@ namespace OpenTrans.net
             }
             _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
             _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
-            _writeOptionalElementString(writer, "bmecat:PHONE", party.PhoneNo);
-            foreach (var phoneNo in party.AdditionalPhoneNo) 
-            {
-                _writeOptionalElementString(writer, "bmecat:PHONE", phoneNo);
-            }
-            _writeOptionalElementString(writer, "bmecat:FAX", party.FaxNo);
+            _writePhoneNumbers(writer, "bmecat:PHONE", party.PhoneNo);
+            _writePhoneNumbers(writer, "bmecat:FAX", party.FaxNo);
             _writeOptionalElementString(writer, "bmecat:EMAIL", party.EmailAddress);
             _writeOptionalElementString(writer, "bmecat:URL", party.Url);
             writer.WriteEndElement(); // !ADDRESS
@@ -106,6 +103,21 @@ namespace OpenTrans.net
             writer.WriteEndElement(); // !PARTY
         } // !_writeParty()
 
+        /// <summary>
+        /// writes the phone numbers as XML elements with the given elementname
+        /// </summary>
+        private void _writePhoneNumbers(XmlTextWriter writer, string elementName, List<Phone> value) 
+        {
+            foreach (var phoneNo in value) 
+            {
+                Dictionary<string, string> typeAttribute = null;
+                if (!string.IsNullOrWhiteSpace(phoneNo.Type)) 
+                { 
+                    typeAttribute = new Dictionary<string, string>() { { "type", phoneNo.Type } };
+                }
+                _writeOptionalElementString(writer, elementName, phoneNo.Number, typeAttribute);
+            }
+        }
 
         internal void _writeCustomerOrderReference(XmlTextWriter writer, CustomerOrderReference customerOrderReference)
         {

@@ -116,19 +116,14 @@ namespace OpenTrans.net
         public Contact ContactDetails { get; set; }
 
         /// <summary>
-        /// Fax number
+        /// Phone numbers - contents of ADDRESS/PHONE element
         /// </summary>
-        public string FaxNo { get; set; }
+        public List<Phone> PhoneNo { get; set; } = new List<Phone>();
 
         /// <summary>
-        /// Phone number
+        /// Fax numbers - contents of ADDRESS/FAX element
         /// </summary>
-        public string PhoneNo { get; set; }
-
-        /// <summary>
-        /// Additional phone numbers all read / written as the XML "PHONE" element
-        /// </summary>
-        public List<string> AdditionalPhoneNo { get; set; } = new List<string>();
+        public List<Phone> FaxNo { get; set; }
 
         /// <summary>
         /// e-mail address
