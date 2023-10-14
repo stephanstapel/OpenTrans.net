@@ -78,7 +78,7 @@ namespace OpenTrans.net
                 Writer.WriteElementString("SUPPLIER_ORDER_ID", orderResponse.OrderId);
             }
             
-            _writeDateTime(Writer, "ORDERRESPONSE_DATE", DateTime.Now);
+            _writeDateTime(Writer, "ORDERRESPONSE_DATE", orderResponse.OrderResponseDate ?? DateTime.Now);
             if (orderResponse.OrderDate.HasValue)
             {
                 _writeDateTime(Writer, "ORDER_DATE", orderResponse.OrderDate.Value);
