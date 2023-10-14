@@ -143,12 +143,15 @@ namespace OpenTrans.net
             if (item.ProductFeatures.Any())
             {
                 writer.WriteStartElement("PRODUCT_FEATURES");
-                foreach (var features in item.ProductFeatures)
+                foreach (var feature in item.ProductFeatures)
                 {
                     writer.WriteStartElement("FEATURE ");
-                    _writeOptionalElementString(writer, "bmecat:FNAME", features.Name);
-                    _writeOptionalElementString(writer, "bmecat:FVALUE", features.Value);
-                    _writeOptionalElementString(writer, "bmecat:FUNIT", features.Unit.EnumToString());
+                    _writeOptionalElementString(writer, "bmecat:FNAME", feature.Name);
+                    _writeOptionalElementString(writer, "bmecat:FVALUE", feature.Value);
+                    _writeOptionalElementString(writer, "bmecat:FVALUE_DETAILS", feature.ValueDetails);
+                    _writeOptionalElementString(writer, "bmecat:FDESCR", feature.Description, new Dictionary<string, string> { { "lang", "deu" } });
+                    _writeOptionalElementString(writer, "bmecat:FUNIT", feature.Unit.EnumToString());
+                    _writeOptionalElementString(writer, "bmecat:FVALUE_TYPE", feature.ValueType);
                     writer.WriteEndElement(); // !FEATURE 
                 }
                 writer.WriteEndElement(); // !PRODUCT_FEATURES

@@ -38,6 +38,11 @@ namespace OpenTrans.net
         public string Value { get; set; }
 
         /// <summary>
+        /// Additional details on the feature value
+        /// </summary>
+        public string ValueDetails { get; set; }
+
+        /// <summary>
         /// Unit of measurement of the feature
         /// </summary>
         public QuantityCodes Unit { get; set; }
@@ -62,5 +67,10 @@ namespace OpenTrans.net
         /// Definition of the feature
         /// </summary>
         public string Template { get; set; }
+
+        /// <summary>
+        /// Information on the valid value range
+        /// </summary>
+        public string ValueType { get; set; }
     }
 }

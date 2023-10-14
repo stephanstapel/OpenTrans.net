@@ -116,10 +116,12 @@ namespace OpenTrans.net
             {
                 Name = XmlUtils.NodeAsString(node, "./*[local-name()='FNAME']", nsmgr),
                 Value = XmlUtils.NodeAsString(node, "./*[local-name()='FVALUE']", nsmgr),
-                Description = XmlUtils.NodeAsString(node, "./*[local-name()='FDESCRIPTION']", nsmgr),
+                ValueDetails = XmlUtils.NodeAsString(node, "./*[local-name()='FVALUE_DETAILS']", nsmgr),
+                Description = XmlUtils.NodeAsString(node, "./*[local-name()='FDESCR']", nsmgr),
                 Order = XmlUtils.NodeAsString(node, "./*[local-name()='FORDER']", nsmgr),
                 Template = XmlUtils.NodeAsString(node, "./*[local-name()='FTEMPLATE']", nsmgr),
                 Unit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='FUNIT']", nsmgr)),
+                ValueType = XmlUtils.NodeAsString(node, "./*[local-name()='FVALUE_TYPE']", nsmgr),
             };
         } // !_readFeature()
 
