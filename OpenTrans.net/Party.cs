@@ -31,9 +31,14 @@ namespace OpenTrans.net
         public List<PartyId> Ids { get; set; } = new List<PartyId>();
 
         /// <summary>
-        /// Role of the business partner in the context of this document
+        /// Role of the business partner in the context of this document (PARTY_ROLE)
         /// </summary>
         public List<PartyRoles> Roles { get; set; } = new List<PartyRoles>();
+
+        /// <summary>
+        /// String values of PARTY_ROLEs, that do not have a value according to the standard 
+        /// </summary>
+        public List<string> RolesCustom { get; set; } = new List<string>();
 
         /// <summary>
         /// First address line, in most cases the name of the organisation
