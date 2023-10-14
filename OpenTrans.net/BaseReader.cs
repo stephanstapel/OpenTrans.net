@@ -28,21 +28,20 @@ namespace OpenTrans.net
     /// </summary>
     internal class BaseReader
     {
-        protected DateTime? _nodeAsDateTime(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null)
+        protected DateTime? _readDateTime(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null)
         {
             string _temp = XmlUtils.NodeAsString(node, xpath, nsmgr);
-            DateTime retval;
-
-            try 
-            {
-                retval = XmlConvert.ToDateTime(_temp, XmlDateTimeSerializationMode.RoundtripKind);
-                return retval;
-            } catch (FormatException) 
+            
+            try
+            { 
+                return XmlConvert.ToDateTime(_temp, XmlDateTimeSerializationMode.RoundtripKind);              
+            }
+            catch (FormatException) 
             {
             }
 
             // for compatibility
-            if (DateTime.TryParseExact(_temp, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out retval))
+            if (DateTime.TryParseExact(_temp, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime retval))
             {
                 return retval;
             }
