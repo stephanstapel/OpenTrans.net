@@ -121,7 +121,7 @@ namespace OpenTrans.net
                 Order = XmlUtils.NodeAsString(node, "./*[local-name()='FORDER']", nsmgr),
                 Template = XmlUtils.NodeAsString(node, "./*[local-name()='FTEMPLATE']", nsmgr),
                 Unit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='FUNIT']", nsmgr)),
-                ValueType = XmlUtils.NodeAsString(node, "./*[local-name()='FVALUE_TYPE']", nsmgr),
+                ValueType = XmlUtils.NodeAsEnum<ValueTypes>(node, "./*[local-name()='FVALUE_TYPE']", nsmgr),
             };
         } // !_readFeature()
 

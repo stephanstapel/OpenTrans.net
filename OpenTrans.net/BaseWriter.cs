@@ -151,7 +151,7 @@ namespace OpenTrans.net
                     _writeOptionalElementString(writer, "bmecat:FVALUE_DETAILS", feature.ValueDetails);
                     _writeOptionalElementString(writer, "bmecat:FDESCR", feature.Description, new Dictionary<string, string> { { "lang", "deu" } });
                     _writeOptionalElementString(writer, "bmecat:FUNIT", feature.Unit.EnumToString());
-                    _writeOptionalElementString(writer, "bmecat:FVALUE_TYPE", feature.ValueType);
+                    _writeOptionalElementString(writer, "bmecat:FVALUE_TYPE", feature.ValueType?.ToString());
                     writer.WriteEndElement(); // !FEATURE 
                 }
                 writer.WriteEndElement(); // !PRODUCT_FEATURES
