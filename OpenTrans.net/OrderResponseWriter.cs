@@ -75,7 +75,7 @@ namespace OpenTrans.net
 
             if (!String.IsNullOrEmpty(orderResponse.SupplierOrderId))
             {
-                Writer.WriteElementString("SUPPLIER_ORDER_ID", orderResponse.OrderId);
+                Writer.WriteElementString("SUPPLIER_ORDER_ID", orderResponse.SupplierOrderId);
             }
             
             _writeDateTime(Writer, "ORDERRESPONSE_DATE", DateTime.Now);
