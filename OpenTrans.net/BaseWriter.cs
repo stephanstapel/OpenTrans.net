@@ -37,18 +37,14 @@ namespace OpenTrans.net
                 _writeOptionalElementString(writer, "bmecat:PARTY_ID", id.Id, new Dictionary<string, string>() { { "type", id.Type.EnumToString() } });
             }
 
-            int unknownIndex = 0;
             foreach (PartyRoles _role in party.Roles)
             {
-                if (_role != PartyRoles.Unknown || unknownIndex >= party.RolesUnknown.Count) 
-                {
-                    writer.WriteElementString("PARTY_ROLE", _role.EnumToString());
-                } 
-                else 
-                { 
-                    writer.WriteElementString("PARTY_ROLE", party.RolesUnknown[unknownIndex]);
-                    unknownIndex++;
-                }
+                writer.WriteElementString("PARTY_ROLE", _role.EnumToString());
+            }
+            
+            foreach (string _role in party.RolesCustom) 
+            {
+                writer.WriteElementString("PARTY_ROLE", _role);
             }
 
             writer.WriteStartElement("ADDRESS");
