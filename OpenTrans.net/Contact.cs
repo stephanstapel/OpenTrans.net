@@ -70,14 +70,14 @@ namespace OpenTrans.net
         public string Url { get; set; }
 
         /// <summary>
-        /// Phone number
+        /// Phone numbers - contents of CONTACT_DETAILS/PHONE element
         /// </summary>
-        public string PhoneNo { get; set; }
+        public List<Phone> PhoneNo { get; set; } = new List<Phone>();
 
         /// <summary>
-        /// Fax number
+        /// Fax numbers - contents of CONTACT_DETAILS/FAX element
         /// </summary>
-        public string FaxNo { get; set; }
+        public List<Phone> FaxNo { get; set; }
 
         /// <summary>
         /// List of e-mail addresses

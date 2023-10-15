@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace OpenTrans.net
 {
@@ -28,7 +29,7 @@ namespace OpenTrans.net
     /// </summary>
     internal class BaseReader
     {
-        protected DateTime? _readDateTime(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null)
+        protected DateTime? _nodeAsDateTime(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null)
         {
             string _temp = XmlUtils.NodeAsString(node, xpath, nsmgr);
             
@@ -217,6 +218,10 @@ namespace OpenTrans.net
                 }
             } // !roleNodes
 
+
+            List<Phone> phoneNumbers = _readPhoneNumbers(node.SelectNodes("./*[local-name()='ADDRESS']/*[local-name()='PHONE']", nsmgr), nsmgr);
+            List<Phone> faxNumbers = _readPhoneNumbers(node.SelectNodes("./*[local-name()='ADDRESS']/*[local-name()='FAX']", nsmgr), nsmgr);
+
             Party party = new Party
             {
                 Roles = partyRoles,
@@ -235,8 +240,8 @@ namespace OpenTrans.net
                 CountryCode = default(CountryCodes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='COUNTRY_CODED']", nsmgr)),
                 VATId = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='VAT_ID']", nsmgr),
                 TaxNumber = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='TAX_NUMBER']", nsmgr),
-                FaxNo = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='FAX']", nsmgr),
-                PhoneNo = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='PHONE']", nsmgr),
+                PhoneNo = phoneNumbers,
+                FaxNo = faxNumbers,
                 Url = XmlUtils.NodeAsString(node, "./*[local-name()='ADDRESS']/*[local-name()='URL']", nsmgr),
             };
 
@@ -291,6 +296,10 @@ namespace OpenTrans.net
                     }
                 } // !contactEmailAddressNodes
 
+                List<Phone> contactPhoneNumbers = _readPhoneNumbers(contactNode.SelectNodes("./*[local-name()='PHONE']", nsmgr), nsmgr);
+                List<Phone> contactFaxNumbers = _readPhoneNumbers(contactNode.SelectNodes("./*[local-name()='FAX']", nsmgr), nsmgr);
+
+
                 party.ContactDetails = new Contact
                 {
                     Id = XmlUtils.NodeAsString(contactNode, "./*[local-name()='CONTACT_ID']", nsmgr),
@@ -300,8 +309,8 @@ namespace OpenTrans.net
                     AcademicTitle = XmlUtils.NodeAsString(contactNode, "./*[local-name()='ACADEMIC_TITLE']", nsmgr),
                     Description = XmlUtils.NodeAsString(contactNode, "./*[local-name()='CONTACT_DESCR']", nsmgr),
                     Url = XmlUtils.NodeAsString(contactNode, "./*[local-name()='URL']", nsmgr),
-                    PhoneNo = XmlUtils.NodeAsString(contactNode, "./*[local-name()='PHONE']", nsmgr),
-                    FaxNo = XmlUtils.NodeAsString(contactNode, "./*[local-name()='FAX']", nsmgr),
+                    PhoneNo = contactPhoneNumbers,
+                    FaxNo = contactFaxNumbers,
                     Authentification = XmlUtils.NodeAsString(contactNode, "./*[local-name()='AUTHENTIFICATION']", nsmgr),
                     Roles = contactRoles,
                     EmailAddresses = contactEmailAddresses
@@ -310,5 +319,25 @@ namespace OpenTrans.net
 
             return party;
         } // !_readParty()
+
+        /// <summary>
+        /// read phone or Fax numbers from the nodes supplied
+        /// </summary>
+        /// <returns></returns>
+        private List<Phone> _readPhoneNumbers(XmlNodeList xmlNodes, XmlNamespaceManager nsmgr = null)
+        { 
+            List<Phone> result = new List<Phone>();
+            foreach (XmlNode phoneNode in xmlNodes) 
+            {
+                var phone = new Phone() 
+                { 
+                    Number = XmlUtils.NodeAsString(phoneNode, ".", nsmgr),
+                    Type = XmlUtils.AttributeText(phoneNode, "type", null),
+                };
+                
+                result.Add(phone);
+            }
+            return result;
+        }
     }
 }
