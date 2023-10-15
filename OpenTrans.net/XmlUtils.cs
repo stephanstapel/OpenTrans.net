@@ -146,5 +146,29 @@ namespace OpenTrans.net
                 return defaultValue;
             }
         } // !NodeAsDecimal()
+
+        /// <summary>
+        ///  reads the value from given xpath and interprets the value as enumeration
+        /// </summary>
+        public static T? NodeAsEnum<T>(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null, T? defaultValue = null) where T : struct 
+        {
+            if (node == null)
+            {
+                return defaultValue;
+            }
+
+            string temp = NodeAsString(node, xpath, nsmgr, "");
+            if (!string.IsNullOrWhiteSpace(temp))
+                try 
+                {
+                    return (T)Enum.Parse(typeof(T), temp);
+                }
+                catch (Exception) 
+                {
+                }
+
+            return defaultValue;
+        } // !NodeAsEnum()
+
     }
 }
