@@ -106,14 +106,14 @@ namespace OpenTrans.net
         /// <summary>
         /// writes the phone numbers as XML elements with the given elementname
         /// </summary>
-        private void _writePhoneNumbers(XmlTextWriter writer, string elementName, List<Phone> value) 
+        private void _writePhoneNumbers(XmlTextWriter writer, string elementName, List<PhoneNo> value) 
         {
             foreach (var phoneNo in value) 
             {
                 Dictionary<string, string> typeAttribute = null;
-                if (!string.IsNullOrWhiteSpace(phoneNo.Type)) 
+                if (!string.IsNullOrWhiteSpace(phoneNo.Type.EnumToString())) 
                 { 
-                    typeAttribute = new Dictionary<string, string>() { { "type", phoneNo.Type } };
+                    typeAttribute = new Dictionary<string, string>() { { "type", phoneNo.Type.EnumToString() } };
                 }
                 _writeOptionalElementString(writer, elementName, phoneNo.Number, typeAttribute);
             }

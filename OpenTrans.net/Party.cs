@@ -118,12 +118,12 @@ namespace OpenTrans.net
         /// <summary>
         /// Phone numbers - contents of ADDRESS/PHONE element
         /// </summary>
-        public List<Phone> PhoneNo { get; set; } = new List<Phone>();
+        public List<PhoneNo> PhoneNo { get; set; } = new List<PhoneNo>();
 
         /// <summary>
         /// Fax numbers - contents of ADDRESS/FAX element
         /// </summary>
-        public List<Phone> FaxNo { get; set; }
+        public List<PhoneNo> FaxNo { get; set; }
 
         /// <summary>
         /// e-mail address

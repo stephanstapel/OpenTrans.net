@@ -48,7 +48,7 @@ namespace OpenTrans.net
             }
 
             return null;
-        } // !_readDateTime()
+        } // !_nodeAsDateTime()
 
 
         protected OrderItem _readItem(XmlNode node, XmlNamespaceManager nsmgr = null)
@@ -219,8 +219,8 @@ namespace OpenTrans.net
             } // !roleNodes
 
 
-            List<Phone> phoneNumbers = _readPhoneNumbers(node.SelectNodes("./*[local-name()='ADDRESS']/*[local-name()='PHONE']", nsmgr), nsmgr);
-            List<Phone> faxNumbers = _readPhoneNumbers(node.SelectNodes("./*[local-name()='ADDRESS']/*[local-name()='FAX']", nsmgr), nsmgr);
+            List<PhoneNo> phoneNumbers = _readPhoneNumbers(node.SelectNodes("./*[local-name()='ADDRESS']/*[local-name()='PHONE']", nsmgr), nsmgr);
+            List<PhoneNo> faxNumbers = _readPhoneNumbers(node.SelectNodes("./*[local-name()='ADDRESS']/*[local-name()='FAX']", nsmgr), nsmgr);
 
             Party party = new Party
             {
@@ -296,8 +296,8 @@ namespace OpenTrans.net
                     }
                 } // !contactEmailAddressNodes
 
-                List<Phone> contactPhoneNumbers = _readPhoneNumbers(contactNode.SelectNodes("./*[local-name()='PHONE']", nsmgr), nsmgr);
-                List<Phone> contactFaxNumbers = _readPhoneNumbers(contactNode.SelectNodes("./*[local-name()='FAX']", nsmgr), nsmgr);
+                List<PhoneNo> contactPhoneNumbers = _readPhoneNumbers(contactNode.SelectNodes("./*[local-name()='PHONE']", nsmgr), nsmgr);
+                List<PhoneNo> contactFaxNumbers = _readPhoneNumbers(contactNode.SelectNodes("./*[local-name()='FAX']", nsmgr), nsmgr);
 
 
                 party.ContactDetails = new Contact
@@ -324,15 +324,15 @@ namespace OpenTrans.net
         /// read phone or Fax numbers from the nodes supplied
         /// </summary>
         /// <returns></returns>
-        private List<Phone> _readPhoneNumbers(XmlNodeList xmlNodes, XmlNamespaceManager nsmgr = null)
+        private List<PhoneNo> _readPhoneNumbers(XmlNodeList xmlNodes, XmlNamespaceManager nsmgr = null)
         { 
-            List<Phone> result = new List<Phone>();
+            List<PhoneNo> result = new List<PhoneNo>();
             foreach (XmlNode phoneNode in xmlNodes) 
             {
-                var phone = new Phone() 
+                var phone = new PhoneNo() 
                 { 
                     Number = XmlUtils.NodeAsString(phoneNode, ".", nsmgr),
-                    Type = XmlUtils.AttributeText(phoneNode, "type", null),
+                    Type = default(PhoneNoTypes).FromString(XmlUtils.AttributeText(phoneNode, "type", null)),
                 };
                 
                 result.Add(phone);

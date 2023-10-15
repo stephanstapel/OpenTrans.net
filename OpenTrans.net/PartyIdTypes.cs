@@ -100,7 +100,7 @@ namespace OpenTrans.net
                 case PartyIdTypes.SupplierSpecific: return "supplier_specific";
                 default: return "";
             }
-        } // !ToString()
+        } // !EnumToString()
     }
 }
  

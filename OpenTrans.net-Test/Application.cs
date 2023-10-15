@@ -166,8 +166,8 @@ namespace OpenTrans.net_Test
                 VATId = "a",
                 TaxNumber = "a",
                 Url = "a",
-                FaxNo = "a",
-                PhoneNo = "a",
+                FaxNo = new List<PhoneNo>() { new PhoneNo() { Number = "a"  } },
+                PhoneNo = new List<PhoneNo>() { new PhoneNo() { Number = "a" } },                
                 EmailAddress = "a"
             });
 
