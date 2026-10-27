@@ -18,6 +18,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -62,6 +63,10 @@ namespace OpenTrans.net
                 _writeOptionalElementString(writer, "bmecat:FIRST_NAME", party.ContactDetails.FirstName);
                 _writeOptionalElementString(writer, "bmecat:TITLE", party.ContactDetails.Title);
                 _writeOptionalElementString(writer, "bmecat:ACADEMIC_TITLE", party.ContactDetails.AcademicTitle);
+                foreach (string role in party.ContactDetails.Roles)
+                {
+                    _writeOptionalElementString(writer, "CONTACT_ROLE", role);
+                }
                 _writeOptionalElementString(writer, "bmecat:CONTACT_DESCR", party.ContactDetails.Description);
                 _writePhoneNumbers(writer, "bmecat:PHONE", party.ContactDetails.PhoneNo);
                 _writePhoneNumbers(writer, "bmecat:FAX", party.ContactDetails.FaxNo);
@@ -135,8 +140,8 @@ namespace OpenTrans.net
             if (orderPartiesReference != null)
             {
                 writer.WriteStartElement("ORDER_PARTIES_REFERENCE");
-                _writeOptionalElementString(writer, "bmecat:BUYER_IDREF", orderPartiesReference.BuyerIdRef.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.BuyerIdRef.Type.EnumToString() } });
-                _writeOptionalElementString(writer, "bmecat:SUPPLIER_IDREF", orderPartiesReference.SupplierIdRef.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.SupplierIdRef.Type.EnumToString() } });
+                _writeOptionalElementString(writer, "bmecat:BUYER_IDREF", orderPartiesReference.BuyerIdRef?.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.BuyerIdRef?.Type.EnumToString() } });
+                _writeOptionalElementString(writer, "bmecat:SUPPLIER_IDREF", orderPartiesReference.SupplierIdRef?.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.SupplierIdRef?.Type.EnumToString() } });
                 if (orderPartiesReference.ShipmentPartiesReference != null)
                 {
                     writer.WriteStartElement("SHIPMENT_PARTIES_REFERENCE");
@@ -161,13 +166,21 @@ namespace OpenTrans.net
                 writer.WriteStartElement("PRODUCT_FEATURES");
                 foreach (var feature in item.ProductFeatures)
                 {
-                    writer.WriteStartElement("FEATURE ");
-                    _writeOptionalElementString(writer, "bmecat:FNAME", feature.Name);
+                    writer.WriteStartElement("FEATURE");
+                    if (!string.IsNullOrEmpty(feature.Name))
+                    {
+                        _writeOptionalElementString(writer, "bmecat:FNAME", feature.Name);
+                    }
+                    else
+                    {
+                        _writeOptionalElementString(writer, "bmecat:FTEMPLATE", feature.Template);
+                    }
                     _writeOptionalElementString(writer, "bmecat:FVALUE", feature.Value);
-                    _writeOptionalElementString(writer, "bmecat:FVALUE_DETAILS", feature.ValueDetails);
-                    _writeOptionalElementString(writer, "bmecat:FDESCR", feature.Description, new Dictionary<string, string> { { "lang", "deu" } });
                     _writeOptionalElementString(writer, "bmecat:FUNIT", feature.Unit.EnumToString());
-                    _writeOptionalElementString(writer, "bmecat:FVALUE_TYPE", feature.ValueType?.ToString());
+                    _writeOptionalElementString(writer, "bmecat:FORDER", feature.Order);
+                    _writeOptionalElementString(writer, "bmecat:FDESCR", feature.Description, new Dictionary<string, string> { { "lang", "deu" } });
+                    _writeOptionalElementString(writer, "bmecat:FVALUE_DETAILS", feature.ValueDetails);
+                    _writeOptionalElementString(writer, "bmecat:FVALUE_TYPE", feature.ValueType?.EnumToString());
                     writer.WriteEndElement(); // !FEATURE 
                 }
                 writer.WriteEndElement(); // !PRODUCT_FEATURES
@@ -327,15 +340,14 @@ namespace OpenTrans.net
         } // !_writeOptionalAmount()
 
 
+        /// <summary>
+        /// Formats the value with at least numDecimals decimal places. Additional decimal places are kept
+        /// so that no precision is lost.
+        /// </summary>
         internal string _formatDecimal(decimal value, int numDecimals = 2)
         {
-            string formatString = "0.";
-            for (int i = 0; i < numDecimals; i++)
-            {
-                formatString += "0";
-            }
-
-            return value.ToString(formatString).Replace(",", ".");
+            string formatString = "0." + new string('0', numDecimals) + new string('#', 28 - numDecimals);
+            return value.ToString(formatString, CultureInfo.InvariantCulture);
         } // !_formatDecimal()
     }
 }

@@ -77,7 +77,7 @@ namespace OpenTrans.net
         /// <summary>
         /// Fax numbers - contents of CONTACT_DETAILS/FAX element
         /// </summary>
-        public List<PhoneNo> FaxNo { get; set; }
+        public List<PhoneNo> FaxNo { get; set; } = new List<PhoneNo>();
 
         /// <summary>
         /// List of e-mail addresses

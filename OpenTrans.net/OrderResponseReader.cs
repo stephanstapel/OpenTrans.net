@@ -36,7 +36,10 @@ namespace OpenTrans.net
                 throw new FileNotFoundException();
             }
 
-            return Load(new FileStream(fileName, FileMode.Open, FileAccess.Read));
+            using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            {
+                return Load(stream);
+            }
         } // !Load()
 
 

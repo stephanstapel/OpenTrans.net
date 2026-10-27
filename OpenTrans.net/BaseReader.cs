@@ -113,6 +113,8 @@ namespace OpenTrans.net
                 return null;
             }
 
+            string valueType = XmlUtils.NodeAsString(node, "./*[local-name()='FVALUE_TYPE']", nsmgr);
+
             return new Feature
             {
                 Name = XmlUtils.NodeAsString(node, "./*[local-name()='FNAME']", nsmgr),
@@ -122,7 +124,7 @@ namespace OpenTrans.net
                 Order = XmlUtils.NodeAsString(node, "./*[local-name()='FORDER']", nsmgr),
                 Template = XmlUtils.NodeAsString(node, "./*[local-name()='FTEMPLATE']", nsmgr),
                 Unit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='FUNIT']", nsmgr)),
-                ValueType = XmlUtils.NodeAsEnum<ValueTypes>(node, "./*[local-name()='FVALUE_TYPE']", nsmgr),
+                ValueType = string.IsNullOrWhiteSpace(valueType) ? (ValueTypes?)null : default(ValueTypes).FromString(valueType),
             };
         } // !_readFeature()
 
@@ -155,11 +157,23 @@ namespace OpenTrans.net
                     Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(supplierIdRefNode, "type"))
                 };
             } // !supplierIdRefNode
-            
+
+            BuyerProductId buyerPId = default;
+            XmlNode buyerPIdNode = node.SelectSingleNode("./*[local-name()='BUYER_PID']", nsmgr);
+            if (buyerPIdNode != null)
+            {
+                buyerPId = new BuyerProductId
+                {
+                    Id = buyerPIdNode.InnerText,
+                    Type = default(BuyerProductIdTypes).FromString(XmlUtils.AttributeText(buyerPIdNode, "type"))
+                };
+            } // !buyerPIdNode
+
             return new ProductId
             {
                 SupplierPId = supplierPId,
                 SupplierIdRef = supplierIdRef,
+                BuyerPId = buyerPId,
                 DescriptionShort = XmlUtils.NodeAsString(node, "./*[local-name()='DESCRIPTION_SHORT']", nsmgr),
                 DescriptionLong = XmlUtils.NodeAsString(node, "./*[local-name()='DESCRIPTION_LONG']", nsmgr)
             };
@@ -291,7 +305,7 @@ namespace OpenTrans.net
                 }
                 else
                 {
-                    string contactEmailAddress = XmlUtils.NodeAsString(node, "./*[local-name()='EMAIL']", nsmgr);
+                    string contactEmailAddress = XmlUtils.NodeAsString(contactNode, "./*[local-name()='EMAIL']", nsmgr);
                     if (!String.IsNullOrEmpty(contactEmailAddress))
                     {
                         contactEmailAddresses.Add(contactEmailAddress);
@@ -334,7 +348,7 @@ namespace OpenTrans.net
                 var phone = new PhoneNo() 
                 { 
                     Number = XmlUtils.NodeAsString(phoneNode, ".", nsmgr),
-                    Type = default(PhoneNoTypes).FromString(XmlUtils.AttributeText(phoneNode, "type", null)),
+                    Type = default(PhoneNoTypes).FromString(XmlUtils.AttributeText(phoneNode, "type")),
                 };
                 
                 result.Add(phone);

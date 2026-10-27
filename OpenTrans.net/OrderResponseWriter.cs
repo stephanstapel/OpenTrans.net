@@ -34,10 +34,11 @@ namespace OpenTrans.net
 
         public void Save(OrderResponse orderResponse, string fileName)
         {
-            FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write);
-            Save(orderResponse, fs);
-            fs.Flush();
-            fs.Close();
+            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+            {
+                Save(orderResponse, fs);
+                fs.Flush();
+            }
         } //!Save()
 
 
@@ -73,15 +74,15 @@ namespace OpenTrans.net
                 Writer.WriteElementString("ORDER_ID", orderResponse.OrderId);
             }
 
-            if (!String.IsNullOrEmpty(orderResponse.SupplierOrderId))
-            {
-                Writer.WriteElementString("SUPPLIER_ORDER_ID", orderResponse.SupplierOrderId);
-            }
-            
             _writeDateTime(Writer, "ORDERRESPONSE_DATE", orderResponse.OrderResponseDate ?? DateTime.Now);
             if (orderResponse.OrderDate.HasValue)
             {
                 _writeDateTime(Writer, "ORDER_DATE", orderResponse.OrderDate.Value);
+            }
+
+            if (!String.IsNullOrEmpty(orderResponse.SupplierOrderId))
+            {
+                Writer.WriteElementString("SUPPLIER_ORDER_ID", orderResponse.SupplierOrderId);
             }
             _writeAmount(Writer, "ORDERCHANGE_SEQUENCE_ID", orderResponse.OrderChangeSequenceId);
             Writer.WriteStartElement("PARTIES");

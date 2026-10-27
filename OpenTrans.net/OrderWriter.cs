@@ -61,7 +61,7 @@ namespace OpenTrans.net
             Writer.WriteStartElement("ORDER_HEADER");
             Writer.WriteStartElement("CONTROL_INFO");
             _writeOptionalElementString(Writer, "GENERATOR_INFO", generatorInfo);
-            _writeDateTime(Writer, "GENERATION_DATE", DateTime.Now);
+            _writeDateTime(Writer, "GENERATION_DATE", order.GenerationDate ?? DateTime.Now);
             Writer.WriteEndElement(); // !CONTROL_INFO
             Writer.WriteStartElement("SOURCING_INFO");
             Writer.WriteEndElement(); // !SOURCING_INFO
@@ -94,7 +94,7 @@ namespace OpenTrans.net
 
             Writer.WriteStartElement("ORDER_SUMMARY");
             _writeAmount(Writer, "TOTAL_ITEM_NUM", order.OrderItems.Count);
-            _writeOptionalAmount(Writer, "TOTAL_AMOUNT ", order.OrderSummary?.TotalAmount);
+            _writeOptionalAmount(Writer, "TOTAL_AMOUNT", order.OrderSummary?.TotalAmount);
             Writer.WriteEndElement(); // !ORDER_SUMMARY
             
             Writer.WriteEndElement(); // !ORDER

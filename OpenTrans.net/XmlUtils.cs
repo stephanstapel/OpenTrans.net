@@ -100,9 +100,9 @@ namespace OpenTrans.net
             {
                 return defaultValue;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             };
         } // NodeAsString()
 

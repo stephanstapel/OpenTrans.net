@@ -75,6 +75,21 @@ namespace OpenTrans.net
                 order.OrderDate = _nodeAsDateTime(orderInfoNode, "./*[local-name()='ORDER_DATE']", nsmgr);
                 order.Currency = XmlUtils.NodeAsString(orderInfoNode, "./*[local-name()='CURRENCY']", nsmgr);
 
+                string partialShipmentAllowed = XmlUtils.NodeAsString(orderInfoNode, "./*[local-name()='PARTIAL_SHIPMENT_ALLOWED']", nsmgr);
+                if (!string.IsNullOrWhiteSpace(partialShipmentAllowed))
+                {
+                    order.PartialShipmentAllowed = XmlUtils.NodeAsBool(orderInfoNode, "./*[local-name()='PARTIAL_SHIPMENT_ALLOWED']", nsmgr);
+                }
+
+                XmlNode customerOrderReferenceNode = orderInfoNode?.SelectSingleNode("./*[local-name()='CUSTOMER_ORDER_REFERENCE']", nsmgr);
+                if (customerOrderReferenceNode != null)
+                {
+                    order.CustomerOrderReference = new CustomerOrderReference
+                    {
+                        OrderId = XmlUtils.NodeAsString(customerOrderReferenceNode, "./*[local-name()='ORDER_ID']", nsmgr)
+                    };
+                } // !customerOrderReferenceNode
+
                 XmlNode deliveryDateRefNode = orderInfoNode?.SelectSingleNode("./*[local-name()='DELIVERY_DATE']", nsmgr);
                 if (deliveryDateRefNode != null)
                 {
@@ -155,6 +170,15 @@ namespace OpenTrans.net
                     order.OrderItems.Add(_readItem(itemNode, nsmgr));
                 }
             } // !itemNodes
+
+            XmlNode orderSummaryNode = doc.SelectSingleNode("//*[local-name()='ORDER_SUMMARY']", nsmgr);
+            if (orderSummaryNode != null)
+            {
+                order.OrderSummary = new OrderSummary
+                {
+                    TotalAmount = XmlUtils.NodeAsDecimal(orderSummaryNode, "./*[local-name()='TOTAL_AMOUNT']", nsmgr)
+                };
+            } // !orderSummaryNode
 
             return order;
         } // !Load()
