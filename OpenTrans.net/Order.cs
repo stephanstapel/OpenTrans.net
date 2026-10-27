@@ -34,6 +34,9 @@ namespace OpenTrans.net
         
         /// <summary>
         /// Date of creation
+        ///
+        /// The value is written as is when saving the order. If it is not set, the current time is used.
+        /// When re-saving a loaded order as a new document, reset this property to null to get a fresh generation date.
         /// </summary>
         public DateTime? GenerationDate { get; set; }
         

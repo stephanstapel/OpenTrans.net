@@ -213,7 +213,11 @@ namespace OpenTrans.net.UnitTests
             System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.CurrentCulture;
             try
             {
-                System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("de-DE");
+                // separators that are neither '.' nor ',' make sure that no culture specific formatting is used
+                System.Globalization.CultureInfo exoticCulture = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.InvariantCulture.Clone();
+                exoticCulture.NumberFormat.NumberDecimalSeparator = "|";
+                exoticCulture.NumberFormat.NumberGroupSeparator = "_";
+                System.Globalization.CultureInfo.CurrentCulture = exoticCulture;
                 Order original = TestDataFactory.CreateOrder();
                 original.OrderItems[0].LineAmount = 1234567.5m;
 
@@ -248,6 +252,71 @@ namespace OpenTrans.net.UnitTests
             // unknown units must not be written
             Assert.IsNull(doc.SelectSingleNode("//o:ORDER_ITEM[o:LINE_ITEM_ID='1']/bmecat:ORDER_UNIT", nsmgr));
         } // !WrittenXmlUsesSpecValues()
+
+
+        [TestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public void SingleDeliveryDateIsUsedAsStartAndEnd(bool onlyStart)
+        {
+            DateTime date = new DateTime(2024, 03, 21, 08, 00, 00);
+            Order original = TestDataFactory.CreateOrder();
+            original.OrderItems[0].DeliveryDate = onlyStart ? new DeliveryDate() { StartDate = date } : new DeliveryDate() { EndDate = date };
+
+            Order loaded = Roundtrip.Run(original);
+
+            Assert.IsNotNull(loaded.OrderItems[0].DeliveryDate);
+            Assert.AreEqual(date, loaded.OrderItems[0].DeliveryDate.StartDate);
+            Assert.AreEqual(date, loaded.OrderItems[0].DeliveryDate.EndDate);
+        } // !SingleDeliveryDateIsUsedAsStartAndEnd()
+
+
+        [TestMethod]
+        public void ContactWithoutListsCanBeSaved()
+        {
+            Order original = TestDataFactory.CreateOrder();
+            original.Parties[0].ContactDetails.Roles = null;
+            original.Parties[0].ContactDetails.EmailAddresses = null;
+
+            Order loaded = Roundtrip.Run(original);
+
+            Assert.AreEqual(0, loaded.Parties[0].ContactDetails.Roles.Count);
+            Assert.AreEqual(0, loaded.Parties[0].ContactDetails.EmailAddresses.Count);
+        } // !ContactWithoutListsCanBeSaved()
+
+
+        [TestMethod]
+        public void MissingOrderSummaryStaysNull()
+        {
+            Order original = TestDataFactory.CreateOrder();
+            original.OrderSummary = null;
+
+            Order loaded = Roundtrip.Run(original);
+
+            Assert.IsNull(loaded.OrderSummary);
+        } // !MissingOrderSummaryStaysNull()
+
+
+        [TestMethod]
+        [DataRow("choice", ValueTypes.Choice)]
+        [DataRow("Range", ValueTypes.Range)]
+        [DataRow("foo", null)]
+        [DataRow("", null)]
+        public void FeatureValueTypeIsRead(string xmlValue, ValueTypes? expected)
+        {
+            string xml = "<ORDER xmlns=\"http://www.opentrans.org/XMLSchema/2.1\" xmlns:bmecat=\"http://www.bmecat.org/bmecat/2005\">"
+                       + "<ORDER_ITEM_LIST><ORDER_ITEM><LINE_ITEM_ID>1</LINE_ITEM_ID><PRODUCT_FEATURES><FEATURE>"
+                       + "<bmecat:FNAME>a</bmecat:FNAME><bmecat:FVALUE>b</bmecat:FVALUE>"
+                       + "<bmecat:FVALUE_TYPE>" + xmlValue + "</bmecat:FVALUE_TYPE>"
+                       + "</FEATURE></PRODUCT_FEATURES></ORDER_ITEM></ORDER_ITEM_LIST></ORDER>";
+
+            using (MemoryStream stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(xml)))
+            {
+                Order order = Order.Load(stream);
+
+                Assert.AreEqual(expected, order.OrderItems[0].ProductFeatures[0].ValueType);
+            }
+        } // !FeatureValueTypeIsRead()
 
 
         [TestMethod]

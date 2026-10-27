@@ -29,7 +29,19 @@ namespace OpenTrans.net
     /// This class contains base functionality that is useable by writers for all OpenTrans message types
     /// </summary>
     internal class BaseWriter
-    {      
+    {
+        /// <summary>
+        /// Maximum scale of System.Decimal
+        /// </summary>
+        private const int MaxDecimals = 28;
+
+        /// <summary>
+        /// Format strings indexed by the minimum number of decimal places, e.g. "0.00##..." for two decimals
+        /// </summary>
+        private static readonly string[] _DecimalFormats = Enumerable.Range(0, MaxDecimals + 1)
+            .Select(i => "0." + new string('0', i) + new string('#', MaxDecimals - i))
+            .ToArray();
+
         internal void _writeParty(XmlTextWriter writer, Party party)
         {
             writer.WriteStartElement("PARTY");
@@ -63,7 +75,7 @@ namespace OpenTrans.net
                 _writeOptionalElementString(writer, "bmecat:FIRST_NAME", party.ContactDetails.FirstName);
                 _writeOptionalElementString(writer, "bmecat:TITLE", party.ContactDetails.Title);
                 _writeOptionalElementString(writer, "bmecat:ACADEMIC_TITLE", party.ContactDetails.AcademicTitle);
-                foreach (string role in party.ContactDetails.Roles)
+                foreach (string role in party.ContactDetails.Roles ?? Enumerable.Empty<string>())
                 {
                     _writeOptionalElementString(writer, "CONTACT_ROLE", role);
                 }
@@ -71,7 +83,7 @@ namespace OpenTrans.net
                 _writePhoneNumbers(writer, "bmecat:PHONE", party.ContactDetails.PhoneNo);
                 _writePhoneNumbers(writer, "bmecat:FAX", party.ContactDetails.FaxNo);
                 _writeOptionalElementString(writer, "bmecat:URL", party.ContactDetails.Url);
-                if (party.ContactDetails.EmailAddresses.Any())
+                if (party.ContactDetails.EmailAddresses?.Any() == true)
                 {
                     writer.WriteStartElement("bmecat:EMAILS");
                     foreach (string emailAddress in party.ContactDetails.EmailAddresses)
@@ -273,7 +285,7 @@ namespace OpenTrans.net
         
         internal void _writeDeliveryDate(XmlTextWriter writer, DeliveryDate deliveryDate)
         {
-            if (deliveryDate?.EndDate == null || !deliveryDate.StartDate.HasValue)
+            if (deliveryDate == null || (!deliveryDate.StartDate.HasValue && !deliveryDate.EndDate.HasValue))
             {
                 return;
             }
@@ -282,8 +294,9 @@ namespace OpenTrans.net
             {
                 writer.WriteAttributeString("type", deliveryDate.Type.EnumToString());
             }
-            _writeDateTime(writer, "DELIVERY_START_DATE", deliveryDate.StartDate);
-            _writeDateTime(writer, "DELIVERY_END_DATE", deliveryDate.EndDate);
+            // both elements are mandatory, a single date is interpreted as start and end of the delivery period
+            _writeDateTime(writer, "DELIVERY_START_DATE", deliveryDate.StartDate ?? deliveryDate.EndDate);
+            _writeDateTime(writer, "DELIVERY_END_DATE", deliveryDate.EndDate ?? deliveryDate.StartDate);
             writer.WriteEndElement(); // !DELIVERY_DATE
         } // !_writeDeliveryDate()
 
@@ -346,8 +359,8 @@ namespace OpenTrans.net
         /// </summary>
         internal string _formatDecimal(decimal value, int numDecimals = 2)
         {
-            string formatString = "0." + new string('0', numDecimals) + new string('#', 28 - numDecimals);
-            return value.ToString(formatString, CultureInfo.InvariantCulture);
+            numDecimals = Math.Max(0, Math.Min(numDecimals, MaxDecimals));
+            return value.ToString(_DecimalFormats[numDecimals], CultureInfo.InvariantCulture);
         } // !_formatDecimal()
     }
 }

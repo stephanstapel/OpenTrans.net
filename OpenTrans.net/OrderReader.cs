@@ -78,7 +78,8 @@ namespace OpenTrans.net
                 string partialShipmentAllowed = XmlUtils.NodeAsString(orderInfoNode, "./*[local-name()='PARTIAL_SHIPMENT_ALLOWED']", nsmgr);
                 if (!string.IsNullOrWhiteSpace(partialShipmentAllowed))
                 {
-                    order.PartialShipmentAllowed = XmlUtils.NodeAsBool(orderInfoNode, "./*[local-name()='PARTIAL_SHIPMENT_ALLOWED']", nsmgr);
+                    partialShipmentAllowed = partialShipmentAllowed.Trim().ToLowerInvariant();
+                    order.PartialShipmentAllowed = partialShipmentAllowed == "true" || partialShipmentAllowed == "1";
                 }
 
                 XmlNode customerOrderReferenceNode = orderInfoNode?.SelectSingleNode("./*[local-name()='CUSTOMER_ORDER_REFERENCE']", nsmgr);
@@ -171,14 +172,15 @@ namespace OpenTrans.net
                 }
             } // !itemNodes
 
-            XmlNode orderSummaryNode = doc.SelectSingleNode("//*[local-name()='ORDER_SUMMARY']", nsmgr);
-            if (orderSummaryNode != null)
+            // ORDER_SUMMARY is always written (TOTAL_ITEM_NUM is mandatory), so only TOTAL_AMOUNT indicates a summary
+            decimal? totalAmount = XmlUtils.NodeAsDecimal(doc, "//*[local-name()='ORDER_SUMMARY']/*[local-name()='TOTAL_AMOUNT']", nsmgr);
+            if (totalAmount.HasValue)
             {
                 order.OrderSummary = new OrderSummary
                 {
-                    TotalAmount = XmlUtils.NodeAsDecimal(orderSummaryNode, "./*[local-name()='TOTAL_AMOUNT']", nsmgr)
+                    TotalAmount = totalAmount
                 };
-            } // !orderSummaryNode
+            } // !totalAmount
 
             return order;
         } // !Load()

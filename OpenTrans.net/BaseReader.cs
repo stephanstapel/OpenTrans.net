@@ -113,7 +113,11 @@ namespace OpenTrans.net
                 return null;
             }
 
-            string valueType = XmlUtils.NodeAsString(node, "./*[local-name()='FVALUE_TYPE']", nsmgr);
+            ValueTypes? valueType = default(ValueTypes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='FVALUE_TYPE']", nsmgr));
+            if (valueType == ValueTypes.Unknown)
+            {
+                valueType = null;
+            }
 
             return new Feature
             {
@@ -124,7 +128,7 @@ namespace OpenTrans.net
                 Order = XmlUtils.NodeAsString(node, "./*[local-name()='FORDER']", nsmgr),
                 Template = XmlUtils.NodeAsString(node, "./*[local-name()='FTEMPLATE']", nsmgr),
                 Unit = default(QuantityCodes).FromString(XmlUtils.NodeAsString(node, "./*[local-name()='FUNIT']", nsmgr)),
-                ValueType = string.IsNullOrWhiteSpace(valueType) ? (ValueTypes?)null : default(ValueTypes).FromString(valueType),
+                ValueType = valueType,
             };
         } // !_readFeature()
 
