@@ -54,7 +54,6 @@ namespace OpenTrans.net
             Writer.Formatting = Formatting.Indented;
             Writer.WriteStartDocument();
             Writer.WriteStartElement("ORDERRESPONSE");
-            Writer.WriteAttributeString("type", "standard");
             Writer.WriteAttributeString("version", "2.1");
             Writer.WriteAttributeString("xmlns", "http://www.opentrans.org/XMLSchema/2.1");
             Writer.WriteAttributeString("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
@@ -85,12 +84,16 @@ namespace OpenTrans.net
                 Writer.WriteElementString("SUPPLIER_ORDER_ID", orderResponse.SupplierOrderId);
             }
             _writeAmount(Writer, "ORDERCHANGE_SEQUENCE_ID", orderResponse.OrderChangeSequenceId);
+            _writeDeliveryDate(Writer, orderResponse.DeliveryDate);
             Writer.WriteStartElement("PARTIES");
             foreach(Party party in orderResponse.Parties)
             {
                 _writeParty(Writer, party);
             }
             Writer.WriteEndElement(); // !PARTIES
+            _writeOrderPartiesReference(Writer, orderResponse.OrderPartiesReference);
+            _writeOptionalElementString(Writer, "bmecat:CURRENCY", orderResponse.Currency);
+            _writeRemarks(Writer, orderResponse.Remarks);
             Writer.WriteEndElement(); // !ORDERRESPONSE_INFO
 
             Writer.WriteEndElement(); // !ORDERRESPONSE_HEADER

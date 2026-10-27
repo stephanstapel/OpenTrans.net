@@ -20,7 +20,24 @@ namespace OpenTrans.net.UnitTests
             Assert.AreEqual(original.OrderDate, loaded.OrderDate);
             Assert.AreEqual(original.OrderResponseDate, loaded.OrderResponseDate);
             Assert.AreEqual(original.OrderChangeSequenceId, loaded.OrderChangeSequenceId);
+            Assert.AreEqual(original.Currency, loaded.Currency);
+            RoundtripAssert.AreEqual(original.DeliveryDate, loaded.DeliveryDate);
+            RoundtripAssert.AreEqual(original.Remarks, loaded.Remarks);
         } // !HeaderIsPreserved()
+
+
+        [TestMethod]
+        public void OrderPartiesReferenceIsPreserved()
+        {
+            OrderResponse original = TestDataFactory.CreateOrderResponse();
+
+            OrderResponse loaded = Roundtrip.Run(original);
+
+            Assert.IsNotNull(loaded.OrderPartiesReference);
+            RoundtripAssert.AreEqual(original.OrderPartiesReference.BuyerIdRef, loaded.OrderPartiesReference.BuyerIdRef);
+            RoundtripAssert.AreEqual(original.OrderPartiesReference.SupplierIdRef, loaded.OrderPartiesReference.SupplierIdRef);
+            Assert.AreEqual(original.OrderPartiesReference.ShipmentPartiesReference.DeliveryIdRef, loaded.OrderPartiesReference.ShipmentPartiesReference.DeliveryIdRef);
+        } // !OrderPartiesReferenceIsPreserved()
 
 
         [TestMethod]

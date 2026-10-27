@@ -55,7 +55,24 @@ namespace OpenTrans.net.UnitTests
                 SupplierOrderId = "SUPPLIER-ORDER-0815",
                 OrderDate = new DateTime(2024, 03, 15, 10, 30, 00),
                 OrderResponseDate = new DateTime(2024, 03, 16, 09, 15, 00),
-                OrderChangeSequenceId = 2
+                OrderChangeSequenceId = 2,
+                Currency = "EUR",
+                DeliveryDate = new DeliveryDate()
+                {
+                    StartDate = new DateTime(2024, 03, 21, 08, 00, 00),
+                    EndDate = new DateTime(2024, 03, 21, 17, 00, 00),
+                    Type = DeliveryDateTypes.FixedDeliveryDate
+                },
+                OrderPartiesReference = new OrderPartiesReference()
+                {
+                    BuyerIdRef = new PartyId() { Id = "BUYER-1", Type = PartyIdTypes.BuyerSpecific },
+                    SupplierIdRef = new PartyId() { Id = "SUPPLIER-1", Type = PartyIdTypes.SupplierSpecific },
+                    ShipmentPartiesReference = new ShipmentPartiesReference() { DeliveryIdRef = "DELIVERY-1" }
+                },
+                Remarks = new List<Remark>()
+                {
+                    new Remark() { Value = "Lieferung erfolgt in zwei Teilen", Type = "delivery", Lang = "deu" }
+                }
             };
 
             response.Parties.Add(CreateParty("BUYER-1", PartyIdTypes.BuyerSpecific, PartyRoles.Buyer));
@@ -114,7 +131,8 @@ namespace OpenTrans.net.UnitTests
                     Url = "https://www.muster.de/max",
                     PhoneNo = new List<PhoneNo>() { new PhoneNo() { Number = "+49 721 999", Type = PhoneNoTypes.Private } },
                     FaxNo = new List<PhoneNo>() { new PhoneNo() { Number = "+49 721 998", Type = PhoneNoTypes.Office } },
-                    EmailAddresses = new List<string>() { "max@muster.de", "einkauf@muster.de" }
+                    EmailAddresses = new List<string>() { "max@muster.de", "einkauf@muster.de" },
+                    Authentification = "max.mustermann"
                 }
             };
         } // !CreateParty()

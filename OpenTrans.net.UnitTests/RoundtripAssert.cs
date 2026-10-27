@@ -56,6 +56,7 @@ namespace OpenTrans.net.UnitTests
             Assert.AreEqual(expected.AcademicTitle, actual.AcademicTitle, "Contact.AcademicTitle");
             Assert.AreEqual(expected.Description, actual.Description, "Contact.Description");
             Assert.AreEqual(expected.Url, actual.Url, "Contact.Url");
+            Assert.AreEqual(expected.Authentification, actual.Authentification, "Contact.Authentification");
             CollectionAssert.AreEqual(expected.Roles, actual.Roles, "Contact.Roles");
             CollectionAssert.AreEqual(expected.EmailAddresses, actual.EmailAddresses, "Contact.EmailAddresses");
             AreEqual(expected.PhoneNo, actual.PhoneNo, "Contact.PhoneNo");

@@ -91,17 +91,7 @@ namespace OpenTrans.net
                     };
                 } // !customerOrderReferenceNode
 
-                XmlNode deliveryDateRefNode = orderInfoNode?.SelectSingleNode("./*[local-name()='DELIVERY_DATE']", nsmgr);
-                if (deliveryDateRefNode != null)
-                {
-                    DeliveryDate deliveryDate = new DeliveryDate
-                    {
-                        StartDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_START_DATE']", nsmgr),
-                        EndDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_END_DATE']", nsmgr),
-                        Type = default(DeliveryDateTypes).FromString(XmlUtils.AttributeText(deliveryDateRefNode, "type"))
-                    };
-                    order.DeliveryDate = deliveryDate;
-                } // !deliveryDateRefNode
+                order.DeliveryDate = _readDeliveryDate(orderInfoNode?.SelectSingleNode("./*[local-name()='DELIVERY_DATE']", nsmgr), nsmgr);
 
                 XmlNodeList partyNodes = orderHeaderNode.SelectNodes(".//*[local-name()='PARTIES']/*[local-name()='PARTY']", nsmgr);
                 if (partyNodes != null) {
@@ -112,55 +102,9 @@ namespace OpenTrans.net
                     }
                 } // !partyNodes
                 
-                XmlNode partiesReferenceNode = orderInfoNode?.SelectSingleNode("./*[local-name()='ORDER_PARTIES_REFERENCE']", nsmgr);
-                if (partiesReferenceNode != null)
-                {
-                    order.OrderPartiesReference = new OrderPartiesReference();
-                    XmlNode buyerIdRefNode = partiesReferenceNode.SelectSingleNode("./*[local-name()='BUYER_IDREF']", nsmgr);
-                    if (buyerIdRefNode != null)
-                    {
-                        order.OrderPartiesReference.BuyerIdRef = new PartyId
-                        {
-                            Id = buyerIdRefNode.InnerText,
-                            Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(buyerIdRefNode, "type"))
-                        };
-                    } // !buyerIdRefNode
-                    
-                    XmlNode supplierIdRefNode = partiesReferenceNode.SelectSingleNode("./*[local-name()='SUPPLIER_IDREF']", nsmgr);
-                    if (supplierIdRefNode != null)
-                    {
-                        order.OrderPartiesReference.SupplierIdRef = new PartyId
-                        {
-                            Id = supplierIdRefNode.InnerText,
-                            Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(supplierIdRefNode, "type"))
-                        };
-                    } // !supplierIdRefNode
-                    
-                    XmlNode shipmentRefNode = partiesReferenceNode.SelectSingleNode("./*[local-name()='SHIPMENT_PARTIES_REFERENCE']", nsmgr);
-                    if (shipmentRefNode != null)
-                    {
-                        XmlNode deliveryIdRefNode = shipmentRefNode.SelectSingleNode("./*[local-name()='DELIVERY_IDREF']");
-                        order.OrderPartiesReference.ShipmentPartiesReference = new ShipmentPartiesReference
-                        {
-                            DeliveryIdRef = deliveryIdRefNode?.InnerText
-                        };
-                    } // !shipmentRefNode 
-                } // !partiesReferenceNode
+                order.OrderPartiesReference = _readOrderPartiesReference(orderInfoNode?.SelectSingleNode("./*[local-name()='ORDER_PARTIES_REFERENCE']", nsmgr), nsmgr);
                 
-                XmlNodeList remarkNodes = orderInfoNode?.SelectNodes("./*[local-name()='REMARKS']", nsmgr);
-                if (remarkNodes != null)
-                {
-                    foreach (XmlNode remarkNode in remarkNodes)
-                    {
-                        Remark remark = new Remark
-                        {
-                            Value = XmlUtils.NodeAsString(remarkNode, ".", nsmgr),
-                            Type = XmlUtils.AttributeText(remarkNode, "type"),
-                            Lang = XmlUtils.AttributeText(remarkNode, "lang")
-                        };
-                        order.Remarks.Add(remark);
-                    }
-                } // !remarkNodes
+                order.Remarks.AddRange(_readRemarks(orderInfoNode, nsmgr));
             } // !orderHeaderNode
 
             XmlNodeList itemNodes = doc.SelectNodes("//*[local-name()='ORDER_ITEM_LIST']/*[local-name()='ORDER_ITEM']", nsmgr);

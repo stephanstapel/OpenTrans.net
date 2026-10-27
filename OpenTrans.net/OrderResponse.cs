@@ -59,6 +59,28 @@ namespace OpenTrans.net
         public int OrderChangeSequenceId { get; set; }
 
         /// <summary>
+        /// Delivery date confirmed by the supplier. If the delivery date deviates from the one specified in the header,
+        /// the delivery date on item level is valid.
+        /// </summary>
+        public DeliveryDate DeliveryDate { get; set; }
+
+        /// <summary>
+        /// Reference to the business partners integrated in the process of the document flow.
+        /// Mandatory according to the openTRANS 2.1 schema (BUYER_IDREF and SUPPLIER_IDREF).
+        /// </summary>
+        public OrderPartiesReference OrderPartiesReference { get; set; }
+
+        /// <summary>
+        /// Default currency for all price information in the document
+        /// </summary>
+        public string Currency { get; set; }
+
+        /// <summary>
+        /// Remarks related to the business document
+        /// </summary>
+        public List<Remark> Remarks { get; set; } = new List<Remark>();
+
+        /// <summary>
         /// List of parties that are relevant to this business document
         /// </summary>
         public List<Party> Parties { get; set; } = new List<Party>();

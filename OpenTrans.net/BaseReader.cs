@@ -51,6 +51,90 @@ namespace OpenTrans.net
         } // !_nodeAsDateTime()
 
 
+        /// <summary>
+        /// reads all REMARKS elements that are direct children of the given node
+        /// </summary>
+        protected List<Remark> _readRemarks(XmlNode node, XmlNamespaceManager nsmgr = null)
+        {
+            List<Remark> remarks = new List<Remark>();
+            XmlNodeList remarkNodes = node?.SelectNodes("./*[local-name()='REMARKS']", nsmgr);
+            if (remarkNodes == null)
+            {
+                return remarks;
+            }
+
+            foreach (XmlNode remarkNode in remarkNodes)
+            {
+                remarks.Add(new Remark
+                {
+                    Value = XmlUtils.NodeAsString(remarkNode, ".", nsmgr),
+                    Type = XmlUtils.AttributeText(remarkNode, "type"),
+                    Lang = XmlUtils.AttributeText(remarkNode, "lang")
+                });
+            }
+
+            return remarks;
+        } // !_readRemarks()
+
+
+        protected DeliveryDate _readDeliveryDate(XmlNode node, XmlNamespaceManager nsmgr = null)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+
+            return new DeliveryDate
+            {
+                StartDate = _nodeAsDateTime(node, "./*[local-name()='DELIVERY_START_DATE']", nsmgr),
+                EndDate = _nodeAsDateTime(node, "./*[local-name()='DELIVERY_END_DATE']", nsmgr),
+                Type = default(DeliveryDateTypes).FromString(XmlUtils.AttributeText(node, "type"))
+            };
+        } // !_readDeliveryDate()
+
+
+        protected OrderPartiesReference _readOrderPartiesReference(XmlNode node, XmlNamespaceManager nsmgr = null)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+
+            OrderPartiesReference reference = new OrderPartiesReference
+            {
+                BuyerIdRef = _readPartyIdRef(node.SelectSingleNode("./*[local-name()='BUYER_IDREF']", nsmgr)),
+                SupplierIdRef = _readPartyIdRef(node.SelectSingleNode("./*[local-name()='SUPPLIER_IDREF']", nsmgr))
+            };
+
+            XmlNode shipmentRefNode = node.SelectSingleNode("./*[local-name()='SHIPMENT_PARTIES_REFERENCE']", nsmgr);
+            if (shipmentRefNode != null)
+            {
+                XmlNode deliveryIdRefNode = shipmentRefNode.SelectSingleNode("./*[local-name()='DELIVERY_IDREF']", nsmgr);
+                reference.ShipmentPartiesReference = new ShipmentPartiesReference
+                {
+                    DeliveryIdRef = deliveryIdRefNode?.InnerText
+                };
+            } // !shipmentRefNode
+
+            return reference;
+        } // !_readOrderPartiesReference()
+
+
+        private PartyId _readPartyIdRef(XmlNode node)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+
+            return new PartyId
+            {
+                Id = node.InnerText,
+                Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(node, "type"))
+            };
+        } // !_readPartyIdRef()
+
+
         protected OrderItem _readItem(XmlNode node, XmlNamespaceManager nsmgr = null)
         {
             if (node == null)
@@ -68,32 +152,8 @@ namespace OpenTrans.net
                 }
             } // !featureNodes
             
-            XmlNodeList remarkNodes = node.SelectNodes("./*[local-name()='REMARKS']", nsmgr);
-            if (remarkNodes != null)
-            {
-                foreach (XmlNode remarkNode in remarkNodes)
-                {
-                    Remark remark = new Remark
-                    {
-                        Value = XmlUtils.NodeAsString(remarkNode, ".", nsmgr),
-                        Type = XmlUtils.AttributeText(remarkNode, "type"),
-                        Lang = XmlUtils.AttributeText(remarkNode, "lang")
-                    };
-                    item.Remarks.Add(remark);
-                }
-            } // !remarkNodes
-            
-            XmlNode deliveryDateRefNode = node.SelectSingleNode("./*[local-name()='DELIVERY_DATE']", nsmgr);
-            if (deliveryDateRefNode != null)
-            {
-                DeliveryDate deliveryDate = new DeliveryDate
-                {
-                    StartDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_START_DATE']", nsmgr),
-                    EndDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_END_DATE']", nsmgr),
-                    Type = default(DeliveryDateTypes).FromString(XmlUtils.AttributeText(deliveryDateRefNode, "type"))
-                };
-                item.DeliveryDate = deliveryDate;
-            } // !deliveryDateRefNode
+            item.Remarks.AddRange(_readRemarks(node, nsmgr));
+            item.DeliveryDate = _readDeliveryDate(node.SelectSingleNode("./*[local-name()='DELIVERY_DATE']", nsmgr), nsmgr);
 
             item.LineItemId = XmlUtils.NodeAsString(node, "./*[local-name()='LINE_ITEM_ID']", nsmgr);
             item.ProductId = _readProductId(node.SelectSingleNode("./*[local-name()='PRODUCT_ID']", nsmgr), nsmgr);
@@ -151,16 +211,7 @@ namespace OpenTrans.net
                 };
             } // !supplierPIdNode
             
-            PartyId supplierIdRef = default;
-            XmlNode supplierIdRefNode = node.SelectSingleNode("./*[local-name()='SUPPLIER_IDREF']", nsmgr);
-            if (supplierIdRefNode != null)
-            {
-                supplierIdRef = new PartyId
-                {
-                    Id = supplierIdRefNode.InnerText,
-                    Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(supplierIdRefNode, "type"))
-                };
-            } // !supplierIdRefNode
+            PartyId supplierIdRef = _readPartyIdRef(node.SelectSingleNode("./*[local-name()='SUPPLIER_IDREF']", nsmgr));
 
             BuyerProductId buyerPId = default;
             XmlNode buyerPIdNode = node.SelectSingleNode("./*[local-name()='BUYER_PID']", nsmgr);
@@ -331,7 +382,7 @@ namespace OpenTrans.net
                     Url = XmlUtils.NodeAsString(contactNode, "./*[local-name()='URL']", nsmgr),
                     PhoneNo = contactPhoneNumbers,
                     FaxNo = contactFaxNumbers,
-                    Authentification = XmlUtils.NodeAsString(contactNode, "./*[local-name()='AUTHENTIFICATION']", nsmgr),
+                    Authentification = _readAuthentification(contactNode, nsmgr),
                     Roles = contactRoles,
                     EmailAddresses = contactEmailAddresses
                 };
@@ -339,6 +390,23 @@ namespace OpenTrans.net
 
             return party;
         } // !_readParty()
+
+        /// <summary>
+        /// reads the login of the AUTHENTIFICATION element. For compatibility with documents written by
+        /// older versions of this library, plain text content is accepted as well.
+        /// </summary>
+        private string _readAuthentification(XmlNode contactNode, XmlNamespaceManager nsmgr = null)
+        {
+            XmlNode authentificationNode = contactNode.SelectSingleNode("./*[local-name()='AUTHENTIFICATION']", nsmgr);
+            if (authentificationNode == null)
+            {
+                return "";
+            }
+
+            XmlNode loginNode = authentificationNode.SelectSingleNode("./*[local-name()='LOGIN']", nsmgr);
+            return loginNode != null ? loginNode.InnerText : authentificationNode.InnerText;
+        } // !_readAuthentification()
+
 
         /// <summary>
         /// read phone or Fax numbers from the nodes supplied

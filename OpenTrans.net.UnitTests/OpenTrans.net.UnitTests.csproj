@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <None Include="..\Documentation and Samples\_Examples_\sample_order_opentrans_2_1_xml signature.xml" Link="Samples\sample_order.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\Documentation and Samples\*.xsd" LinkBase="Schemas" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

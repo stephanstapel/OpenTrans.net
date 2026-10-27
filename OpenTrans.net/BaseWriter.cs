@@ -93,7 +93,12 @@ namespace OpenTrans.net
                     writer.WriteEndElement(); // !bmecat:EMAILS
                 }
 
-                _writeOptionalElementString(writer, "bmecat:AUTHENTIFICATION", party.ContactDetails.Authentification);
+                if (!string.IsNullOrEmpty(party.ContactDetails.Authentification))
+                {
+                    writer.WriteStartElement("bmecat:AUTHENTIFICATION");
+                    _writeOptionalElementString(writer, "bmecat:LOGIN", party.ContactDetails.Authentification);
+                    writer.WriteEndElement(); // !bmecat:AUTHENTIFICATION
+                }
 
                 writer.WriteEndElement(); // !CONTACT_DETAILS
             }
@@ -110,7 +115,7 @@ namespace OpenTrans.net
                 _writeOptionalElementString(writer, "bmecat:COUNTRY_CODED", party.CountryCode.EnumToString());
             }
             _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
-            _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
+            _writeOptionalElementString(writer, "TAX_NUMBER", party.TaxNumber);
             _writePhoneNumbers(writer, "bmecat:PHONE", party.PhoneNo);
             _writePhoneNumbers(writer, "bmecat:FAX", party.FaxNo);
             _writeOptionalElementString(writer, "bmecat:EMAIL", party.EmailAddress);
@@ -213,8 +218,8 @@ namespace OpenTrans.net
                 {
                     writer.WriteStartElement("PRICE_BASE_FIX");
                     _writeOptionalAmount(writer, "PRICE_UNIT_VALUE", item.ProductPriceFix.PriceBaseFix.PriceUnitValue);
-                    _writeOptionalElementString(writer, "PRICE_UNIT", item.ProductPriceFix.PriceBaseFix.PriceUnit.EnumToString());
-                    _writeOptionalAmount(writer, "PRICE_UNIT_FACTOR", item.ProductPriceFix.PriceBaseFix.PriceUnitFactor);
+                    _writeOptionalElementString(writer, "bmecat:PRICE_UNIT", item.ProductPriceFix.PriceBaseFix.PriceUnit.EnumToString());
+                    _writeOptionalAmount(writer, "bmecat:PRICE_UNIT_FACTOR", item.ProductPriceFix.PriceBaseFix.PriceUnitFactor);
                     writer.WriteEndElement(); // !PRICE_BASE_FIX
                 }
 
