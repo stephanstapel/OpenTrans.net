@@ -153,6 +153,22 @@ The demo application contains some simple examples. Please see here for more det
 
 https://github.com/stephanstapel/OpenTrans.net/blob/master/OpenTrans.net-Test/Application.cs 
 
+## Asynchronous API
+All load and save methods are also available asynchronously and accept an optional `CancellationToken`:
+
+```csharp
+Order order = await Order.LoadAsync("order.xml");
+await order.SaveAsync("order-copy.xml");
+
+OrderResponse response = await OrderResponse.LoadAsync(stream, cancellationToken);
+await response.SaveAsync(outputStream, cancellationToken);
+```
+
+`LoadAsync` also accepts non-seekable streams such as network streams. Like `Save`, `SaveAsync` requires a seekable stream and resets it to its original position afterwards.
+
+## Supported frameworks
+The package targets .NET Standard 2.0, .NET 8 and .NET 10.
+
 ## Dispatch Notification, Receipt Acknowledgement
 The other message types will be implemented when someone should require it.
 

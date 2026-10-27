@@ -19,6 +19,8 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace OpenTrans.net
@@ -35,7 +37,20 @@ namespace OpenTrans.net
                 stream.Flush();
             }
         } // !Save()
-        
+
+
+        public Task SaveAsync(Order order, string fileName, string generatorInfo, CancellationToken cancellationToken)
+        {
+            return _saveAsync(fileName, s => Save(order, s, generatorInfo), cancellationToken);
+        } // !SaveAsync()
+
+
+        public Task SaveAsync(Order order, Stream stream, string generatorInfo, CancellationToken cancellationToken)
+        {
+            return _saveAsync(stream, s => Save(order, s, generatorInfo), cancellationToken);
+        } // !SaveAsync()
+
+
         public void Save(Order order, Stream stream, string generatorInfo = null)
         {
             if (!stream.CanWrite || !stream.CanSeek)

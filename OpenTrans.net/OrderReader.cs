@@ -18,6 +18,8 @@
  */
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace OpenTrans.net
@@ -39,8 +41,21 @@ namespace OpenTrans.net
             }
 
             return order;
-        } // !Load()       
-        
+        } // !Load()
+
+
+        public Task<Order> LoadAsync(string fileName, CancellationToken cancellationToken)
+        {
+            return _loadAsync(fileName, Load, cancellationToken);
+        } // !LoadAsync()
+
+
+        public Task<Order> LoadAsync(Stream stream, CancellationToken cancellationToken)
+        {
+            return _loadAsync(stream, Load, cancellationToken);
+        } // !LoadAsync()
+
+
         public Order Load(Stream stream)
         {
             if (!stream.CanRead)

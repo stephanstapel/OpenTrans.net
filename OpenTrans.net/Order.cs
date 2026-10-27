@@ -19,6 +19,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OpenTrans.net
 {
@@ -151,5 +153,66 @@ namespace OpenTrans.net
             OrderWriter writer = new OrderWriter();
             writer.Save(this, fileName, generatorInfo);
         } // !Save()
+
+
+        /// <summary>
+        /// Asynchronously loads an order from the given stream.
+        ///
+        /// Make sure that the stream is open. After successful reading, the stream is left open, i.e.
+        /// the caller of the library has to take care of the stream lifecycle.
+        ///
+        /// If the stream is not open or readable, an IllegalStreamException exception is raised.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static Task<Order> LoadAsync(Stream stream, CancellationToken cancellationToken = default)
+        {
+            OrderReader reader = new OrderReader();
+            return reader.LoadAsync(stream, cancellationToken);
+        } // !LoadAsync()
+
+
+        /// <summary>
+        /// Asynchronously loads an order from the given file.
+        /// If the file does not exist, a FileNotFoundException exception is raised.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static Task<Order> LoadAsync(string fileName, CancellationToken cancellationToken = default)
+        {
+            OrderReader reader = new OrderReader();
+            return reader.LoadAsync(fileName, cancellationToken);
+        } // !LoadAsync()
+
+
+        /// <summary>
+        /// Asynchronously saves the order object into a stream.
+        ///
+        /// The stream position will be reset to the original position after writing is finished.
+        /// This allows easy further processing of the stream.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="generatorInfo"></param>
+        /// <param name="cancellationToken"></param>
+        public Task SaveAsync(Stream stream, string generatorInfo = null, CancellationToken cancellationToken = default)
+        {
+            OrderWriter writer = new OrderWriter();
+            return writer.SaveAsync(this, stream, generatorInfo, cancellationToken);
+        } // !SaveAsync()
+
+
+        /// <summary>
+        /// Asynchronously saves the order into the given file.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="generatorInfo"></param>
+        /// <param name="cancellationToken"></param>
+        public Task SaveAsync(string fileName, string generatorInfo = null, CancellationToken cancellationToken = default)
+        {
+            OrderWriter writer = new OrderWriter();
+            return writer.SaveAsync(this, fileName, generatorInfo, cancellationToken);
+        } // !SaveAsync()
     }
 }

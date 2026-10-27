@@ -19,6 +19,9 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -29,6 +32,49 @@ namespace OpenTrans.net
     /// </summary>
     internal class BaseReader
     {
+        /// <summary>
+        /// Buffer size used when reading the source stream into memory
+        /// </summary>
+        private const int CopyBufferSize = 81920;
+
+
+        /// <summary>
+        /// Reads the stream asynchronously into memory and parses the buffered document using the synchronous load function
+        /// </summary>
+        protected async Task<T> _loadAsync<T>(Stream stream, Func<Stream, T> load, CancellationToken cancellationToken)
+        {
+            if (!stream.CanRead)
+            {
+                throw new IllegalStreamException("Cannot read from stream.");
+            }
+
+            using (MemoryStream buffer = new MemoryStream())
+            {
+                await stream.CopyToAsync(buffer, CopyBufferSize, cancellationToken).ConfigureAwait(false);
+                buffer.Position = 0;
+                return load(buffer);
+            }
+        } // !_loadAsync()
+
+
+        /// <summary>
+        /// Opens the given file and loads the document asynchronously.
+        /// If the file does not exist, a FileNotFoundException exception is raised.
+        /// </summary>
+        protected async Task<T> _loadAsync<T>(string fileName, Func<Stream, T> load, CancellationToken cancellationToken)
+        {
+            if (!File.Exists(fileName))
+            {
+                throw new FileNotFoundException();
+            }
+
+            using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, useAsync: true))
+            {
+                return await _loadAsync(stream, load, cancellationToken).ConfigureAwait(false);
+            }
+        } // !_loadAsync()
+
+
         protected DateTime? _nodeAsDateTime(XmlNode node, string xpath, XmlNamespaceManager nsmgr = null)
         {
             string _temp = XmlUtils.NodeAsString(node, xpath, nsmgr);

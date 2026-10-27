@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace OpenTrans.net
@@ -30,6 +32,11 @@ namespace OpenTrans.net
     /// </summary>
     internal class BaseWriter
     {
+        /// <summary>
+        /// Buffer size used when copying the generated document into the target stream
+        /// </summary>
+        private const int CopyBufferSize = 81920;
+
         /// <summary>
         /// Maximum scale of System.Decimal
         /// </summary>
@@ -41,6 +48,42 @@ namespace OpenTrans.net
         private static readonly string[] _DecimalFormats = Enumerable.Range(0, MaxDecimals + 1)
             .Select(i => "0." + new string('0', i) + new string('#', MaxDecimals - i))
             .ToArray();
+
+        /// <summary>
+        /// Generates the document in memory using the synchronous save function and copies it asynchronously
+        /// into the target stream. The stream position is reset to the original position afterwards, just like
+        /// in the synchronous variant.
+        /// </summary>
+        internal async Task _saveAsync(Stream stream, Action<Stream> save, CancellationToken cancellationToken)
+        {
+            if (!stream.CanWrite || !stream.CanSeek)
+            {
+                throw new IllegalStreamException("Cannot write to stream.");
+            }
+
+            long streamPosition = stream.Position;
+            using (MemoryStream buffer = new MemoryStream())
+            {
+                save(buffer);
+                await buffer.CopyToAsync(stream, CopyBufferSize, cancellationToken).ConfigureAwait(false);
+                await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+            }
+
+            stream.Seek(streamPosition, SeekOrigin.Begin);
+        } // !_saveAsync()
+
+
+        /// <summary>
+        /// Creates the given file and saves the document asynchronously into it
+        /// </summary>
+        internal async Task _saveAsync(string fileName, Action<Stream> save, CancellationToken cancellationToken)
+        {
+            using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync: true))
+            {
+                await _saveAsync(stream, save, cancellationToken).ConfigureAwait(false);
+            }
+        } // !_saveAsync()
+
 
         internal void _writeParty(XmlTextWriter writer, Party party)
         {
