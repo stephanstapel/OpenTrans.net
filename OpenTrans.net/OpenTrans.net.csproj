@@ -4,9 +4,9 @@
     <TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <Authors>Stephan Stapel, stephan@s2-industries.com</Authors>
-    <Version>4.0.2</Version>
-    <AssemblyVersion>4.0.2.0</AssemblyVersion>
-    <FileVersion>4.0.1.0</FileVersion>
+    <Version>5.0.0</Version>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <FileVersion>5.0.0.0</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
