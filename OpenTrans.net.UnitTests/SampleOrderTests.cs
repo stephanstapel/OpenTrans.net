@@ -52,6 +52,8 @@ namespace OpenTrans.net.UnitTests
             Assert.AreEqual(PhoneNoTypes.Office, buyer.PhoneNo.Single().Type);
             Assert.AreEqual(2, buyer.ContactDetails.EmailAddresses.Count);
             CollectionAssert.AreEqual(new[] { "a" }, buyer.ContactDetails.Roles);
+            Assert.AreEqual("a", buyer.ContactDetails.Authentification);
+            Assert.AreEqual("use encryption", buyer.ContactDetails.AuthentificationPassword);
         } // !PartyIsRead()
 
 

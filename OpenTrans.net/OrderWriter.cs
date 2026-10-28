@@ -93,7 +93,7 @@ namespace OpenTrans.net
             Writer.WriteEndElement(); // !PARTIES
             
             _writeCustomerOrderReference(Writer, order.CustomerOrderReference);
-            _writeOrderPartiesReference(Writer, order.OrderPartiesReference);
+            _writeOrderPartiesReference(Writer, order.OrderPartiesReference, order.Parties);
             _writeOptionalElementString(Writer, "bmecat:CURRENCY", order.Currency);
             _writeOptionalElementBool(Writer, "PARTIAL_SHIPMENT_ALLOWED", order.PartialShipmentAllowed);
             _writeRemarks(Writer, order.Remarks);

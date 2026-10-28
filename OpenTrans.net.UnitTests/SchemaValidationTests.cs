@@ -35,8 +35,9 @@ namespace OpenTrans.net.UnitTests
             Order order = TestDataFactory.CreateOrder();
             // older versions wrote the value as plain text content
             string xml = System.Text.RegularExpressions.Regex.Replace(Roundtrip.ToXml(order),
-                                                                       @"<bmecat:AUTHENTIFICATION>\s*<bmecat:LOGIN>max.mustermann</bmecat:LOGIN>\s*</bmecat:AUTHENTIFICATION>",
-                                                                       "<bmecat:AUTHENTIFICATION>max.mustermann</bmecat:AUTHENTIFICATION>");
+                                                                       @"<bmecat:AUTHENTIFICATION>.*?</bmecat:AUTHENTIFICATION>",
+                                                                       "<bmecat:AUTHENTIFICATION>max.mustermann</bmecat:AUTHENTIFICATION>",
+                                                                       System.Text.RegularExpressions.RegexOptions.Singleline);
             Assert.IsFalse(xml.Contains("<bmecat:LOGIN>"));
 
             using (System.IO.MemoryStream stream = new System.IO.MemoryStream(System.Text.Encoding.UTF8.GetBytes(xml)))
@@ -46,6 +47,25 @@ namespace OpenTrans.net.UnitTests
                 Assert.AreEqual("max.mustermann", loaded.Parties[0].ContactDetails.Authentification);
             }
         } // !LegacyAuthentificationIsRead()
+
+
+        [TestMethod]
+        public void OrderPartiesReferenceIsDerivedFromParties()
+        {
+            Order order = TestDataFactory.CreateOrder();
+            order.OrderPartiesReference = null;
+            _removeCustomRoles(order.Parties);
+            OrderResponse response = TestDataFactory.CreateOrderResponse();
+            response.OrderPartiesReference = null;
+            _removeCustomRoles(response.Parties);
+
+            _assertValid(Roundtrip.ToXml(order));
+            _assertValid(Roundtrip.ToXml(response));
+
+            OrderResponse loaded = Roundtrip.Run(response);
+            RoundtripAssert.AreEqual(response.Parties[0].Ids[0], loaded.OrderPartiesReference.BuyerIdRef);
+            RoundtripAssert.AreEqual(response.Parties[1].Ids[0], loaded.OrderPartiesReference.SupplierIdRef);
+        } // !OrderPartiesReferenceIsDerivedFromParties()
 
 
         /// <summary>

@@ -61,7 +61,9 @@ namespace OpenTrans.net
         public CustomerOrderReference CustomerOrderReference { get; set; }
 
         /// <summary>
-        /// Reference to the business partners integrated in the process of the document flow
+        /// Reference to the business partners integrated in the process of the document flow.
+        /// Mandatory according to the openTRANS 2.1 schema (BUYER_IDREF and SUPPLIER_IDREF).
+        /// If not set, it is derived from the first id of the first party with role Buyer and Supplier when saving.
         /// </summary>
         public OrderPartiesReference OrderPartiesReference { get; set; }
 
@@ -213,6 +215,30 @@ namespace OpenTrans.net
         {
             OrderWriter writer = new OrderWriter();
             return writer.SaveAsync(this, fileName, generatorInfo, cancellationToken);
+        } // !SaveAsync()
+
+
+        /// <summary>
+        /// Asynchronously saves the order object into a stream without generator info.
+        ///
+        /// The stream position will be reset to the original position after writing is finished.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"></param>
+        public Task SaveAsync(Stream stream, CancellationToken cancellationToken)
+        {
+            return SaveAsync(stream, null, cancellationToken);
+        } // !SaveAsync()
+
+
+        /// <summary>
+        /// Asynchronously saves the order into the given file without generator info.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="cancellationToken"></param>
+        public Task SaveAsync(string fileName, CancellationToken cancellationToken)
+        {
+            return SaveAsync(fileName, null, cancellationToken);
         } // !SaveAsync()
     }
 }

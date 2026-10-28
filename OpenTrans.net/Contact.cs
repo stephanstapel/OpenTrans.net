@@ -85,8 +85,14 @@ namespace OpenTrans.net
         public List<string> EmailAddresses { get; set; } = new List<string>();
 
         /// <summary>
-        /// Authentification information
+        /// Authentification information (login, element AUTHENTIFICATION/LOGIN)
         /// </summary>
         public string Authentification { get; set; }
+
+        /// <summary>
+        /// Password belonging to the login (element AUTHENTIFICATION/PASSWORD).
+        /// Note that the password is transmitted in plain text unless the document is encrypted.
+        /// </summary>
+        public string AuthentificationPassword { get; set; }
     }
 }

@@ -51,6 +51,7 @@ namespace OpenTrans.net
             using (MemoryStream buffer = new MemoryStream())
             {
                 await stream.CopyToAsync(buffer, CopyBufferSize, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
                 buffer.Position = 0;
                 return load(buffer);
             }
@@ -429,6 +430,7 @@ namespace OpenTrans.net
                     PhoneNo = contactPhoneNumbers,
                     FaxNo = contactFaxNumbers,
                     Authentification = _readAuthentification(contactNode, nsmgr),
+                    AuthentificationPassword = XmlUtils.NodeAsString(contactNode, "./*[local-name()='AUTHENTIFICATION']/*[local-name()='PASSWORD']", nsmgr),
                     Roles = contactRoles,
                     EmailAddresses = contactEmailAddresses
                 };

@@ -69,6 +69,7 @@ namespace OpenTrans.net
         /// <summary>
         /// Reference to the business partners integrated in the process of the document flow.
         /// Mandatory according to the openTRANS 2.1 schema (BUYER_IDREF and SUPPLIER_IDREF).
+        /// If not set, it is derived from the first id of the first party with role Buyer and Supplier when saving.
         /// </summary>
         public OrderPartiesReference OrderPartiesReference { get; set; }
 

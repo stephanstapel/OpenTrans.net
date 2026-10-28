@@ -105,7 +105,7 @@ namespace OpenTrans.net
                 _writeParty(Writer, party);
             }
             Writer.WriteEndElement(); // !PARTIES
-            _writeOrderPartiesReference(Writer, orderResponse.OrderPartiesReference);
+            _writeOrderPartiesReference(Writer, orderResponse.OrderPartiesReference, orderResponse.Parties);
             _writeOptionalElementString(Writer, "bmecat:CURRENCY", orderResponse.Currency);
             _writeRemarks(Writer, orderResponse.Remarks);
             Writer.WriteEndElement(); // !ORDERRESPONSE_INFO

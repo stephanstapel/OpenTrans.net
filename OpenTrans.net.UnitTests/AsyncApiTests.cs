@@ -168,6 +168,47 @@ namespace OpenTrans.net.UnitTests
         } // !CancellationIsHonored()
 
 
+        [TestMethod]
+        public async Task CancelledFileSaveKeepsExistingFile()
+        {
+            Order original = TestDataFactory.CreateOrder();
+            string path = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".xml");
+            File.WriteAllText(path, "previous content");
+
+            try
+            {
+                using (CancellationTokenSource cts = new CancellationTokenSource())
+                {
+                    cts.Cancel();
+
+                    await _assertCancelledAsync(() => original.SaveAsync(path, cts.Token));
+                }
+
+                Assert.AreEqual("previous content", File.ReadAllText(path));
+            }
+            finally
+            {
+                File.Delete(path);
+            }
+        } // !CancelledFileSaveKeepsExistingFile()
+
+
+        [TestMethod]
+        public async Task SaveAsyncAcceptsTokenWithoutGeneratorInfo()
+        {
+            Order original = TestDataFactory.CreateOrder();
+
+            using (CancellationTokenSource cts = new CancellationTokenSource())
+            using (MemoryStream stream = new MemoryStream())
+            {
+                await original.SaveAsync(stream, cts.Token);
+                Order loaded = await Order.LoadAsync(stream, cts.Token);
+
+                Assert.AreEqual(original.Id, loaded.Id);
+            }
+        } // !SaveAsyncAcceptsTokenWithoutGeneratorInfo()
+
+
         private static async Task _assertCancelledAsync(Func<Task> action)
         {
             try

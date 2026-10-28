@@ -132,7 +132,8 @@ namespace OpenTrans.net.UnitTests
                     PhoneNo = new List<PhoneNo>() { new PhoneNo() { Number = "+49 721 999", Type = PhoneNoTypes.Private } },
                     FaxNo = new List<PhoneNo>() { new PhoneNo() { Number = "+49 721 998", Type = PhoneNoTypes.Office } },
                     EmailAddresses = new List<string>() { "max@muster.de", "einkauf@muster.de" },
-                    Authentification = "max.mustermann"
+                    Authentification = "max.mustermann",
+                    AuthentificationPassword = "geheim"
                 }
             };
         } // !CreateParty()

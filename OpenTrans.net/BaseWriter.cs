@@ -54,35 +54,59 @@ namespace OpenTrans.net
         /// into the target stream. The stream position is reset to the original position afterwards, just like
         /// in the synchronous variant.
         /// </summary>
-        internal async Task _saveAsync(Stream stream, Action<Stream> save, CancellationToken cancellationToken)
+        protected async Task _saveAsync(Stream stream, Action<Stream> save, CancellationToken cancellationToken)
         {
             if (!stream.CanWrite || !stream.CanSeek)
             {
                 throw new IllegalStreamException("Cannot write to stream.");
             }
 
-            long streamPosition = stream.Position;
-            using (MemoryStream buffer = new MemoryStream())
+            using (MemoryStream buffer = _generate(save, cancellationToken))
             {
-                save(buffer);
+                long streamPosition = stream.Position;
                 await buffer.CopyToAsync(stream, CopyBufferSize, cancellationToken).ConfigureAwait(false);
                 await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+                stream.Seek(streamPosition, SeekOrigin.Begin);
             }
-
-            stream.Seek(streamPosition, SeekOrigin.Begin);
         } // !_saveAsync()
 
 
         /// <summary>
-        /// Creates the given file and saves the document asynchronously into it
+        /// Creates the given file and saves the document asynchronously into it.
+        ///
+        /// The document is generated before the file is opened, so cancellation or errors during generation leave an
+        /// existing file untouched. Once the file has been opened, the write is completed to avoid truncated documents.
         /// </summary>
-        internal async Task _saveAsync(string fileName, Action<Stream> save, CancellationToken cancellationToken)
+        protected async Task _saveAsync(string fileName, Action<Stream> save, CancellationToken cancellationToken)
         {
+            using (MemoryStream buffer = _generate(save, cancellationToken))
             using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync: true))
             {
-                await _saveAsync(stream, save, cancellationToken).ConfigureAwait(false);
+                await buffer.CopyToAsync(stream, CopyBufferSize, CancellationToken.None).ConfigureAwait(false);
+                await stream.FlushAsync(CancellationToken.None).ConfigureAwait(false);
             }
         } // !_saveAsync()
+
+
+        /// <summary>
+        /// Generates the document into a memory buffer which is positioned at its beginning
+        /// </summary>
+        private MemoryStream _generate(Action<Stream> save, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            MemoryStream buffer = new MemoryStream();
+            try
+            {
+                save(buffer);
+                cancellationToken.ThrowIfCancellationRequested();
+                return buffer;
+            }
+            catch
+            {
+                buffer.Dispose();
+                throw;
+            }
+        } // !_generate()
 
 
         internal void _writeParty(XmlTextWriter writer, Party party)
@@ -140,6 +164,7 @@ namespace OpenTrans.net
                 {
                     writer.WriteStartElement("bmecat:AUTHENTIFICATION");
                     _writeOptionalElementString(writer, "bmecat:LOGIN", party.ContactDetails.Authentification);
+                    _writeOptionalElementString(writer, "bmecat:PASSWORD", party.ContactDetails.AuthentificationPassword);
                     writer.WriteEndElement(); // !bmecat:AUTHENTIFICATION
                 }
 
@@ -193,6 +218,33 @@ namespace OpenTrans.net
                 writer.WriteEndElement(); // !CUSTOMER_ORDER_REFERENCE
             }
         }  // !_writeCustomerOrderReference()
+
+
+        /// <summary>
+        /// ORDER_PARTIES_REFERENCE is mandatory. If it is not set explicitly, it is derived from the first id of
+        /// the first buyer and supplier party.
+        /// </summary>
+        internal void _writeOrderPartiesReference(XmlTextWriter writer, OrderPartiesReference orderPartiesReference, List<Party> parties)
+        {
+            _writeOrderPartiesReference(writer, orderPartiesReference ?? _deriveOrderPartiesReference(parties));
+        } // !_writeOrderPartiesReference()
+
+
+        private OrderPartiesReference _deriveOrderPartiesReference(List<Party> parties)
+        {
+            PartyId buyerId = parties.FirstOrDefault(p => p.Roles.Contains(PartyRoles.Buyer) && p.Ids.Any())?.Ids[0];
+            PartyId supplierId = parties.FirstOrDefault(p => p.Roles.Contains(PartyRoles.Supplier) && p.Ids.Any())?.Ids[0];
+            if (buyerId == null && supplierId == null)
+            {
+                return null;
+            }
+
+            return new OrderPartiesReference
+            {
+                BuyerIdRef = buyerId,
+                SupplierIdRef = supplierId
+            };
+        } // !_deriveOrderPartiesReference()
 
 
         internal void _writeOrderPartiesReference(XmlTextWriter writer, OrderPartiesReference orderPartiesReference)
