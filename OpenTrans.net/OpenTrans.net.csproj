@@ -4,10 +4,59 @@
     <TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <Authors>Stephan Stapel, stephan@s2-industries.com</Authors>
-    <Version>4.0.2</Version>
-    <AssemblyVersion>4.0.2.0</AssemblyVersion>
-    <FileVersion>4.0.1.0</FileVersion>
+    <Version>5.0.0</Version>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <FileVersion>5.0.0.0</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Description>.net library for reading and writing OpenTRANS 2.1 orders and order responses.
+
+The additional transactions will be added as soon as possible.</Description>
+    <PackageProjectUrl>https://github.com/stephanstapel/OpenTrans.net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/stephanstapel/OpenTrans.net</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>5.0.0:
+Breaking changes: the generated XML changed, existing documents can still be read.
+- decimals keep their precision and are always written culture-invariant
+- FVALUE_TYPE written in lower case, QuantityCodes.Unknown no longer written
+- no type attribute on ORDERRESPONSE, schema namespaces for TAX_NUMBER, PRICE_UNIT, PRICE_UNIT_FACTOR
+- GenerationDate written as set, ORDER_PARTIES_REFERENCE derived from parties if not set
+- AUTHENTIFICATION written with LOGIN/PASSWORD, element order of FEATURE and ORDERRESPONSE_INFO corrected
+New:
+- targets netstandard2.0, net8.0 and net10.0
+- LoadAsync/SaveAsync with CancellationToken for Order and OrderResponse
+- OrderResponse: DeliveryDate, OrderPartiesReference, Currency, Remarks
+- Contact.AuthentificationPassword
+- reading of PARTIAL_SHIPMENT_ALLOWED, CUSTOMER_ORDER_REFERENCE, TOTAL_AMOUNT, BUYER_PID, CONTACT_ROLE, FORDER, FTEMPLATE
+Bugfixes:
+- crashes when saving default Party/Contact objects, partial OrderPartiesReference, phone numbers without type
+- file handles left open by OrderResponse.Load(file)
+
+4.0.2:
+additional documentation
+
+4.0.1:
+corrected element order
+improved code safety. some additional null checks
+
+4.0.0:
+Some breaking changes inside.
+Bugfixes.
+Documentation added.
+
+3.0.0:
+Error correction around email addresses in parties and contacts.
+
+2.2.0:
+adding Feature and more fields
+
+2.1.0:
+repacked.
+
+2.0.0: full support for order response message
+1.3.0: correction of net standard configuration in nuget package
+1.2.0: converted into .net standard 2.0, made dates optional values
+1.1.0: fixed bug in order creation, added support for all countries, moved to .net 4.6.2
+1.0.0: Initial</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
