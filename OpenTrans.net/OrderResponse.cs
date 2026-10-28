@@ -19,6 +19,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OpenTrans.net
 {
@@ -57,6 +59,29 @@ namespace OpenTrans.net
         /// business document.The numbering begins at 1.
         /// </summary>
         public int OrderChangeSequenceId { get; set; }
+
+        /// <summary>
+        /// Delivery date confirmed by the supplier. If the delivery date deviates from the one specified in the header,
+        /// the delivery date on item level is valid.
+        /// </summary>
+        public DeliveryDate DeliveryDate { get; set; }
+
+        /// <summary>
+        /// Reference to the business partners integrated in the process of the document flow.
+        /// Mandatory according to the openTRANS 2.1 schema (BUYER_IDREF and SUPPLIER_IDREF).
+        /// If not set, it is derived from the first id of the first party with role Buyer and Supplier when saving.
+        /// </summary>
+        public OrderPartiesReference OrderPartiesReference { get; set; }
+
+        /// <summary>
+        /// Default currency for all price information in the document
+        /// </summary>
+        public string Currency { get; set; }
+
+        /// <summary>
+        /// Remarks related to the business document
+        /// </summary>
+        public List<Remark> Remarks { get; set; } = new List<Remark>();
 
         /// <summary>
         /// List of parties that are relevant to this business document
@@ -121,5 +146,64 @@ namespace OpenTrans.net
             OrderResponseWriter writer = new OrderResponseWriter();
             writer.Save(this, fileName);
         } // !Save()
+
+
+        /// <summary>
+        /// Asynchronously loads an order response from the given stream.
+        ///
+        /// Make sure that the stream is open. After successful reading, the stream is left open, i.e.
+        /// the caller of the library has to take care of the stream lifecycle.
+        ///
+        /// If the stream is not open or readable, an IllegalStreamException exception is raised.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static Task<OrderResponse> LoadAsync(Stream stream, CancellationToken cancellationToken = default)
+        {
+            OrderResponseReader reader = new OrderResponseReader();
+            return reader.LoadAsync(stream, cancellationToken);
+        } // !LoadAsync()
+
+
+        /// <summary>
+        /// Asynchronously loads an order response from the given file.
+        /// If the file does not exist, a FileNotFoundException exception is raised.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static Task<OrderResponse> LoadAsync(string fileName, CancellationToken cancellationToken = default)
+        {
+            OrderResponseReader reader = new OrderResponseReader();
+            return reader.LoadAsync(fileName, cancellationToken);
+        } // !LoadAsync()
+
+
+        /// <summary>
+        /// Asynchronously saves the order response object into a stream.
+        ///
+        /// The stream position will be reset to the original position after writing is finished.
+        /// This allows easy further processing of the stream.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"></param>
+        public Task SaveAsync(Stream stream, CancellationToken cancellationToken = default)
+        {
+            OrderResponseWriter writer = new OrderResponseWriter();
+            return writer.SaveAsync(this, stream, cancellationToken);
+        } // !SaveAsync()
+
+
+        /// <summary>
+        /// Asynchronously saves the order response into the given file.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="cancellationToken"></param>
+        public Task SaveAsync(string fileName, CancellationToken cancellationToken = default)
+        {
+            OrderResponseWriter writer = new OrderResponseWriter();
+            return writer.SaveAsync(this, fileName, cancellationToken);
+        } // !SaveAsync()
     }
 }

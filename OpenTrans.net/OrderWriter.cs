@@ -19,6 +19,8 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace OpenTrans.net
@@ -35,7 +37,20 @@ namespace OpenTrans.net
                 stream.Flush();
             }
         } // !Save()
-        
+
+
+        public Task SaveAsync(Order order, string fileName, string generatorInfo, CancellationToken cancellationToken)
+        {
+            return _saveAsync(fileName, s => Save(order, s, generatorInfo), cancellationToken);
+        } // !SaveAsync()
+
+
+        public Task SaveAsync(Order order, Stream stream, string generatorInfo, CancellationToken cancellationToken)
+        {
+            return _saveAsync(stream, s => Save(order, s, generatorInfo), cancellationToken);
+        } // !SaveAsync()
+
+
         public void Save(Order order, Stream stream, string generatorInfo = null)
         {
             if (!stream.CanWrite || !stream.CanSeek)
@@ -61,7 +76,7 @@ namespace OpenTrans.net
             Writer.WriteStartElement("ORDER_HEADER");
             Writer.WriteStartElement("CONTROL_INFO");
             _writeOptionalElementString(Writer, "GENERATOR_INFO", generatorInfo);
-            _writeDateTime(Writer, "GENERATION_DATE", DateTime.Now);
+            _writeDateTime(Writer, "GENERATION_DATE", order.GenerationDate ?? DateTime.Now);
             Writer.WriteEndElement(); // !CONTROL_INFO
             Writer.WriteStartElement("SOURCING_INFO");
             Writer.WriteEndElement(); // !SOURCING_INFO
@@ -78,7 +93,7 @@ namespace OpenTrans.net
             Writer.WriteEndElement(); // !PARTIES
             
             _writeCustomerOrderReference(Writer, order.CustomerOrderReference);
-            _writeOrderPartiesReference(Writer, order.OrderPartiesReference);
+            _writeOrderPartiesReference(Writer, order.OrderPartiesReference, order.Parties);
             _writeOptionalElementString(Writer, "bmecat:CURRENCY", order.Currency);
             _writeOptionalElementBool(Writer, "PARTIAL_SHIPMENT_ALLOWED", order.PartialShipmentAllowed);
             _writeRemarks(Writer, order.Remarks);
@@ -94,7 +109,7 @@ namespace OpenTrans.net
 
             Writer.WriteStartElement("ORDER_SUMMARY");
             _writeAmount(Writer, "TOTAL_ITEM_NUM", order.OrderItems.Count);
-            _writeOptionalAmount(Writer, "TOTAL_AMOUNT ", order.OrderSummary?.TotalAmount);
+            _writeOptionalAmount(Writer, "TOTAL_AMOUNT", order.OrderSummary?.TotalAmount);
             Writer.WriteEndElement(); // !ORDER_SUMMARY
             
             Writer.WriteEndElement(); // !ORDER

@@ -195,7 +195,7 @@ namespace OpenTrans.net_Test
 
         private void _validateCreateAndReadOrder(Order initialOrder, Order loadedOrder)
         {
-            _validateGenerationDate(initialOrder.OrderDate, loadedOrder.OrderDate);
+            _validateGenerationDate(initialOrder.GenerationDate, loadedOrder.GenerationDate);
 
             _validateOrderDate(initialOrder.OrderDate, loadedOrder.OrderDate);
         }

@@ -18,6 +18,8 @@
  */
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace OpenTrans.net
@@ -39,8 +41,21 @@ namespace OpenTrans.net
             }
 
             return order;
-        } // !Load()       
-        
+        } // !Load()
+
+
+        public Task<Order> LoadAsync(string fileName, CancellationToken cancellationToken)
+        {
+            return _loadAsync(fileName, Load, cancellationToken);
+        } // !LoadAsync()
+
+
+        public Task<Order> LoadAsync(Stream stream, CancellationToken cancellationToken)
+        {
+            return _loadAsync(stream, Load, cancellationToken);
+        } // !LoadAsync()
+
+
         public Order Load(Stream stream)
         {
             if (!stream.CanRead)
@@ -75,17 +90,23 @@ namespace OpenTrans.net
                 order.OrderDate = _nodeAsDateTime(orderInfoNode, "./*[local-name()='ORDER_DATE']", nsmgr);
                 order.Currency = XmlUtils.NodeAsString(orderInfoNode, "./*[local-name()='CURRENCY']", nsmgr);
 
-                XmlNode deliveryDateRefNode = orderInfoNode?.SelectSingleNode("./*[local-name()='DELIVERY_DATE']", nsmgr);
-                if (deliveryDateRefNode != null)
+                string partialShipmentAllowed = XmlUtils.NodeAsString(orderInfoNode, "./*[local-name()='PARTIAL_SHIPMENT_ALLOWED']", nsmgr);
+                if (!string.IsNullOrWhiteSpace(partialShipmentAllowed))
                 {
-                    DeliveryDate deliveryDate = new DeliveryDate
+                    partialShipmentAllowed = partialShipmentAllowed.Trim().ToLowerInvariant();
+                    order.PartialShipmentAllowed = partialShipmentAllowed == "true" || partialShipmentAllowed == "1";
+                }
+
+                XmlNode customerOrderReferenceNode = orderInfoNode?.SelectSingleNode("./*[local-name()='CUSTOMER_ORDER_REFERENCE']", nsmgr);
+                if (customerOrderReferenceNode != null)
+                {
+                    order.CustomerOrderReference = new CustomerOrderReference
                     {
-                        StartDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_START_DATE']", nsmgr),
-                        EndDate = _nodeAsDateTime(deliveryDateRefNode, "./*[local-name()='DELIVERY_END_DATE']", nsmgr),
-                        Type = default(DeliveryDateTypes).FromString(XmlUtils.AttributeText(deliveryDateRefNode, "type"))
+                        OrderId = XmlUtils.NodeAsString(customerOrderReferenceNode, "./*[local-name()='ORDER_ID']", nsmgr)
                     };
-                    order.DeliveryDate = deliveryDate;
-                } // !deliveryDateRefNode
+                } // !customerOrderReferenceNode
+
+                order.DeliveryDate = _readDeliveryDate(orderInfoNode?.SelectSingleNode("./*[local-name()='DELIVERY_DATE']", nsmgr), nsmgr);
 
                 XmlNodeList partyNodes = orderHeaderNode.SelectNodes(".//*[local-name()='PARTIES']/*[local-name()='PARTY']", nsmgr);
                 if (partyNodes != null) {
@@ -96,55 +117,9 @@ namespace OpenTrans.net
                     }
                 } // !partyNodes
                 
-                XmlNode partiesReferenceNode = orderInfoNode?.SelectSingleNode("./*[local-name()='ORDER_PARTIES_REFERENCE']", nsmgr);
-                if (partiesReferenceNode != null)
-                {
-                    order.OrderPartiesReference = new OrderPartiesReference();
-                    XmlNode buyerIdRefNode = partiesReferenceNode.SelectSingleNode("./*[local-name()='BUYER_IDREF']", nsmgr);
-                    if (buyerIdRefNode != null)
-                    {
-                        order.OrderPartiesReference.BuyerIdRef = new PartyId
-                        {
-                            Id = buyerIdRefNode.InnerText,
-                            Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(buyerIdRefNode, "type"))
-                        };
-                    } // !buyerIdRefNode
-                    
-                    XmlNode supplierIdRefNode = partiesReferenceNode.SelectSingleNode("./*[local-name()='SUPPLIER_IDREF']", nsmgr);
-                    if (supplierIdRefNode != null)
-                    {
-                        order.OrderPartiesReference.SupplierIdRef = new PartyId
-                        {
-                            Id = supplierIdRefNode.InnerText,
-                            Type = default(PartyIdTypes).FromString(XmlUtils.AttributeText(supplierIdRefNode, "type"))
-                        };
-                    } // !supplierIdRefNode
-                    
-                    XmlNode shipmentRefNode = partiesReferenceNode.SelectSingleNode("./*[local-name()='SHIPMENT_PARTIES_REFERENCE']", nsmgr);
-                    if (shipmentRefNode != null)
-                    {
-                        XmlNode deliveryIdRefNode = shipmentRefNode.SelectSingleNode("./*[local-name()='DELIVERY_IDREF']");
-                        order.OrderPartiesReference.ShipmentPartiesReference = new ShipmentPartiesReference
-                        {
-                            DeliveryIdRef = deliveryIdRefNode?.InnerText
-                        };
-                    } // !shipmentRefNode 
-                } // !partiesReferenceNode
+                order.OrderPartiesReference = _readOrderPartiesReference(orderInfoNode?.SelectSingleNode("./*[local-name()='ORDER_PARTIES_REFERENCE']", nsmgr), nsmgr);
                 
-                XmlNodeList remarkNodes = orderInfoNode?.SelectNodes("./*[local-name()='REMARKS']", nsmgr);
-                if (remarkNodes != null)
-                {
-                    foreach (XmlNode remarkNode in remarkNodes)
-                    {
-                        Remark remark = new Remark
-                        {
-                            Value = XmlUtils.NodeAsString(remarkNode, ".", nsmgr),
-                            Type = XmlUtils.AttributeText(remarkNode, "type"),
-                            Lang = XmlUtils.AttributeText(remarkNode, "lang")
-                        };
-                        order.Remarks.Add(remark);
-                    }
-                } // !remarkNodes
+                order.Remarks.AddRange(_readRemarks(orderInfoNode, nsmgr));
             } // !orderHeaderNode
 
             XmlNodeList itemNodes = doc.SelectNodes("//*[local-name()='ORDER_ITEM_LIST']/*[local-name()='ORDER_ITEM']", nsmgr);
@@ -155,6 +130,16 @@ namespace OpenTrans.net
                     order.OrderItems.Add(_readItem(itemNode, nsmgr));
                 }
             } // !itemNodes
+
+            // ORDER_SUMMARY is always written (TOTAL_ITEM_NUM is mandatory), so only TOTAL_AMOUNT indicates a summary
+            decimal? totalAmount = XmlUtils.NodeAsDecimal(doc, "//*[local-name()='ORDER_SUMMARY']/*[local-name()='TOTAL_AMOUNT']", nsmgr);
+            if (totalAmount.HasValue)
+            {
+                order.OrderSummary = new OrderSummary
+                {
+                    TotalAmount = totalAmount
+                };
+            } // !totalAmount
 
             return order;
         } // !Load()

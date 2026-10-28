@@ -18,6 +18,8 @@
  */
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace OpenTrans.net
@@ -36,8 +38,23 @@ namespace OpenTrans.net
                 throw new FileNotFoundException();
             }
 
-            return Load(new FileStream(fileName, FileMode.Open, FileAccess.Read));
+            using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            {
+                return Load(stream);
+            }
         } // !Load()
+
+
+        internal Task<OrderResponse> LoadAsync(string fileName, CancellationToken cancellationToken)
+        {
+            return _loadAsync(fileName, Load, cancellationToken);
+        } // !LoadAsync()
+
+
+        internal Task<OrderResponse> LoadAsync(Stream stream, CancellationToken cancellationToken)
+        {
+            return _loadAsync(stream, Load, cancellationToken);
+        } // !LoadAsync()
 
 
         internal OrderResponse Load(Stream stream)
@@ -61,12 +78,16 @@ namespace OpenTrans.net
             XmlNode headerNode = doc.SelectSingleNode("//*[local-name()='ORDERRESPONSE_HEADER']", nsmgr);
             if (headerNode != null)
             {
-                DateTime? generationDate = _nodeAsDateTime(headerNode, "./*[local-name()='CONTROL_INFO']/*[local-name()='GENERATION_DATE']", nsmgr);
-                retval.OrderId = XmlUtils.NodeAsString(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDER_ID']", nsmgr);
-                retval.SupplierOrderId = XmlUtils.NodeAsString(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='SUPPLIER_ORDER_ID']", nsmgr);
-                retval.OrderDate = _nodeAsDateTime(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDER_DATE']", nsmgr);
-                retval.OrderResponseDate = _nodeAsDateTime(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDERRESPONSE_DATE']", nsmgr);
-                retval.OrderChangeSequenceId = XmlUtils.NodeAsInt(headerNode, "./*[local-name()='ORDERRESPONSE_INFO']/*[local-name()='ORDERCHANGE_SEQUENCE_ID']", nsmgr);
+                XmlNode infoNode = headerNode.SelectSingleNode("./*[local-name()='ORDERRESPONSE_INFO']", nsmgr);
+                retval.OrderId = XmlUtils.NodeAsString(infoNode, "./*[local-name()='ORDER_ID']", nsmgr);
+                retval.SupplierOrderId = XmlUtils.NodeAsString(infoNode, "./*[local-name()='SUPPLIER_ORDER_ID']", nsmgr);
+                retval.OrderDate = _nodeAsDateTime(infoNode, "./*[local-name()='ORDER_DATE']", nsmgr);
+                retval.OrderResponseDate = _nodeAsDateTime(infoNode, "./*[local-name()='ORDERRESPONSE_DATE']", nsmgr);
+                retval.OrderChangeSequenceId = XmlUtils.NodeAsInt(infoNode, "./*[local-name()='ORDERCHANGE_SEQUENCE_ID']", nsmgr);
+                retval.Currency = XmlUtils.NodeAsString(infoNode, "./*[local-name()='CURRENCY']", nsmgr);
+                retval.DeliveryDate = _readDeliveryDate(infoNode?.SelectSingleNode("./*[local-name()='DELIVERY_DATE']", nsmgr), nsmgr);
+                retval.OrderPartiesReference = _readOrderPartiesReference(infoNode?.SelectSingleNode("./*[local-name()='ORDER_PARTIES_REFERENCE']", nsmgr), nsmgr);
+                retval.Remarks.AddRange(_readRemarks(infoNode, nsmgr));
 
                 XmlNodeList partyNodes = headerNode.SelectNodes(".//*[local-name()='PARTIES']/*[local-name()='PARTY']", nsmgr);
                 foreach (XmlNode partyNode in partyNodes)

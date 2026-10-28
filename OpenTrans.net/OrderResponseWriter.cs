@@ -19,6 +19,8 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace OpenTrans.net
@@ -34,11 +36,24 @@ namespace OpenTrans.net
 
         public void Save(OrderResponse orderResponse, string fileName)
         {
-            FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write);
-            Save(orderResponse, fs);
-            fs.Flush();
-            fs.Close();
+            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+            {
+                Save(orderResponse, fs);
+                fs.Flush();
+            }
         } //!Save()
+
+
+        public Task SaveAsync(OrderResponse orderResponse, string fileName, CancellationToken cancellationToken)
+        {
+            return _saveAsync(fileName, s => Save(orderResponse, s), cancellationToken);
+        } // !SaveAsync()
+
+
+        public Task SaveAsync(OrderResponse orderResponse, Stream stream, CancellationToken cancellationToken)
+        {
+            return _saveAsync(stream, s => Save(orderResponse, s), cancellationToken);
+        } // !SaveAsync()
 
 
         public void Save(OrderResponse orderResponse, Stream stream)
@@ -53,7 +68,6 @@ namespace OpenTrans.net
             Writer.Formatting = Formatting.Indented;
             Writer.WriteStartDocument();
             Writer.WriteStartElement("ORDERRESPONSE");
-            Writer.WriteAttributeString("type", "standard");
             Writer.WriteAttributeString("version", "2.1");
             Writer.WriteAttributeString("xmlns", "http://www.opentrans.org/XMLSchema/2.1");
             Writer.WriteAttributeString("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
@@ -73,23 +87,27 @@ namespace OpenTrans.net
                 Writer.WriteElementString("ORDER_ID", orderResponse.OrderId);
             }
 
-            if (!String.IsNullOrEmpty(orderResponse.SupplierOrderId))
-            {
-                Writer.WriteElementString("SUPPLIER_ORDER_ID", orderResponse.SupplierOrderId);
-            }
-            
             _writeDateTime(Writer, "ORDERRESPONSE_DATE", orderResponse.OrderResponseDate ?? DateTime.Now);
             if (orderResponse.OrderDate.HasValue)
             {
                 _writeDateTime(Writer, "ORDER_DATE", orderResponse.OrderDate.Value);
             }
+
+            if (!String.IsNullOrEmpty(orderResponse.SupplierOrderId))
+            {
+                Writer.WriteElementString("SUPPLIER_ORDER_ID", orderResponse.SupplierOrderId);
+            }
             _writeAmount(Writer, "ORDERCHANGE_SEQUENCE_ID", orderResponse.OrderChangeSequenceId);
+            _writeDeliveryDate(Writer, orderResponse.DeliveryDate);
             Writer.WriteStartElement("PARTIES");
             foreach(Party party in orderResponse.Parties)
             {
                 _writeParty(Writer, party);
             }
             Writer.WriteEndElement(); // !PARTIES
+            _writeOrderPartiesReference(Writer, orderResponse.OrderPartiesReference, orderResponse.Parties);
+            _writeOptionalElementString(Writer, "bmecat:CURRENCY", orderResponse.Currency);
+            _writeRemarks(Writer, orderResponse.Remarks);
             Writer.WriteEndElement(); // !ORDERRESPONSE_INFO
 
             Writer.WriteEndElement(); // !ORDERRESPONSE_HEADER

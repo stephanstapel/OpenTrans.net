@@ -18,8 +18,11 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace OpenTrans.net
@@ -28,7 +31,84 @@ namespace OpenTrans.net
     /// This class contains base functionality that is useable by writers for all OpenTrans message types
     /// </summary>
     internal class BaseWriter
-    {      
+    {
+        /// <summary>
+        /// Buffer size used when copying the generated document into the target stream
+        /// </summary>
+        private const int CopyBufferSize = 81920;
+
+        /// <summary>
+        /// Maximum scale of System.Decimal
+        /// </summary>
+        private const int MaxDecimals = 28;
+
+        /// <summary>
+        /// Format strings indexed by the minimum number of decimal places, e.g. "0.00##..." for two decimals
+        /// </summary>
+        private static readonly string[] _DecimalFormats = Enumerable.Range(0, MaxDecimals + 1)
+            .Select(i => "0." + new string('0', i) + new string('#', MaxDecimals - i))
+            .ToArray();
+
+        /// <summary>
+        /// Generates the document in memory using the synchronous save function and copies it asynchronously
+        /// into the target stream. The stream position is reset to the original position afterwards, just like
+        /// in the synchronous variant.
+        /// </summary>
+        protected async Task _saveAsync(Stream stream, Action<Stream> save, CancellationToken cancellationToken)
+        {
+            if (!stream.CanWrite || !stream.CanSeek)
+            {
+                throw new IllegalStreamException("Cannot write to stream.");
+            }
+
+            using (MemoryStream buffer = _generate(save, cancellationToken))
+            {
+                long streamPosition = stream.Position;
+                await buffer.CopyToAsync(stream, CopyBufferSize, cancellationToken).ConfigureAwait(false);
+                await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+                stream.Seek(streamPosition, SeekOrigin.Begin);
+            }
+        } // !_saveAsync()
+
+
+        /// <summary>
+        /// Creates the given file and saves the document asynchronously into it.
+        ///
+        /// The document is generated before the file is opened, so cancellation or errors during generation leave an
+        /// existing file untouched. Once the file has been opened, the write is completed to avoid truncated documents.
+        /// </summary>
+        protected async Task _saveAsync(string fileName, Action<Stream> save, CancellationToken cancellationToken)
+        {
+            using (MemoryStream buffer = _generate(save, cancellationToken))
+            using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None, 4096, useAsync: true))
+            {
+                await buffer.CopyToAsync(stream, CopyBufferSize, CancellationToken.None).ConfigureAwait(false);
+                await stream.FlushAsync(CancellationToken.None).ConfigureAwait(false);
+            }
+        } // !_saveAsync()
+
+
+        /// <summary>
+        /// Generates the document into a memory buffer which is positioned at its beginning
+        /// </summary>
+        private MemoryStream _generate(Action<Stream> save, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            MemoryStream buffer = new MemoryStream();
+            try
+            {
+                save(buffer);
+                cancellationToken.ThrowIfCancellationRequested();
+                return buffer;
+            }
+            catch
+            {
+                buffer.Dispose();
+                throw;
+            }
+        } // !_generate()
+
+
         internal void _writeParty(XmlTextWriter writer, Party party)
         {
             writer.WriteStartElement("PARTY");
@@ -62,11 +142,15 @@ namespace OpenTrans.net
                 _writeOptionalElementString(writer, "bmecat:FIRST_NAME", party.ContactDetails.FirstName);
                 _writeOptionalElementString(writer, "bmecat:TITLE", party.ContactDetails.Title);
                 _writeOptionalElementString(writer, "bmecat:ACADEMIC_TITLE", party.ContactDetails.AcademicTitle);
+                foreach (string role in party.ContactDetails.Roles ?? Enumerable.Empty<string>())
+                {
+                    _writeOptionalElementString(writer, "CONTACT_ROLE", role);
+                }
                 _writeOptionalElementString(writer, "bmecat:CONTACT_DESCR", party.ContactDetails.Description);
                 _writePhoneNumbers(writer, "bmecat:PHONE", party.ContactDetails.PhoneNo);
                 _writePhoneNumbers(writer, "bmecat:FAX", party.ContactDetails.FaxNo);
                 _writeOptionalElementString(writer, "bmecat:URL", party.ContactDetails.Url);
-                if (party.ContactDetails.EmailAddresses.Any())
+                if (party.ContactDetails.EmailAddresses?.Any() == true)
                 {
                     writer.WriteStartElement("bmecat:EMAILS");
                     foreach (string emailAddress in party.ContactDetails.EmailAddresses)
@@ -76,7 +160,13 @@ namespace OpenTrans.net
                     writer.WriteEndElement(); // !bmecat:EMAILS
                 }
 
-                _writeOptionalElementString(writer, "bmecat:AUTHENTIFICATION", party.ContactDetails.Authentification);
+                if (!string.IsNullOrEmpty(party.ContactDetails.Authentification))
+                {
+                    writer.WriteStartElement("bmecat:AUTHENTIFICATION");
+                    _writeOptionalElementString(writer, "bmecat:LOGIN", party.ContactDetails.Authentification);
+                    _writeOptionalElementString(writer, "bmecat:PASSWORD", party.ContactDetails.AuthentificationPassword);
+                    writer.WriteEndElement(); // !bmecat:AUTHENTIFICATION
+                }
 
                 writer.WriteEndElement(); // !CONTACT_DETAILS
             }
@@ -93,7 +183,7 @@ namespace OpenTrans.net
                 _writeOptionalElementString(writer, "bmecat:COUNTRY_CODED", party.CountryCode.EnumToString());
             }
             _writeOptionalElementString(writer, "bmecat:VAT_ID", party.VATId);
-            _writeOptionalElementString(writer, "bmecat:TAX_NUMBER", party.TaxNumber);
+            _writeOptionalElementString(writer, "TAX_NUMBER", party.TaxNumber);
             _writePhoneNumbers(writer, "bmecat:PHONE", party.PhoneNo);
             _writePhoneNumbers(writer, "bmecat:FAX", party.FaxNo);
             _writeOptionalElementString(writer, "bmecat:EMAIL", party.EmailAddress);
@@ -130,13 +220,40 @@ namespace OpenTrans.net
         }  // !_writeCustomerOrderReference()
 
 
+        /// <summary>
+        /// ORDER_PARTIES_REFERENCE is mandatory. If it is not set explicitly, it is derived from the first id of
+        /// the first buyer and supplier party.
+        /// </summary>
+        internal void _writeOrderPartiesReference(XmlTextWriter writer, OrderPartiesReference orderPartiesReference, List<Party> parties)
+        {
+            _writeOrderPartiesReference(writer, orderPartiesReference ?? _deriveOrderPartiesReference(parties));
+        } // !_writeOrderPartiesReference()
+
+
+        private OrderPartiesReference _deriveOrderPartiesReference(List<Party> parties)
+        {
+            PartyId buyerId = parties.FirstOrDefault(p => p.Roles.Contains(PartyRoles.Buyer) && p.Ids.Any())?.Ids[0];
+            PartyId supplierId = parties.FirstOrDefault(p => p.Roles.Contains(PartyRoles.Supplier) && p.Ids.Any())?.Ids[0];
+            if (buyerId == null && supplierId == null)
+            {
+                return null;
+            }
+
+            return new OrderPartiesReference
+            {
+                BuyerIdRef = buyerId,
+                SupplierIdRef = supplierId
+            };
+        } // !_deriveOrderPartiesReference()
+
+
         internal void _writeOrderPartiesReference(XmlTextWriter writer, OrderPartiesReference orderPartiesReference)
         {
             if (orderPartiesReference != null)
             {
                 writer.WriteStartElement("ORDER_PARTIES_REFERENCE");
-                _writeOptionalElementString(writer, "bmecat:BUYER_IDREF", orderPartiesReference.BuyerIdRef.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.BuyerIdRef.Type.EnumToString() } });
-                _writeOptionalElementString(writer, "bmecat:SUPPLIER_IDREF", orderPartiesReference.SupplierIdRef.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.SupplierIdRef.Type.EnumToString() } });
+                _writeOptionalElementString(writer, "bmecat:BUYER_IDREF", orderPartiesReference.BuyerIdRef?.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.BuyerIdRef?.Type.EnumToString() } });
+                _writeOptionalElementString(writer, "bmecat:SUPPLIER_IDREF", orderPartiesReference.SupplierIdRef?.Id, new Dictionary<string, string>() { { "type", orderPartiesReference.SupplierIdRef?.Type.EnumToString() } });
                 if (orderPartiesReference.ShipmentPartiesReference != null)
                 {
                     writer.WriteStartElement("SHIPMENT_PARTIES_REFERENCE");
@@ -161,13 +278,21 @@ namespace OpenTrans.net
                 writer.WriteStartElement("PRODUCT_FEATURES");
                 foreach (var feature in item.ProductFeatures)
                 {
-                    writer.WriteStartElement("FEATURE ");
-                    _writeOptionalElementString(writer, "bmecat:FNAME", feature.Name);
+                    writer.WriteStartElement("FEATURE");
+                    if (!string.IsNullOrEmpty(feature.Name))
+                    {
+                        _writeOptionalElementString(writer, "bmecat:FNAME", feature.Name);
+                    }
+                    else
+                    {
+                        _writeOptionalElementString(writer, "bmecat:FTEMPLATE", feature.Template);
+                    }
                     _writeOptionalElementString(writer, "bmecat:FVALUE", feature.Value);
-                    _writeOptionalElementString(writer, "bmecat:FVALUE_DETAILS", feature.ValueDetails);
-                    _writeOptionalElementString(writer, "bmecat:FDESCR", feature.Description, new Dictionary<string, string> { { "lang", "deu" } });
                     _writeOptionalElementString(writer, "bmecat:FUNIT", feature.Unit.EnumToString());
-                    _writeOptionalElementString(writer, "bmecat:FVALUE_TYPE", feature.ValueType?.ToString());
+                    _writeOptionalElementString(writer, "bmecat:FORDER", feature.Order);
+                    _writeOptionalElementString(writer, "bmecat:FDESCR", feature.Description, new Dictionary<string, string> { { "lang", "deu" } });
+                    _writeOptionalElementString(writer, "bmecat:FVALUE_DETAILS", feature.ValueDetails);
+                    _writeOptionalElementString(writer, "bmecat:FVALUE_TYPE", feature.ValueType?.EnumToString());
                     writer.WriteEndElement(); // !FEATURE 
                 }
                 writer.WriteEndElement(); // !PRODUCT_FEATURES
@@ -188,8 +313,8 @@ namespace OpenTrans.net
                 {
                     writer.WriteStartElement("PRICE_BASE_FIX");
                     _writeOptionalAmount(writer, "PRICE_UNIT_VALUE", item.ProductPriceFix.PriceBaseFix.PriceUnitValue);
-                    _writeOptionalElementString(writer, "PRICE_UNIT", item.ProductPriceFix.PriceBaseFix.PriceUnit.EnumToString());
-                    _writeOptionalAmount(writer, "PRICE_UNIT_FACTOR", item.ProductPriceFix.PriceBaseFix.PriceUnitFactor);
+                    _writeOptionalElementString(writer, "bmecat:PRICE_UNIT", item.ProductPriceFix.PriceBaseFix.PriceUnit.EnumToString());
+                    _writeOptionalAmount(writer, "bmecat:PRICE_UNIT_FACTOR", item.ProductPriceFix.PriceBaseFix.PriceUnitFactor);
                     writer.WriteEndElement(); // !PRICE_BASE_FIX
                 }
 
@@ -260,7 +385,7 @@ namespace OpenTrans.net
         
         internal void _writeDeliveryDate(XmlTextWriter writer, DeliveryDate deliveryDate)
         {
-            if (deliveryDate?.EndDate == null || !deliveryDate.StartDate.HasValue)
+            if (deliveryDate == null || (!deliveryDate.StartDate.HasValue && !deliveryDate.EndDate.HasValue))
             {
                 return;
             }
@@ -269,8 +394,9 @@ namespace OpenTrans.net
             {
                 writer.WriteAttributeString("type", deliveryDate.Type.EnumToString());
             }
-            _writeDateTime(writer, "DELIVERY_START_DATE", deliveryDate.StartDate);
-            _writeDateTime(writer, "DELIVERY_END_DATE", deliveryDate.EndDate);
+            // both elements are mandatory, a single date is interpreted as start and end of the delivery period
+            _writeDateTime(writer, "DELIVERY_START_DATE", deliveryDate.StartDate ?? deliveryDate.EndDate);
+            _writeDateTime(writer, "DELIVERY_END_DATE", deliveryDate.EndDate ?? deliveryDate.StartDate);
             writer.WriteEndElement(); // !DELIVERY_DATE
         } // !_writeDeliveryDate()
 
@@ -327,15 +453,14 @@ namespace OpenTrans.net
         } // !_writeOptionalAmount()
 
 
+        /// <summary>
+        /// Formats the value with at least numDecimals decimal places. Additional decimal places are kept
+        /// so that no precision is lost.
+        /// </summary>
         internal string _formatDecimal(decimal value, int numDecimals = 2)
         {
-            string formatString = "0.";
-            for (int i = 0; i < numDecimals; i++)
-            {
-                formatString += "0";
-            }
-
-            return value.ToString(formatString).Replace(",", ".");
+            numDecimals = Math.Max(0, Math.Min(numDecimals, MaxDecimals));
+            return value.ToString(_DecimalFormats[numDecimals], CultureInfo.InvariantCulture);
         } // !_formatDecimal()
     }
 }

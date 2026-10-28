@@ -123,7 +123,7 @@ namespace OpenTrans.net
         /// <summary>
         /// Fax numbers - contents of ADDRESS/FAX element
         /// </summary>
-        public List<PhoneNo> FaxNo { get; set; }
+        public List<PhoneNo> FaxNo { get; set; } = new List<PhoneNo>();
 
         /// <summary>
         /// e-mail address

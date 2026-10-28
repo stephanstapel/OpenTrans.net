@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>.net6</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>OpenTrans.net_Test</RootNamespace>
     <Authors>Stephan Stapel, stephan@s2-industries.com</Authors>
     <PackageLicenseExpression>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseExpression>

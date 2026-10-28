@@ -360,6 +360,11 @@ namespace OpenTrans.net
 
         public static string EnumToString(this QuantityCodes c)
         {
+            if (c == QuantityCodes.Unknown)
+            {
+                return "";
+            }
+
             return c.ToString("g");
         } // !ToString()
     }
